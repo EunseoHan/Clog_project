@@ -25,6 +25,7 @@ import com.example.myapplication.databinding.ActivityMainBinding
 class AddCloset : BaseActivity() {
 
     lateinit var pic_plus: ImageView
+    lateinit var back: ImageView
 
     lateinit var outer: Button
     lateinit var top: Button
@@ -60,6 +61,7 @@ class AddCloset : BaseActivity() {
 
         setContentView(binding.root)
         pic_plus = findViewById<ImageView>(R.id.pic_plus)
+        back = findViewById(R.id.back)
 
         outer = findViewById<Button>(R.id.outer)
         top = findViewById<Button>(R.id.top)
@@ -111,6 +113,10 @@ class AddCloset : BaseActivity() {
             visibleGone()
             shoes_txtview.visibility = View.VISIBLE
             shoes_layout.visibility = View.VISIBLE
+        }
+
+        back.setOnClickListener {
+            finish()
         }
 
 
