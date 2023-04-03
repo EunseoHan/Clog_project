@@ -3,6 +3,7 @@ package com.example.myapplication
 import android.content.ContentValues
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.Color
 import android.graphics.ImageDecoder
 import android.icu.text.SimpleDateFormat
 import android.net.Uri
@@ -13,14 +14,17 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.VISIBLE
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.core.view.LayoutInflaterFactory
 import com.example.myapplication.databinding.ActivityAddClosetBinding
 import com.example.myapplication.databinding.ActivityMainBinding
+
 
 class AddCloset : BaseActivity() {
 
@@ -85,35 +89,12 @@ class AddCloset : BaseActivity() {
         onepiece_layout2 = findViewById(R.id.type_detail_onepiece_layout2)
         shoes_layout = findViewById(R.id.type_detail_shoes_layout)
 
-        outer.setOnClickListener {
-            visibleGone()
-            outer_txtview.visibility = View.VISIBLE
-            outer_layout.visibility = View.VISIBLE
-        }
-        top.setOnClickListener {
-            visibleGone()
-            top_txtview.visibility = View.VISIBLE
-            top_layout.visibility = View.VISIBLE
-        }
-        bottom.setOnClickListener {
-            visibleGone()
-            bottom_txtview1.visibility = View.VISIBLE
-            bottom_txtview2.visibility = View.VISIBLE
-            bottom_layout1.visibility = View.VISIBLE
-            bottom_layout2.visibility = View.VISIBLE
-        }
-        onepiece.setOnClickListener {
-            visibleGone()
-            onepiece_txtview1.visibility = View.VISIBLE
-            onepiece_txtview2.visibility = View.VISIBLE
-            onepiece_layout1.visibility = View.VISIBLE
-            onepiece_layout2.visibility = View.VISIBLE
-        }
-        shoes.setOnClickListener {
-            visibleGone()
-            shoes_txtview.visibility = View.VISIBLE
-            shoes_layout.visibility = View.VISIBLE
-        }
+        clickBtn(outer, outer_txtview, outer_layout)
+        clickBtn(top, top_txtview, top_layout)
+        clickBtn(bottom, bottom_txtview1, bottom_txtview2, bottom_layout1, bottom_layout2)
+        clickBtn(onepiece, onepiece_txtview1, onepiece_txtview2, onepiece_layout1, onepiece_layout2)
+        clickBtn(shoes, shoes_txtview, shoes_layout)
+
 
         back.setOnClickListener {
             finish()
@@ -124,6 +105,38 @@ class AddCloset : BaseActivity() {
         requirePermissions(arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE), PERM_STORAGE)
     }
 
+    fun clickBtn(btn:Button, txtview:TextView, layout: LinearLayout) {
+        btn.setOnClickListener {
+            if (txtview.visibility == VISIBLE) {
+                backgroundClear()
+                visibleGone()
+            } else {
+                backgroundClear()
+                visibleGone()
+                txtview.visibility = View.VISIBLE
+                layout.visibility = View.VISIBLE
+                btn.setBackgroundColor(Color.parseColor("#BFCBE5"))
+                btn.setBackgroundResource(R.drawable.button_roud2)
+            }
+        }
+    }
+    fun clickBtn(btn:Button, txtview:TextView, txtview2: TextView, layout: LinearLayout, layout2: LinearLayout) {
+        btn.setOnClickListener {
+            if (txtview.visibility == VISIBLE) {
+                backgroundClear()
+                visibleGone()
+            } else {
+                backgroundClear()
+                visibleGone()
+                txtview.visibility = View.VISIBLE
+                layout.visibility = View.VISIBLE
+                txtview2.visibility = View.VISIBLE
+                layout2.visibility = View.VISIBLE
+                btn.setBackgroundColor(Color.parseColor("#BFCBE5"))
+                btn.setBackgroundResource(R.drawable.button_roud2)
+            }
+        }
+    }
     fun visibleGone() {
         outer_txtview.visibility = View.GONE
         outer_layout.visibility = View.GONE
@@ -139,6 +152,14 @@ class AddCloset : BaseActivity() {
         onepiece_layout2.visibility = View.GONE
         shoes_txtview.visibility = View.GONE
         shoes_layout.visibility = View.GONE
+    }
+
+    fun backgroundClear() {
+        outer.setBackgroundResource(R.drawable.button_roud)
+        top.setBackgroundResource(R.drawable.button_roud)
+        bottom.setBackgroundResource(R.drawable.button_roud)
+        onepiece.setBackgroundResource(R.drawable.button_roud)
+        shoes.setBackgroundResource(R.drawable.button_roud)
     }
 
     fun initViews() {

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import org.w3c.dom.Text
 
 
@@ -17,6 +18,9 @@ class MainActivity : AppCompatActivity() {
     lateinit var MyPage : TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        installSplashScreen()
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
@@ -29,6 +33,11 @@ class MainActivity : AppCompatActivity() {
 
         closet.setOnClickListener {
             val intent = Intent(this, AddCloset::class.java)
+            startActivity(intent)
+        }
+
+        home.setOnClickListener {
+            val intent = Intent(this, EditCloset::class.java)
             startActivity(intent)
         }
 
