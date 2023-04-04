@@ -22,7 +22,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.LayoutInflaterFactory
-import com.example.myapplication.databinding.ActivityAddClosetBinding
+import com.example.myapplication.databinding.ActivityEditClosetBinding
 import com.example.myapplication.databinding.ActivityMainBinding
 
 
@@ -57,7 +57,7 @@ class EditCloset : BaseActivity() {
     val REQ_CAMERA = 11
     val REQ_GALLERY =12
 
-    val binding by lazy { ActivityAddClosetBinding.inflate(layoutInflater) }
+    val binding by lazy { ActivityEditClosetBinding.inflate(layoutInflater) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -15,7 +15,6 @@ class MainActivity : AppCompatActivity() {
     lateinit var weather : TextView
     lateinit var closet : TextView
     lateinit var community : TextView
-    lateinit var MyPage : TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -28,7 +27,6 @@ class MainActivity : AppCompatActivity() {
         weather = findViewById(R.id.weather)
         closet = findViewById(R.id.closest)
         community = findViewById(R.id.community)
-        MyPage = findViewById(R.id.myPage)
 
 
         closet.setOnClickListener {
