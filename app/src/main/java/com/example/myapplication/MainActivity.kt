@@ -15,6 +15,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var weather : TextView
     lateinit var closet : TextView
     lateinit var community : TextView
+    lateinit var home_to_mypage : ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -27,6 +28,7 @@ class MainActivity : AppCompatActivity() {
         weather = findViewById(R.id.weather)
         closet = findViewById(R.id.closest)
         community = findViewById(R.id.community)
+        home_to_mypage = findViewById(R.id.home_to_mypage)
 
 
         closet.setOnClickListener {
@@ -45,6 +47,10 @@ class MainActivity : AppCompatActivity() {
         }
         community.setOnClickListener {
             val intent = Intent(this, RegisterActivity::class.java)
+            startActivity(intent)
+        }
+        home_to_mypage.setOnClickListener {
+            val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
         }
 
