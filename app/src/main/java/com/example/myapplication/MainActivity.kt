@@ -39,6 +39,15 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        weather.setOnClickListener {
+            val intent = Intent(this, ProfileChangeActivity::class.java)
+            startActivity(intent)
+        }
+        community.setOnClickListener {
+            val intent = Intent(this, RegisterActivity::class.java)
+            startActivity(intent)
+        }
+
 
 
     }
