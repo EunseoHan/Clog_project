@@ -37,12 +37,12 @@ class MainActivity : AppCompatActivity() {
         }
 
         home.setOnClickListener {
-            val intent = Intent(this, EditCloset::class.java)
+            val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
 
         weather.setOnClickListener {
-            val intent = Intent(this, ProfileChangeActivity::class.java)
+            val intent = Intent(this, WeatherActivity::class.java)
             startActivity(intent)
         }
         community.setOnClickListener {
