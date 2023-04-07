@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
 
 
         closet.setOnClickListener {
-            val intent = Intent(this, AddCloset::class.java)
+            val intent = Intent(this, ClosetActivity::class.java)
             startActivity(intent)
         }
 
@@ -45,10 +45,12 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, WeatherActivity::class.java)
             startActivity(intent)
         }
-        community.setOnClickListener {
-            val intent = Intent(this, RegisterActivity::class.java)
-            startActivity(intent)
-        }
+
+//        community.setOnClickListener {
+//            val intent = Intent(this, ::class.java)
+//            startActivity(intent)
+//        }
+
         home_to_mypage.setOnClickListener {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
