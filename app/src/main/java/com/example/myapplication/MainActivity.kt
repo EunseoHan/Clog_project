@@ -46,6 +46,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+//        커뮤니티
 //        community.setOnClickListener {
 //            val intent = Intent(this, ::class.java)
 //            startActivity(intent)
