@@ -130,7 +130,7 @@
         </activity>
 
         <activity
-            android:name=".MypageCommunityActivity"
+            android:name=".CommunityActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

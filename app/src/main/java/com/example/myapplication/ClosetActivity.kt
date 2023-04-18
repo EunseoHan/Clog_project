@@ -2,7 +2,9 @@ package com.example.myapplication
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 
@@ -14,7 +16,7 @@ class ClosetActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_closet)
+        setContentView(R.layout.fragment_closet)
 
         add_cloth = findViewById(R.id.add_cloth)
         ex_outer = findViewById(R.id.ex_outer)

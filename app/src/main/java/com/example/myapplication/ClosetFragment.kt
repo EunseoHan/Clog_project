@@ -18,9 +18,14 @@ class ClosetFragment : Fragment(){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val add_closet = view.findViewById<TextView>(R.id.add_cloth)
+        val ex_outer = view.findViewById<ImageView>(R.id.ex_outer)
 
         add_closet.setOnClickListener{
             val intent = Intent(activity, AddCloset::class.java)
+            startActivity(intent)
+        }
+        ex_outer.setOnClickListener{
+            val intent = Intent(activity, EditCloset::class.java)
             startActivity(intent)
         }
     }
