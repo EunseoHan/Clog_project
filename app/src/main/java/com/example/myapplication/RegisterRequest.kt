@@ -5,6 +5,8 @@ import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 //import com.android.volley.RequestQueue
 
+//RegisterRequest 클래스는 URL에 POST방식으로 파라미터들을 전송하는 역할
+//즉,여기서는 회원가입정보를 PHP 서버에 보내는 여할
 //RegisterRequest 클래스를 StringRequest를 상속해 만듦.
 class RegisterRequest(
     userNAME: String,
@@ -28,7 +30,7 @@ class RegisterRequest(
     init {
         map = HashMap() //HashMap은 코틀린에서 key , value 형태로 데이터를 저장
         map.put("userNAME",userNAME) //put은 HashMap에서 데이터 추가할 때 사용
-        map.put("userID",userID)
+        map.put("userID",userID) //userID를 "userID"에 담는다는 의미
         map.put("userEMAIL",userEMAIL)
         map.put("userPASSWORD",userPASSWORD)
         map.put("userPASSWORDCHECK",userPASSWORDCHECK)
@@ -70,7 +72,7 @@ class RegisterRequest(
     }
     companion object {
         // 서버 url 설정 (php 파일 연동)
-        private const val URL = "http://172.18.8.33:8080/Register.php" // "http:// 퍼블릭 DNS 주소/Register.php"
-        //private const val URL = "http://192.168.200.168:8080/RegisterTest.php"
+        //private const val URL = "http://172.18.8.33:8080/Register.php" // "http:// 퍼블릭 DNS 주소/Register.php"
+        private const val URL = "http://192.168.200.167:8080/Register.php"
     }
 }

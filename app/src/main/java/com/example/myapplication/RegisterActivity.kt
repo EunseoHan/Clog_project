@@ -10,6 +10,8 @@ import org.json.JSONObject
 import com.android.volley.Response
 import com.android.volley.toolbox.Volley
 
+//RegisterActivity는 버튼에 관한 객체를 생성한 뒤 리스너를 연결함
+//volley 라이브러리로 php 서버와 통신하는 부분
 class RegisterActivity : AppCompatActivity() {
 
     val binding by lazy { ActivityRegisterBinding.inflate(layoutInflater)}
@@ -59,23 +61,24 @@ class RegisterActivity : AppCompatActivity() {
 
             //4. 할당된 Response로 콜백 처리하는 부분(volley 사용을 위한 R(r)esponseListener 구현 부분)
             val responseListener: Response.Listener<String> = Response.Listener<String> {
-                //서버로부터 여기서 데이터 받음
-                fun onResponse(response: String) {
+                //서버로부터 여기서 데이터 받음 (응답데이터 받아오는 onResponse 메소드)
+                //override fun onResponse(response: String) {
 
-                    //response-> //이거 아님 위에
+                    response-> //이거 or 위에
                     try {
                         println("나 타고 있니?")
                         //서버로부터 받은 데이터는 JSON타입의 객체다.
                         //응답 성공 시 Register.php에 회원가입 관련 정보를 POST방식으로 보내면 응답결과로 {"success":true} 혹은 {"success":false}를 받는 거임
-                        val jsonObject = JSONObject(response)
-                        //그 중 Key값이 "success"인 것을 가져온다.
-                        val success = jsonObject.getBoolean("success")
+                        val jsonObject = JSONObject(response) ////Register php에 response
+
+                        println(response)
+                        val success = jsonObject.getBoolean("success") //그 중 Key값이 "success"인 것을 가져온다.
 
                         if(success){  // 회원등록에 성공한 경우(즉, success값이 true인 경우)
                             println("성공 탔니?")
                             Toast.makeText(
                                 this@RegisterActivity,
-                                "(sucess)회원 등록에 성공하였습니다.",
+                                "(success:true)회원 등록에 성공하였습니다.",
                                 Toast.LENGTH_SHORT
                             ).show()
                             println("성공이래")
@@ -86,7 +89,7 @@ class RegisterActivity : AppCompatActivity() {
                             println("실패 탔니?")
                             Toast.makeText(
                                 this@RegisterActivity,
-                                "회원 등록에 실패하였습니다.",
+                                "(success:false)회원 등록에 실패하였습니다.",
                                 Toast.LENGTH_SHORT
                             ).show()
                             println("실패래")
@@ -95,7 +98,7 @@ class RegisterActivity : AppCompatActivity() {
                     } catch (e: JSONException) {
                         e.printStackTrace()
                     }
-                }
+                //}
             }
             // responseListener 끝
 
@@ -159,9 +162,8 @@ class RegisterActivity : AppCompatActivity() {
                 //volley 사용법
                 //1.RequestObject를 생성한다. 이때 서버로부터 데이터를 받을 responseListener를 반드시 넘겨준다.
                 val registerRequest =
-                    RegisterRequest(userNAME,userID,userEMAIL,userPASSWORD,userPASSWORDCHECK,userPHONE, red, blue, brown, purple, yellow, character,
-                        responseListener)
-                //2.RequestQueue를 생성한다.
+                    RegisterRequest(userNAME,userID,userEMAIL,userPASSWORD,userPASSWORDCHECK,userPHONE, red, blue, brown, purple, yellow, character, responseListener)
+                //2.RequestQueue(서버에 요청하는 객체)를 생성한다.
                 val queue = Volley.newRequestQueue(this@RegisterActivity)
                 //3.RequsertQueue를 RequestObject에 넘겨준다.
                 queue.add(registerRequest)
