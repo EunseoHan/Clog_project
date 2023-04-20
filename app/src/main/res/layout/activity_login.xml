@@ -25,7 +25,7 @@
         android:layout_marginTop="140dp"
         android:layout_marginEnd="113dp"
         android:layout_marginBottom="2dp"
-        app:layout_constraintBottom_toTopOf="@+id/my_person_id"
+        app:layout_constraintBottom_toTopOf="@+id/id"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -35,7 +35,7 @@
         />
 
     <EditText
-        android:id="@+id/person_password"
+        android:id="@+id/password"
         android:layout_width="300dp"
         android:layout_height="48dp"
         android:layout_marginStart="112dp"
@@ -49,7 +49,7 @@
         app:layout_constraintTop_toBottomOf="@+id/password_text" />
 
     <EditText
-        android:id="@+id/my_person_id"
+        android:id="@+id/id"
         android:layout_width="300dp"
         android:layout_height="48dp"
         android:layout_marginStart="101dp"
@@ -74,7 +74,7 @@
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/person_password"
+        app:layout_constraintTop_toBottomOf="@+id/password"
         app:layout_constraintVertical_bias="0.268" />
 
     <TextView
@@ -105,7 +105,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/my_person_id" />
+        app:layout_constraintTop_toBottomOf="@+id/id" />
 
     <TextView
         android:id="@+id/find_password"
