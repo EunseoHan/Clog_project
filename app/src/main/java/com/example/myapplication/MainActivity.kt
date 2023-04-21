@@ -39,6 +39,11 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
 
+        binding.homeToMypage.setOnClickListener {
+            val intent = Intent(this, RegisterActivity::class.java)
+            startActivity(intent)
+
+        }
 
         // 탭 설정
         binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{

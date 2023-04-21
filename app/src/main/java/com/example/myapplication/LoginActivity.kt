@@ -28,7 +28,7 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
 
         find_password = findViewById(R.id.find_password)
-        find_phone_button = findViewById(R.id.find_phone_button)
+        find_phone_button = findViewById(R.id.LoginButton)
         sign_in = findViewById(R.id.sign_in)
 
         find_password.setOnClickListener {
@@ -36,10 +36,10 @@ class LoginActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        find_phone_button.setOnClickListener {
+        /*find_phone_button.setOnClickListener {
             val intent = Intent(this, MypageMainActivity::class.java)
             startActivity(intent)
-        }
+        }*/
 
         sign_in.setOnClickListener {
             val intent = Intent(this, RegisterActivity::class.java)
@@ -48,7 +48,7 @@ class LoginActivity : AppCompatActivity() {
 
         setContentView(binding.root)
 
-        find_phone_button.setOnClickListener(View.OnClickListener { // EditText에 현재 입력되어있는 값을 get(가져온다)해온다.
+        binding.LoginButton.setOnClickListener(View.OnClickListener { // EditText에 현재 입력되어있는 값을 get(가져온다)해온다.
             val userID = binding.id.text.toString()
             val userPASSWORD = binding.password.text.toString()
 
