@@ -27,26 +27,33 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        find_password = findViewById(R.id.find_password)
-        find_phone_button = findViewById(R.id.LoginButton)
-        sign_in = findViewById(R.id.sign_in)
+//        find_password = findViewById(R.id.find_password)
+//        find_phone_button = findViewById(R.id.LoginButton)
+//        sign_in = findViewById(R.id.sign_in)
 
-        find_password.setOnClickListener {
-            val intent = Intent(this, LoginFindPasswordActivity::class.java)
-            startActivity(intent)
-        }
+
 
         /*find_phone_button.setOnClickListener {
             val intent = Intent(this, MypageMainActivity::class.java)
             startActivity(intent)
         }*/
 
-        sign_in.setOnClickListener {
-            val intent = Intent(this, RegisterActivity::class.java)
+//        sign_in.setOnClickListener {
+//            val intent = Intent(this, RegisterActivity::class.java)
+//            startActivity(intent)
+//        }
+
+        setContentView(binding.root)
+
+        binding.findPassword.setOnClickListener {
+            val intent = Intent(this@LoginActivity, LoginFindPasswordActivity::class.java)
             startActivity(intent)
         }
 
-        setContentView(binding.root)
+        binding.signIn.setOnClickListener {
+            val intent = Intent(this@LoginActivity, RegisterActivity::class.java)
+            startActivity(intent)
+        }
 
         binding.LoginButton.setOnClickListener(View.OnClickListener { // EditText에 현재 입력되어있는 값을 get(가져온다)해온다.
             val userID = binding.id.text.toString()
@@ -78,7 +85,7 @@ class LoginActivity : AppCompatActivity() {
                             //Toast.makeText(applicationContext, userNAME+"님 로그인에 성공하였습니다.", Toast.LENGTH_SHORT)
                             Toast.makeText(this@LoginActivity, "로그인에 성공하였습니다.", Toast.LENGTH_SHORT)
                                 .show()
-                            val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                            val intent = Intent(this@LoginActivity, MypageMainActivity::class.java)
                             //로그인하면서 사용자 정보 넘기기
                             //intent.putExtra("userNAME", userNAME)
                             intent.putExtra("userID", userID)

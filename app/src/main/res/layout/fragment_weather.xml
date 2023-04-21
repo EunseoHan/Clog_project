@@ -14,31 +14,12 @@
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
-<androidx.appcompat.widget.Toolbar
-    android:layout_width="411dp"
-    android:layout_height="45dp"
-    app:contentInsetStart="0dp">
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp">
-
-        <!--            <androidx.appcompat.widget.SearchView-->
-        <!--                android:layout_width="397dp"-->
-        <!--                android:layout_height="36dp"-->
-        <!--                android:layout_marginEnd="4dp"-->
-        <!--                app:iconifiedByDefault="false"-->
-        <!--                app:layout_constraintBottom_toBottomOf="parent"-->
-        <!--                app:layout_constraintEnd_toEndOf="parent"-->
-        <!--                app:layout_constraintHorizontal_bias="1.0"-->
-        <!--                app:layout_constraintStart_toStartOf="parent"-->
-        <!--                app:layout_constraintTop_toTopOf="parent"-->
-        <!--                app:queryHint="위치 검색">-->
-        <!--            </androidx.appcompat.widget.SearchView>-->
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.appcompat.widget.Toolbar>
+<androidx.appcompat.widget.SearchView
+    android:id="@+id/searchView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:iconifiedByDefault="false"
+    app:queryHint="Search..." />
 
 <LinearLayout
     android:layout_width="wrap_content"
