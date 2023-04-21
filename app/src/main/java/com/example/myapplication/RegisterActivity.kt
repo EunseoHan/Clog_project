@@ -83,7 +83,7 @@ class RegisterActivity : AppCompatActivity() {
                             ).show()
                             println("성공이래")
                             //다른 화면으로 돌아가는 부분
-                            val intent = Intent(this@RegisterActivity, ProfileChangeActivity::class.java)
+                            val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
                             startActivity(intent)
                         }else{ //회원 가입 실패 시 success값이 false임
                             println("실패 탔니?")
