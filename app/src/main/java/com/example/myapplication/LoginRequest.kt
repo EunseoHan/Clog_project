@@ -24,6 +24,10 @@ class LoginRequest(userID: String, userPASSWORD: String, listener: Response.List
 
     companion object {
         // 서버 URL 설정 ( PHP 파일 연동 )
+<<<<<<< HEAD
         private const val URL = "http://172.30.1.69:8080/Login.php"
+=======
+        private const val URL = "http://192.168.35.190/Login.php"
+>>>>>>> a6c571543f6480b7bfce9c441e4113622ec850c1
     }
 }

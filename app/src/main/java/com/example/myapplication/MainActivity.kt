@@ -17,7 +17,7 @@ import org.w3c.dom.Text
 class MainActivity : AppCompatActivity() {
 
 
-    lateinit var home_to_mypage : ImageView
+//    lateinit var home_to_mypage : ImageView
     lateinit var binding: ActivityMainBinding
 
 
@@ -27,12 +27,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        home_to_mypage = findViewById(R.id.home_to_mypage)
-
-        home_to_mypage.setOnClickListener {
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
-        }
+//        home_to_mypage = findViewById(R.id.home_to_mypage)
+//
+//        home_to_mypage.setOnClickListener {
+//            val intent = Intent(this, LoginActivity::class.java)
+//            startActivity(intent)
+//        }
 
 
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity() {
 
 
         binding.homeToMypage.setOnClickListener {
-            val intent = Intent(this, RegisterActivity::class.java)
+            val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
 
         }

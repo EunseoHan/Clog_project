@@ -3,6 +3,7 @@ package com.example.myapplication
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 
 class MypageMainActivity : AppCompatActivity() {
@@ -11,6 +12,7 @@ class MypageMainActivity : AppCompatActivity() {
     lateinit var writelist: Button
     lateinit var mypagelogout: Button
     lateinit var mypageout: Button
+    lateinit var back: ImageView
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
@@ -20,15 +22,22 @@ class MypageMainActivity : AppCompatActivity() {
         writelist = findViewById(R.id.writelist)
         mypagelogout = findViewById(R.id.mypagelogout)
         mypageout = findViewById(R.id.mypageout)
+        back = findViewById(R.id.back)
 
         Editprofile.setOnClickListener {
             val intent = Intent(this, ProfileChangeActivity::class.java)
             startActivity(intent)
         }
         writelist.setOnClickListener {
-            val intent = Intent(this, CommunityActivity::class.java)
+            val intent = Intent(this, CommunityList::class.java)
             startActivity(intent)
         }
+
+        back.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
+
 
     }
 }
