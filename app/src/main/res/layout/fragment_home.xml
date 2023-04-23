@@ -23,6 +23,7 @@
             android:textColor="@color/white"
             android:textAlignment="center"/>
         <TextView
+            android:id="@+id/temperature_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="18°"
@@ -31,6 +32,7 @@
             android:textStyle="bold"
             android:textAlignment="center"/>
         <TextView
+            android:id="@+id/weather_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"

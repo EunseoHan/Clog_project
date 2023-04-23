@@ -98,37 +98,6 @@
             android:textStyle="bold" />
     </LinearLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.appcompat.widget.Toolbar
-        android:layout_width="411dp"
-        android:layout_height="45dp"
-        app:contentInsetStart="0dp">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp">
-
-<!--            <androidx.appcompat.widget.SearchView-->
-<!--                android:layout_width="397dp"-->
-<!--                android:layout_height="36dp"-->
-<!--                android:layout_marginEnd="4dp"-->
-<!--                app:iconifiedByDefault="false"-->
-<!--                app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintHorizontal_bias="1.0"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toTopOf="parent"-->
-<!--                app:queryHint="위치 검색">-->
-<!--            </androidx.appcompat.widget.SearchView>-->
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.appcompat.widget.Toolbar>
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -138,13 +107,24 @@
             android:id="@+id/textView12"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp"
             android:text="시간대별 날씨 "
             android:textColor="#000000"
             android:textSize="15sp"
             android:textStyle="bold" />
     </LinearLayout>
+
+    <EditText
+        android:id="@+id/Sample1"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="15dp"
+        android:drawableLeft="@drawable/search_size"
+        android:hint="  위치 검색"
+        android:inputType="text"
+        android:textColorHint="#686767" />
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -237,6 +217,7 @@
         <FrameLayout
             android:layout_width="wrap_content"
             android:layout_height="158dp">
+
             <ImageView
                 android:id="@+id/imageView18"
                 android:layout_width="wrap_content"
@@ -283,6 +264,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
         android:text="오후 12시, 내 옷장에서 추천받기 "
         android:textColor="#000000"
         android:textSize="15sp"
@@ -346,7 +328,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="10dp"
         android:text="하의"
         android:textColor="#686767"
         android:textSize="14sp"
