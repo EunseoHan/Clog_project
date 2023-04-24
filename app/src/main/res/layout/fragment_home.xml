@@ -14,39 +14,59 @@
         android:orientation="vertical"
         android:gravity="center"
         android:background="@color/Serenity">
+
         <TextView
+            android:id="@+id/newData"
+            android:text="⟳"
+            android:gravity="left"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:textSize="20dp"
+            android:textColor="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/cityView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
             android:textSize="20dp"
-            android:text="서울특별시"
+            android:text="city"
             android:textColor="@color/white"
             android:textAlignment="center"/>
         <TextView
-            android:id="@+id/temperature_tv"
+            android:id="@+id/tempView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="18°"
-            android:textSize="80dp"
+            android:text="00°"
+            android:textSize="70dp"
             android:textColor="@color/white"
             android:textStyle="bold"
             android:textAlignment="center"/>
         <TextView
-            android:id="@+id/weather_tv"
+            android:id="@+id/dateView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:text="최고 20° 최저 12°"
+            android:layout_marginBottom="10dp"
+            android:text="0000-00-00 00:00:00"
+            android:textSize="15dp"
+            android:textColor="@color/white"
+            android:textAlignment="center"/>
+        <TextView
+            android:id="@+id/weatherView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="40dp"
+            android:text="weather"
             android:textSize="20dp"
             android:textColor="@color/white"
             android:textAlignment="center"/>
     </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:orientation="horizontal"
-        android:background="@color/Serenity2">
-    </LinearLayout>
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="60dp"-->
+<!--        android:orientation="horizontal"-->
+<!--        android:background="@color/Serenity2">-->
+<!--    </LinearLayout>-->
 
 
     <ScrollView
