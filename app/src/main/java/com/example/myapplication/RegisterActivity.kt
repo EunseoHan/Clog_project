@@ -20,6 +20,11 @@ class RegisterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
+        binding.buttonArrow.setOnClickListener {
+            val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
+            startActivity(intent)
+        }
+
         var character = 0
         var red = 0
         var blue = 0
@@ -78,7 +83,7 @@ class RegisterActivity : AppCompatActivity() {
                             println("성공 탔니?")
                             Toast.makeText(
                                 this@RegisterActivity,
-                                "(success:true)회원 등록에 성공하였습니다.",
+                                "회원 등록에 성공하였습니다.",
                                 Toast.LENGTH_SHORT
                             ).show()
                             println("성공이래")
@@ -89,7 +94,7 @@ class RegisterActivity : AppCompatActivity() {
                             println("실패 탔니?")
                             Toast.makeText(
                                 this@RegisterActivity,
-                                "(success:false)회원 등록에 실패하였습니다.",
+                                "회원 등록에 실패하였습니다.",
                                 Toast.LENGTH_SHORT
                             ).show()
                             println("실패래")
@@ -103,7 +108,6 @@ class RegisterActivity : AppCompatActivity() {
             // responseListener 끝
 
 
-            if(userNAME=="" || userID=="" || userEMAIL=="" ||userPASSWORD==""||userPASSWORDCHECK==""){
                 if (userNAME == "") {
                     Toast.makeText(
                         this@RegisterActivity,
@@ -152,13 +156,7 @@ class RegisterActivity : AppCompatActivity() {
                         "체질을 선택하세요",
                         Toast.LENGTH_SHORT
                     ).show()
-                }
-            }else if(userPASSWORD == userPASSWORDCHECK){
-                Toast.makeText(
-                    this@RegisterActivity,
-                    "회원 등록에 성공하였습니다.",
-                    Toast.LENGTH_SHORT
-                ).show()
+                } else {
                 //volley 사용법
                 //1.RequestObject를 생성한다. 이때 서버로부터 데이터를 받을 responseListener를 반드시 넘겨준다.
                 val registerRequest =
@@ -167,12 +165,6 @@ class RegisterActivity : AppCompatActivity() {
                 val queue = Volley.newRequestQueue(this@RegisterActivity)
                 //3.RequsertQueue를 RequestObject에 넘겨준다.
                 queue.add(registerRequest)
-            } else{
-                Toast.makeText(
-                    this@RegisterActivity,
-                    "비밀번호가 다릅니다.",
-                    Toast.LENGTH_SHORT
-                ).show()
             }
         }
     }
