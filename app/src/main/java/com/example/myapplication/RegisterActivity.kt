@@ -4,11 +4,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.android.volley.Response
+import com.android.volley.toolbox.Volley
 import com.example.myapplication.databinding.ActivityRegisterBinding
 import org.json.JSONException
 import org.json.JSONObject
-import com.android.volley.Response
-import com.android.volley.toolbox.Volley
+
 
 //RegisterActivity는 버튼에 관한 객체를 생성한 뒤 리스너를 연결함
 //volley 라이브러리로 php 서버와 통신하는 부분
@@ -31,6 +32,49 @@ class RegisterActivity : AppCompatActivity() {
         var brown = 0
         var purple = 0
         var yellow = 0
+        var check = false
+
+        binding.buttonCheck.setOnClickListener {
+            val userID = binding.id.editableText.toString()
+            println(userID)
+            val responseListener =
+                Response.Listener<String> { response ->
+                    try {
+                        val jsonObject = JSONObject(response)
+                        val success = jsonObject.getBoolean("success")
+                        if (success) {
+                            check = false
+                            Toast.makeText(
+                                this@RegisterActivity,
+                                "사용 중인 아이디입니다.",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        } else {
+                            check=true
+                            Toast.makeText(
+                                this@RegisterActivity,
+                                "사용 가능한 아이디입니다.",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    } catch (e: JSONException) {
+                        e.printStackTrace()
+                    }
+                }
+
+            if(userID==""){
+                Toast.makeText(
+                    this@RegisterActivity,
+                    "아이디를 입력하세요.",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }else{
+                val register_IDcheck_Request = Register_IDcheck_Request(userID, responseListener)
+                val queue = Volley.newRequestQueue(this@RegisterActivity)
+                queue.add(register_IDcheck_Request)
+            }
+
+        }
 
         binding.buttonSignUp.setOnClickListener {
             val userNAME = binding.name.editableText.toString()
@@ -120,7 +164,13 @@ class RegisterActivity : AppCompatActivity() {
                         "아이디를 입력하세요.",
                         Toast.LENGTH_SHORT
                     ).show()
-                } else if (userEMAIL == "") {
+                } else if(check==false){
+                    Toast.makeText(
+                        this@RegisterActivity,
+                        "아이디 중복을 확인하세요.",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }else if (userEMAIL == "") {
                     Toast.makeText(
                         this@RegisterActivity,
                         "이메일을 입력하세요.",
