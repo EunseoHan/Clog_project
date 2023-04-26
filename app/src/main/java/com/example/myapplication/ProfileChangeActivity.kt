@@ -1,10 +1,15 @@
 package com.example.myapplication
 
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import com.android.volley.Response
+import com.android.volley.toolbox.Volley
 import com.example.myapplication.databinding.ActivityProfileChangeBinding
+import org.json.JSONException
+import org.json.JSONObject
 
 
 class ProfileChangeActivity : AppCompatActivity() {
@@ -21,11 +26,15 @@ class ProfileChangeActivity : AppCompatActivity() {
         var brown = 0
         var purple = 0
         var yellow = 0
+        val id = intent.extras!!.getString("userID")
 
         binding.buttonChange.setOnClickListener {
             val password = binding.password.text.toString()
             val passwordCheck = binding.passwordCheck.text.toString()
             val phone = binding.phone.text.toString()
+            //val id = id
+            println(id)
+            if(id is String) println("good")
 
             if (binding.checkBoxRed.isChecked){
                 red=1
@@ -45,6 +54,36 @@ class ProfileChangeActivity : AppCompatActivity() {
                 character=2
             }else if(binding.radioButtonCold.isChecked){
                 character=3
+            }
+
+            val responseListener: Response.Listener<String> = Response.Listener<String> {
+                    response->
+                try {
+                    println("나 타고 있니?")
+                    val jsonObject = JSONObject(response)
+                    println(response)
+                    val success = jsonObject.getBoolean("success")
+
+                    if(success){
+                        println("성공 탔니?")
+                        Toast.makeText(
+                            this@ProfileChangeActivity,
+                            "회원 정보가 수정되었습니다.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        val intent = Intent(this@ProfileChangeActivity, MainActivity::class.java)
+                        startActivity(intent)
+                    }else{
+                        println("실패 탔니?")
+                        Toast.makeText(
+                            this@ProfileChangeActivity,
+                            "회원 정보 수정에 실패하였습니다.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
             }
 
             if(password==""){
@@ -78,11 +117,15 @@ class ProfileChangeActivity : AppCompatActivity() {
                     Toast.LENGTH_SHORT
                 ).show()
             }else{
-                Toast.makeText(
-                    this@ProfileChangeActivity,
-                    "수정이 완료되었습니다.",
-                    Toast.LENGTH_SHORT
-                ).show()
+                val profileChangeRequest =
+                    ProfileChangeRequest(id ,password, phone, red, blue, brown, purple, yellow, character, responseListener)
+                val queue = Volley.newRequestQueue(this@ProfileChangeActivity)
+                queue.add(profileChangeRequest)
+//                Toast.makeText(
+//                    this@ProfileChangeActivity,
+//                    "수정이 완료되었습니다.",
+//                    Toast.LENGTH_SHORT
+//                ).show()
             }
         }
     }

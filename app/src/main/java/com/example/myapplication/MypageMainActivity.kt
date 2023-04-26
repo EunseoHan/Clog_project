@@ -23,9 +23,11 @@ class MypageMainActivity : AppCompatActivity() {
         mypagelogout = findViewById(R.id.mypagelogout)
         mypageout = findViewById(R.id.mypageout)
         back = findViewById(R.id.back)
+        val id = intent.extras!!.getString("userID")
 
         Editprofile.setOnClickListener {
             val intent = Intent(this, ProfileChangeActivity::class.java)
+            intent.putExtra("userID",id)
             startActivity(intent)
         }
         writelist.setOnClickListener {
