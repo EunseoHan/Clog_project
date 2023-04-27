@@ -1,7 +1,9 @@
-package layout
+package com.example.myapplication
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.myapplication.ClosetFragment
 import com.example.myapplication.CommunityFragment

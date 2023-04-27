@@ -99,9 +99,9 @@ class LoginActivity : AppCompatActivity() {
                                     Intent(this@LoginActivity, MypageMainActivity::class.java)
                                 //로그인하면서 사용자 정보 넘기기
                                 //intent.putExtra("userNAME", userNAME)
-                                intent.putExtra("userID", userID)
+                                intent.putExtra("ID", userID)
                                 //intent.putExtra("userEMAIL", userEMAIL)
-                                intent.putExtra("userPASSWORD", userPASSWORD)
+                                intent.putExtra("PW", userPASSWORD)
                                 //intent.putExtra("userRED", userRED)
                                 //intent.putExtra("userBLUE", userBLUE)
                                 //intent.putExtra("userBROWN", userBROWN)

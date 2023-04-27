@@ -18,6 +18,13 @@ class MypageMainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_mypage_main)
 
+        var intent = getIntent()
+        var str_id = intent.getStringExtra("ID")
+        var str_pw = intent.getStringExtra("PW")
+        println("mypagemainactivity")
+        println(str_id)
+        println(str_pw)
+
         Editprofile = findViewById(R.id.Editprofile)
         writelist = findViewById(R.id.writelist)
         mypagelogout = findViewById(R.id.mypagelogout)
@@ -27,7 +34,7 @@ class MypageMainActivity : AppCompatActivity() {
 
         Editprofile.setOnClickListener {
             val intent = Intent(this, ProfileChangeActivity::class.java)
-            intent.putExtra("userID",id)
+            intent.putExtra("ID",str_id)
             startActivity(intent)
         }
         writelist.setOnClickListener {
@@ -37,6 +44,8 @@ class MypageMainActivity : AppCompatActivity() {
 
         back.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
+            intent.putExtra("ID", str_id)
+            intent.putExtra("PW", str_pw)
             startActivity(intent)
         }
 
