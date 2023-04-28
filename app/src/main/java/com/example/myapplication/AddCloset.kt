@@ -33,77 +33,6 @@ import com.example.myapplication.databinding.ActivityMainBinding
 
 class AddCloset : BaseActivity() {
 
-    lateinit var pic_plus: ImageView
-    lateinit var back: ImageView
-
-    lateinit var outer: Button
-    lateinit var top: Button
-    lateinit var bottom: Button
-    lateinit var onepiece: Button
-    lateinit var shoes: Button
-
-    lateinit var type_detail_outer: LinearLayout
-    lateinit var type_detail_top: LinearLayout
-    lateinit var type_detail_bottom: LinearLayout
-    lateinit var type_detail_onepiece: LinearLayout
-    lateinit var type_detail_shoes: LinearLayout
-
-    lateinit var lining: LinearLayout
-    lateinit var thickness: LinearLayout
-    lateinit var length: LinearLayout
-
-    lateinit var cardigan: RadioButton
-    lateinit var jacket: RadioButton
-    lateinit var field_jacket: RadioButton
-    lateinit var leather_jacket: RadioButton
-    lateinit var fleece: RadioButton
-    lateinit var hoodie: RadioButton
-    lateinit var coat: RadioButton
-    lateinit var padded_coat: RadioButton
-
-    lateinit var non_sleeve: RadioButton
-    lateinit var short_sleeve: RadioButton
-    lateinit var shirt: RadioButton
-    lateinit var mtm: RadioButton
-    lateinit var hoodie_top: RadioButton
-    lateinit var sweater: RadioButton
-
-    lateinit var denim: RadioButton
-    lateinit var leggings: RadioButton
-    lateinit var skirt: RadioButton
-    lateinit var slacks: RadioButton
-    lateinit var jogger: RadioButton
-    lateinit var cotton: RadioButton
-
-    lateinit var non_sleeve_onpiece: RadioButton
-    lateinit var short_sleeve_onepiece: RadioButton
-    lateinit var long_sleeve_onepiece: RadioButton
-
-    lateinit var sneakers: RadioButton
-    lateinit var sandals: RadioButton
-    lateinit var slippers: RadioButton
-    lateinit var boots: RadioButton
-    lateinit var loafer: RadioButton
-    lateinit var rubber_boots: RadioButton
-
-    lateinit var outer_gr1: RadioGroup
-    lateinit var outer_gr2: RadioGroup
-    lateinit var top_gr1: RadioGroup
-    lateinit var top_gr2: RadioGroup
-    lateinit var bottom_gr1: RadioGroup
-    lateinit var bottom_gr2: RadioGroup
-    lateinit var onepiece_gr: RadioGroup
-    lateinit var shoes_gr1: RadioGroup
-    lateinit var shoes_gr2: RadioGroup
-
-    lateinit var lining_gr: RadioGroup
-    lateinit var thickness_gr: RadioGroup
-    lateinit var length_gr: RadioGroup
-
-    lateinit var length_3: RadioButton
-    lateinit var length_5: RadioButton
-    lateinit var length_9: RadioButton
-
     val PERM_STORAGE = 9
     val PERM_CAMERA = 10
     val REQ_CAMERA = 11
@@ -116,221 +45,159 @@ class AddCloset : BaseActivity() {
         setContentView(R.layout.activity_add_closet)
 
         setContentView(binding.root)
-        pic_plus = findViewById<ImageView>(R.id.pic_plus)
-        back = findViewById(R.id.back)
 
-        outer = findViewById<Button>(R.id.outer)
-        top = findViewById<Button>(R.id.top)
-        bottom = findViewById<Button>(R.id.bottom)
-        onepiece = findViewById<Button>(R.id.onepiece)
-        shoes = findViewById<Button>(R.id.shoes)
+        clickBtn(binding.outer, binding.typeDetailOuter) 
+        clickBtn(binding.top, binding.typeDetailTop)
+        clickBtn(binding.bottom, binding.typeDetailBottom)
+        clickBtn(binding.onepiece, binding.typeDetailOnepiece)
+        clickBtn(binding.shoes, binding.typeDetailShoes)
 
-        type_detail_outer = findViewById(R.id.type_detail_outer)
-        type_detail_top = findViewById(R.id.type_detail_top)
-        type_detail_bottom = findViewById(R.id.type_detail_bottom)
-        type_detail_onepiece = findViewById(R.id.type_detail_onepiece)
-        type_detail_shoes = findViewById(R.id.type_detail_shoes)
+        clickRadio(binding.cardigan, binding.thickness)
+        clickRadio(binding.jacket, binding.thickness)
+        clickRadio(binding.fieldJacket)
+        clickRadio(binding.leatherJacket)
+        clickRadio(binding.fleece)
+        clickRadio(binding.hoodie, binding.lining)
+        clickRadio(binding.coat, binding.thickness)
+        clickRadio(binding.paddedCoat)
 
-        lining = findViewById(R.id.lining)
-        thickness = findViewById(R.id.thickness)
-        length = findViewById(R.id.length)
+        clickRadio(binding.nonSleeve)
+        clickRadio(binding.shortSleeve)
+        clickRadio(binding.shirt)
+        clickRadio(binding.mtm, binding.lining)
+        clickRadio(binding.hoodieTop, binding.lining)
+        clickRadio(binding.sweater, binding.thickness)
 
-        cardigan = findViewById(R.id.cardigan)
-        jacket = findViewById(R.id.jacket)
-        field_jacket = findViewById(R.id.field_jacket)
-        leather_jacket = findViewById(R.id.leather_jacket)
-        fleece = findViewById(R.id.fleece)
-        hoodie = findViewById(R.id.hoodie)
-        coat = findViewById(R.id.coat)
-        padded_coat = findViewById(R.id.padded_coat)
+        clickRadio(binding.denim, binding.length)
+        clickRadio(binding.leggings, binding.length)
+        clickRadio(binding.skirt, binding.length)
+        clickRadio(binding.slacks, binding.length)
+        clickRadio(binding.jogger, binding.length)
+        clickRadio(binding.cotton, binding.length)
 
-        non_sleeve = findViewById(R.id.non_sleeve)
-        short_sleeve = findViewById(R.id.short_sleeve)
-        shirt = findViewById(R.id.shirt)
-        mtm = findViewById(R.id.mtm)
-        hoodie_top = findViewById(R.id.hoodie_top)
-        sweater = findViewById(R.id.sweater)
+        clickRadio(binding.nonSleeveOnepiece, binding.length)
+        clickRadio(binding.shortSleeveOnepiece, binding.length)
+        clickRadio(binding.longSleeveOnepiece, binding.length)
 
-        denim = findViewById(R.id.denim)
-        leggings = findViewById(R.id.leggings)
-        skirt = findViewById(R.id.skirt)
-        slacks = findViewById(R.id.slacks)
-        jogger = findViewById(R.id.jogger)
-        cotton = findViewById(R.id.cotton)
-
-        non_sleeve_onpiece = findViewById(R.id.non_sleeve_onepiece)
-        short_sleeve_onepiece = findViewById(R.id.short_sleeve_onepiece)
-        long_sleeve_onepiece = findViewById(R.id.long_sleeve_onepiece)
-
-        sneakers = findViewById(R.id.sneakers)
-        sandals = findViewById(R.id.sandals)
-        slippers = findViewById(R.id.slippers)
-        boots = findViewById(R.id.boots)
-        loafer = findViewById(R.id.loafer)
-        rubber_boots = findViewById(R.id.rubber_boots)
-
-        outer_gr1 = findViewById(R.id.outer_gr1)
-        outer_gr2 = findViewById(R.id.outer_gr2)
-        top_gr1 = findViewById(R.id.top_gr1)
-        top_gr2 = findViewById(R.id.top_gr2)
-        bottom_gr1 = findViewById(R.id.bottom_gr1)
-        bottom_gr2 = findViewById(R.id.bottom_gr2)
-        onepiece_gr = findViewById(R.id.onepiece_gr)
-        shoes_gr1 = findViewById(R.id.shoes_gr1)
-        shoes_gr2 = findViewById(R.id.shoes_gr2)
-
-        lining_gr = findViewById(R.id.lining_gr)
-        thickness_gr = findViewById(R.id.thickness_gr)
-        length_gr = findViewById(R.id.length_gr)
-
-        length_3 = findViewById(R.id.length_3)
-        length_5 = findViewById(R.id.length_5)
-        length_9 = findViewById(R.id.length_9)
-
-
-
-        clickBtn(outer, type_detail_outer)
-        clickBtn(top, type_detail_top)
-        clickBtn(bottom, type_detail_bottom)
-        clickBtn(onepiece, type_detail_onepiece)
-        clickBtn(shoes, type_detail_shoes)
-
-        clickRadio(cardigan, thickness)
-        clickRadio(jacket, thickness)
-        clickRadio(field_jacket)
-        clickRadio(leather_jacket)
-        clickRadio(fleece)
-        clickRadio(hoodie, lining)
-        clickRadio(coat, thickness)
-        clickRadio(padded_coat)
-
-        clickRadio(non_sleeve)
-        clickRadio(short_sleeve)
-        clickRadio(shirt)
-        clickRadio(mtm, lining)
-        clickRadio(hoodie_top, lining)
-        clickRadio(sweater, thickness)
-
-        clickRadio(denim, length)
-        clickRadio(leggings, length)
-        clickRadio(skirt, length)
-        clickRadio(slacks, length)
-        clickRadio(jogger, length)
-        clickRadio(cotton, length)
-
-        clickRadio(non_sleeve_onpiece, length)
-        clickRadio(short_sleeve_onepiece, length)
-        clickRadio(long_sleeve_onepiece, length)
-
-        clickRadio(sneakers)
-        clickRadio(sandals)
-        clickRadio(slippers)
-        clickRadio(boots)
-        clickRadio(loafer)
-        clickRadio(rubber_boots)
+        clickRadio(binding.sneakers)
+        clickRadio(binding.sandals)
+        clickRadio(binding.slippers)
+        clickRadio(binding.boots)
+        clickRadio(binding.loafer)
+        clickRadio(binding.rubberBoots)
 
         bottom_length9()
 
 
-        back.setOnClickListener {
+        binding.back.setOnClickListener {
             finish()
         }
-
-
 
         // 1. 공용저장소 권한이 있는지 확인
         requirePermissions(arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE), PERM_STORAGE)
     }
 
+
+    // 대분류 -> 중분류
+    // 버튼(대분류) 눌렀을 때 아래 레이아웃(중분류) 표시
     fun clickBtn(btn:Button, layout: LinearLayout) {
         btn.setOnClickListener {
-            if (layout.visibility == VISIBLE) {
-                backgroundClear()
-                visibleGone()
+            if (layout.visibility == VISIBLE) { // 이미 버튼이 눌려있을 때
+                backgroundClear()   // 모든 버튼 색 변경
+                visibleGone()   // 중분류 레이아웃 모두 없애기
             } else {
-                backgroundClear()
-                visibleGone()
-                radio_clear()
-                layout.visibility = View.VISIBLE
-                btn.setBackgroundColor(Color.parseColor("#BFCBE5"))
-                btn.setBackgroundResource(R.drawable.button_roud2)
+                backgroundClear()   // 모든 버튼 색 초기화
+                visibleGone()   // 레이아웃 모두 없애기
+                radio_clear()   // 라디오 버튼 초기화
+                layout.visibility = View.VISIBLE    // 해당 중분류 레이아웃 보이기
+//                btn.setBackgroundColor(Color.parseColor("#BFCBE5"))
+                btn.setBackgroundResource(R.drawable.button_roud2)  // 버튼색 변경
             }
         }
     }
-
+    // 눌려져 있는 다른 레이아웃(중분류) 없애기
     fun visibleGone() {
-        type_detail_outer.visibility = View.GONE
-        type_detail_top.visibility = View.GONE
-        type_detail_bottom.visibility = View.GONE
-        type_detail_onepiece.visibility = View.GONE
-        type_detail_shoes.visibility = View.GONE
+        binding.typeDetailOuter.visibility = View.GONE
+        binding.typeDetailTop.visibility = View.GONE
+        binding.typeDetailBottom.visibility = View.GONE
+        binding.typeDetailOnepiece.visibility = View.GONE
+        binding.typeDetailShoes.visibility = View.GONE
 
         visibleGone_radio()
     }
+    // 버튼색 초기화
+    fun backgroundClear() {
+        binding.outer.setBackgroundResource(R.drawable.button_roud)
+        binding.top.setBackgroundResource(R.drawable.button_roud)
+        binding.bottom.setBackgroundResource(R.drawable.button_roud)
+        binding.onepiece.setBackgroundResource(R.drawable.button_roud)
+        binding.shoes.setBackgroundResource(R.drawable.button_roud)
+    }
 
+
+    // 중분류 -> 세부(길이, 기모, 두께)
+    // 라디오 버튼(중분류) 클릭 시 레이아웃(세부) 표시
     fun clickRadio(rd:RadioButton, layout:LinearLayout) {
         rd.setOnClickListener {
-            radio_clear()
-            visibleGone_radio()
-            layout.visibility = View.VISIBLE
+            radio_clear()   // 라디오 버튼 클린된 것 모두 초기화
+            visibleGone_radio() // 레이아웃(세부) 모두 없애기
+            layout.visibility = View.VISIBLE    // 클릭된 레이아웃만 보이기
             rd.isChecked = true
         }
     }
-
+    // 라디오 버튼 클릭 시 레이아웃 표시할 게 없는 경우 (위 함수와 같은 함수. input이 다름)
     fun clickRadio(rd:RadioButton) {
         rd.setOnClickListener {
-            radio_clear()
-            visibleGone_radio()
+            radio_clear()   // 라디오 버튼 클린된 것 모두 초기화
+            visibleGone_radio()     // 레이아웃 안보이게
             rd.isChecked = true
         }
     }
+    // 라디오 버튼 클린된 것 모두 초기화
     fun radio_clear() {
-        outer_gr1.clearCheck()
-        outer_gr2.clearCheck()
-        top_gr1.clearCheck()
-        top_gr2.clearCheck()
-        bottom_gr1.clearCheck()
-        bottom_gr2.clearCheck()
-        onepiece_gr.clearCheck()
-        shoes_gr1.clearCheck()
-        shoes_gr2.clearCheck()
+        binding.outerGr1.clearCheck()
+        binding.outerGr2.clearCheck()
+        binding.topGr1.clearCheck()
+        binding.topGr2.clearCheck()
+        binding.bottomGr1.clearCheck()
+        binding.bottomGr2.clearCheck()
+        binding.onepieceGr.clearCheck()
+        binding.shoesGr1.clearCheck()
+        binding.shoesGr2.clearCheck()
 
-        lining_gr.clearCheck()
-        thickness_gr.clearCheck()
-        length_gr.clearCheck()
+        binding.liningGr.clearCheck()
+        binding.thicknessGr.clearCheck()
+        binding.lengthGr.clearCheck()
     }
-
+    // 레이아웃(세부: 기모 두께 길이) 안보이기
     fun visibleGone_radio() {
-        lining.visibility = View.GONE
-        thickness.visibility = View.GONE
-        length.visibility = View.GONE
+        binding.lining.visibility = View.GONE
+        binding.thickness.visibility = View.GONE
+        binding.length.visibility = View.GONE
     }
 
-    fun backgroundClear() {
-        outer.setBackgroundResource(R.drawable.button_roud)
-        top.setBackgroundResource(R.drawable.button_roud)
-        bottom.setBackgroundResource(R.drawable.button_roud)
-        onepiece.setBackgroundResource(R.drawable.button_roud)
-        shoes.setBackgroundResource(R.drawable.button_roud)
-    }
 
+    // 하의 선택 && 9부 선택만 다르게
     fun bottom_length9() {
-        length_9.setOnClickListener {
-            if (denim.isChecked || leggings.isChecked || jogger.isChecked)
-                lining.visibility = VISIBLE
-            if (slacks.isChecked)
-                thickness.visibility = VISIBLE
+        binding.length9.setOnClickListener {
+            if (binding.denim.isChecked || binding.leggings.isChecked || binding.jogger.isChecked)
+                binding.lining.visibility = VISIBLE
+            if (binding.slacks.isChecked)
+                binding.thickness.visibility = VISIBLE
         }
-        length_3.setOnClickListener {
-            lining.visibility = GONE
-            thickness.visibility = GONE
+        binding.length3.setOnClickListener {
+            binding.lining.visibility = GONE
+            binding.thickness.visibility = GONE
         }
-        length_5.setOnClickListener {
-            lining.visibility = GONE
-            thickness.visibility = GONE
+        binding.length5.setOnClickListener {
+            binding.lining.visibility = GONE
+            binding.thickness.visibility = GONE
         }
     }
 
+
+    // 여기부턴 사진 관련
+    // 지금은 앨범만 활성화. 카메라 사용은 비활성화 (함수만 있음)
     fun initViews() {
         binding.picPlus.setOnClickListener {
             openGallery()

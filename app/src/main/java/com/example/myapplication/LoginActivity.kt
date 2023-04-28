@@ -18,18 +18,13 @@ class LoginActivity : AppCompatActivity() {
 
     val binding by lazy { ActivityLoginBinding.inflate(layoutInflater) }
 
-    lateinit var find_password: TextView
-    lateinit var find_phone_button: Button
-    lateinit var sign_in: TextView
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-//        find_password = findViewById(R.id.find_password)
-//        find_phone_button = findViewById(R.id.LoginButton)
-//        sign_in = findViewById(R.id.sign_in)
 
 
 
