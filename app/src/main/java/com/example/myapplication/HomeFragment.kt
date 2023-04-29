@@ -1,6 +1,5 @@
 package com.example.myapplication
 
-
 import android.app.Application
 import android.content.Context
 import android.content.Intent
@@ -40,7 +39,6 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
 
         if (requestQueue == null) {
             requestQueue = Volley.newRequestQueue(MyApplication.ApplicationContext())
@@ -107,6 +105,4 @@ class HomeFragment : Fragment() {
         request.setShouldCache(false)
         requestQueue!!.add(request)
     }
-
-
 }

@@ -660,6 +660,7 @@
                 android:layout_weight="1">
             </LinearLayout>
             <Button
+                android:id="@+id/btnAddCloset"
                 android:layout_width="wrap_content"
                 android:layout_height="15pt"
                 android:layout_gravity="center"

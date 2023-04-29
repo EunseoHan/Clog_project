@@ -32,7 +32,7 @@ class ClosetFragment : Fragment(){
         val ex_outer = view.findViewById<ImageView>(R.id.ex_outer)
 
         add_closet.setOnClickListener{
-            //MainActivity에서 ID값 받아옴
+            //MainActivity에서 ID값 받아옴, 옷 등록하기 버튼 누른 후에는 AddCloset에서 ID값 받아옴
             val send = arguments?.getString("ID")
             //잘 넘어왔는지 print로 확인
             println("addcloset-intent")
