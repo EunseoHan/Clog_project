@@ -30,7 +30,6 @@ import androidx.core.view.LayoutInflaterFactory
 import com.android.volley.Response
 import com.android.volley.toolbox.Volley
 import com.example.myapplication.databinding.ActivityAddClosetBinding
-import com.example.myapplication.databinding.ActivityMainBinding
 import org.json.JSONException
 import org.json.JSONObject
 
@@ -113,17 +112,6 @@ class AddCloset : BaseActivity() {
         //옷 등록 버튼 눌렀을 때
         binding.btnAddCloset.setOnClickListener{
 
-            //로그인하지 않았을 경우
-            if(idre==null){
-                Toast.makeText(
-                    this@AddCloset,
-                    "옷을 등록하기 위해서 로그인이 필요합니다.",
-                    Toast.LENGTH_SHORT
-                ).show()
-                val intent = Intent(this@AddCloset, LoginActivity::class.java)
-                startActivity(intent)
-            }
-
             //로그인 했을 때
             val responseListener: Response.Listener<String> = Response.Listener<String> { response->
                 try {
@@ -163,6 +151,16 @@ class AddCloset : BaseActivity() {
                 }
             }
 
+            //로그인하지 않았을 경우
+            if(idre==null){
+                Toast.makeText(
+                    this@AddCloset,
+                    "옷을 등록하기 위해서 로그인이 필요합니다.",
+                    Toast.LENGTH_SHORT
+                ).show()
+                val intent = Intent(this@AddCloset, LoginActivity::class.java)
+                startActivity(intent)
+            }else{
             //가디건(아우터)
             if(binding.cardigan.isChecked){
                 typere = 1
@@ -849,6 +847,7 @@ class AddCloset : BaseActivity() {
                 ).show()
             }
         }
+            }
         // 1. 공용저장소 권한이 있는지 확인
         requirePermissions(arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE), PERM_STORAGE)
     }
