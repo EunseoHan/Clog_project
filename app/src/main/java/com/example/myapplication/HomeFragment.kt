@@ -1,30 +1,60 @@
 package com.example.myapplication
 
+import android.Manifest
 import android.app.Application
 import android.content.Context
+import android.content.Context.LOCATION_SERVICE
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.location.Location
+import android.location.LocationListener
+import android.location.LocationManager
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.getSystemService
 import com.android.volley.AuthFailureError
 import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.example.myapplication.R
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import org.json.JSONObject
 import java.text.SimpleDateFormat
 import java.util.*
+
 
 class HomeFragment : Fragment() {
     companion object {
         var requestQueue: RequestQueue? = null
     }
+
+    // 1. Context를 할당할 변수를 프로퍼티로 선언(어디서든 사용할 수 있게)
+    private lateinit var mainActivity: MainActivity
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        // 2. Context를 액티비티로 형변환해서 할당
+        mainActivity = context as MainActivity
+    }
+
+    var lat:Double = 0.0
+    var lng:Double = 0.0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,11 +74,93 @@ class HomeFragment : Fragment() {
             requestQueue = Volley.newRequestQueue(MyApplication.ApplicationContext())
         }
 
-        CurrentWeatherCall()
+        val lm = mainActivity.getSystemService(LOCATION_SERVICE) as LocationManager
+
+
+
+        // 날씨 받기
+//        CurrentWeatherCall()
 
         val button = view.findViewById<TextView>(R.id.newData)
-        button.setOnClickListener { CurrentWeatherCall() }
+        button.setOnClickListener {
+
+            if (Build.VERSION.SDK_INT >= 23 &&
+                ContextCompat.checkSelfPermission(
+                    mainActivity.applicationContext,
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                requestPermissions(
+                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                    0
+                )
+                println("if 안")
+
+            } else {
+                println("else 안 provider")
+
+                val location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+                val provider = location?.provider
+                val longitude = location?.longitude
+                val latitude = location?.latitude
+                val altitude = location?.altitude
+
+                println("else 안 provider" + provider)
+
+//                txtResult!!.text = """
+//                    위치정보 : $provider
+//                    위도 : $longitude
+//                    경도 : $latitude
+//                    고도  :
+//                    """.trimIndent() + altitude
+
+                if (latitude != null) {
+                    lat = latitude.toDouble()
+                }
+                if (longitude != null) {
+                    lng = longitude.toDouble()
+                }
+
+                println("lat=" + lat + ", lng=" + lng)
+
+                lm.requestLocationUpdates(
+                    LocationManager.GPS_PROVIDER,
+                    1000,
+                    1f,
+                    gpsLocationListener
+                )
+                lm.requestLocationUpdates(
+                    LocationManager.NETWORK_PROVIDER,
+                    1000,
+                    1f,
+                    gpsLocationListener
+                )
+            }
+
+            CurrentWeatherCall()
+
+        }
+        }
+
+
+
+
+    val gpsLocationListener: LocationListener = object : LocationListener {
+        override fun onLocationChanged(location: Location) {
+            val provider = location.provider
+            val longitude = location.longitude
+            val latitude = location.latitude
+            val altitude = location.altitude
+
+                lat = latitude
+                lng = longitude
+        }
+
+        override fun onStatusChanged(provider: String, status: Int, extras: Bundle) {}
+        override fun onProviderEnabled(provider: String) {}
+        override fun onProviderDisabled(provider: String) {}
     }
+
 
     private fun CurrentWeatherCall() {
         val cityView = view?.findViewById<TextView>(R.id.cityView)
@@ -56,7 +168,10 @@ class HomeFragment : Fragment() {
         val weatherView = view?.findViewById<TextView>(R.id.weatherView)
         val tempView = view?.findViewById<TextView>(R.id.tempView)
         val url =
-            "http://api.openweathermap.org/data/2.5/weather?q=Seoul&appid=e7a531d94bf0d7e2bff8881247a4b70f"
+//            "http://api.openweathermap.org/data/2.5/weather?q=seoul&appid=e7a531d94bf0d7e2bff8881247a4b70f"
+            "http://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lng + "&appid=e7a531d94bf0d7e2bff8881247a4b70f"
+        println(url)
+
         val request: StringRequest =
             object : StringRequest(Method.GET, url, Response.Listener { response ->
                 try {
