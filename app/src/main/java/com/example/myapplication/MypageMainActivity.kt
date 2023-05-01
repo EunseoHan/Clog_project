@@ -10,7 +10,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.Response
 import com.android.volley.toolbox.Volley
-import com.example.myapplication.databinding.ActivityMainBinding
+import com.example.myapplication.Request.MypageOutRequest
 import org.json.JSONException
 import org.json.JSONObject
 

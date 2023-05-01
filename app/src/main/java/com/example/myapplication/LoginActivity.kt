@@ -3,14 +3,13 @@ package com.example.myapplication
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
 import com.example.myapplication.databinding.ActivityLoginBinding
 import com.android.volley.Response
 import com.android.volley.toolbox.Volley
+import com.example.myapplication.Request.LoginRequest
 import org.json.JSONException
 import org.json.JSONObject
 

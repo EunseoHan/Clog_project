@@ -6,6 +6,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.Response
 import com.android.volley.toolbox.Volley
+import com.example.myapplication.Request.RegisterRequest
+import com.example.myapplication.Request.Register_IDcheck_Request
 import com.example.myapplication.databinding.ActivityRegisterBinding
 import org.json.JSONException
 import org.json.JSONObject
