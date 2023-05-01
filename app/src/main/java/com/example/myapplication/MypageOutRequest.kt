@@ -4,8 +4,7 @@ import com.android.volley.AuthFailureError
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 
-
-class LoginRequest(userID: String, userPASSWORD: String, listener: Response.Listener<String>) :
+class MypageOutRequest(userID: String, userPASSWORD: String, listener: Response.Listener<String>) :
     StringRequest(Method.POST, URL, listener, null) {
     private val map: MutableMap<String, String>
 
@@ -24,6 +23,6 @@ class LoginRequest(userID: String, userPASSWORD: String, listener: Response.List
 
     companion object {
         // 서버 URL 설정 ( PHP 파일 연동 )
-        private const val URL = "http://218.159.194.233/Login.php"
+        private const val URL = "http://218.159.194.233/appout.php"
     }
 }

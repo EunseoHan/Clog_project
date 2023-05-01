@@ -59,7 +59,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.homeToMypage.setOnClickListener {
             //ID값이 없으면 Login화면, 있으면(로그인 한 상태) Mypage로 이동
-            if (!intent.hasExtra("ID")){
+            if (str_id==null||!intent.hasExtra("ID")){
                 val intent = Intent(this, LoginActivity::class.java)
                 startActivity(intent)
             } else{
