@@ -3,14 +3,30 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
+<!--    <LinearLayout-->
+<!--        android:layout_width="fill_parent"-->
+<!--        android:layout_height="fill_parent"-->
+<!--        android:layout_marginLeft="25dp"-->
+<!--        android:layout_marginRight="25dp"-->
+<!--        android:layout_marginBottom="25dp"-->
+<!--        android:orientation="vertical">-->
 
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="3dp"-->
+<!--        android:layout_marginBottom="3dp"-->
+<!--        android:layout_weight=""-->
+<!--        android:orientation="horizontal"-->
+<!--        tools:layout_editor_absoluteX="1dp">-->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="25pt"
-        android:layout_marginBottom="10dp"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        tools:layout_editor_absoluteX="1dp">
 
         <ImageView
             android:id="@+id/back"
@@ -25,93 +41,137 @@
             android:id="@+id/textView2"
             android:layout_width="20pt"
             android:layout_height="wrap_content"
-            android:layout_weight="8"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:text="글 작성하기"
-            android:textColor="@color/black"
+            android:layout_marginBottom="5dp"
+            android:layout_weight="8"
+            android:text="게시글 작성"
             android:textAlignment="center"
-            android:textStyle="bold"
-            android:textSize="20sp" />
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
         <LinearLayout
             android:layout_width="10pt"
             android:layout_height="10pt"
             android:layout_weight="1" />
-
     </LinearLayout>
 
 
-    <View
-        android:id="@+id/line"
-        android:layout_width="match_parent"
-        android:layout_height="2px"
-        android:background="#D3D3D3"
-        android:layout_marginTop="2dp"/>
+          <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            tools:layout_editor_absoluteX="1dp">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginVertical="10dp"
-        android:orientation="horizontal">
+<!--            <View-->
+<!--                android:id="@+id/line"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="2px"-->
+<!--                android:layout_marginTop="12dp"-->
+<!--                android:background="#D3D3D3"-->
+<!--                tools:layout_editor_absoluteX="0dp"/>-->
 
-        <TextView
-            android:id="@+id/title_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingStart="20dp"
-            android:text="제목 : "
-            android:textSize="18dp"
-            android:textColor="@color/black"/>
 
-        <EditText
-            android:id="@+id/commu_title"
-            android:layout_width="336dp"
-            android:layout_height="wrap_content"
-            android:hint="제목을 입력하세요"
-            android:textSize="18dp" />
+    <!--        <ScrollView-->
+    <!--            android:layout_width="fill_parent"-->
+    <!--            android:layout_height="fill_parent"-->
+    <!--            android:orientation="vertical"-->
+    <!--            tools:layout_editor_absoluteX="1dp"-->
+    <!--            android:scrollbars="vertical"-->
+    <!--            android:layout_weight="15"-->
+    <!--            android:scrollbarDefaultDelayBeforeFade="500000"-->
+    <!--            >-->
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="25dp"
+                android:layout_marginBottom="25dp"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="10dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/title_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="제목 : "
+                        android:textSize="18dp"
+                        android:textColor="@color/black"/>
+
+                    <EditText
+                        android:id="@+id/commu_title"
+                        android:layout_width="336dp"
+                        android:layout_height="wrap_content"
+                        android:hint="제목을 입력하세요"
+                        android:textSize="18dp" />
+
+                </LinearLayout>
+
+                    <!--            사진 추가 -->
+                <ImageView
+                    android:id="@+id/pic_plus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="220dp"
+                    android:clickable="true"
+                    android:layout_gravity="center_horizontal"
+                    app:srcCompat="@drawable/pic_plus" />
+                <View
+                    android:id="@+id/line1"
+                    android:layout_width="match_parent"
+                    android:layout_height="2px"
+                    android:layout_marginTop="5dp"
+                    android:background="#D3D3D3"
+                    tools:layout_editor_absoluteX="0dp"/>
+
+                <EditText
+                    android:id="@+id/commu_write"
+                    android:layout_width="match_parent"
+                    android:layout_height="258dp"
+
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:gravity="top|start"
+                    android:hint="글을 작성하세요"
+                    android:scrollbars="vertical" />
+    <!--        </ScrollView>-->
+            <View
+                android:id="@+id/line2"
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:background="#D3D3D3"
+                tools:layout_editor_absoluteX="0dp"/>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="28pt"
+                android:orientation="horizontal"
+                tools:layout_editor_absoluteX="1dp"
+                android:layout_weight="1">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"/>
+                <Button
+                    android:id="@+id/btnAddCloset"
+                    android:layout_width="wrap_content"
+                    android:layout_height="15pt"
+                    android:layout_gravity="center"
+
+                    android:text="저장하기"
+                    android:background="@color/Serenity"
+                    android:textColor="@color/black"
+                    />
+            </LinearLayout>
+
+            </LinearLayout>
+        </LinearLayout>
 
     </LinearLayout>
-
-    <!--    <ScrollView-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="550dp">-->
-
-    <View
-        android:id="@+id/line2"
-        android:layout_width="match_parent"
-        android:layout_height="2px"
-        android:background="#D3D3D3"
-        android:layout_marginTop="2dp"/>
-
-    <EditText
-        android:id="@+id/commu_write"
-        android:layout_width="match_parent"
-        android:layout_height="530dp"
-        android:layout_marginTop="10dp"
-        android:layout_weight="1"
-        android:layout_marginHorizontal="20dp"
-        android:background="@null"
-        android:gravity="top|start"
-        android:scrollbars="vertical"
-        android:hint="글을 작성하세요"/>
-
-    <View
-        android:id="@+id/line3"
-        android:layout_width="match_parent"
-        android:layout_height="2px"
-        android:background="#D3D3D3"
-        android:layout_marginTop="2dp"/>
-
-    <!--    </ScrollView>-->
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="295dp"
-        android:layout_marginVertical="10dp"
-        android:text="저장하기"
-        android:textColor="@color/black"
-        android:backgroundTint="@color/Serenity"/>
-
-
-</LinearLayout>
