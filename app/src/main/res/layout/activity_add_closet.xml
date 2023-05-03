@@ -77,46 +77,19 @@
                     android:layout_gravity="center_horizontal"
                     app:srcCompat="@drawable/pic_plus" />
 
+                <!--            이름 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginVertical="10dp"
+                    android:orientation="horizontal">
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:hint="옷의 이름을 입력해주세요"
+                        android:textSize="15sp"/>
+                </LinearLayout>
 
-<!--                &lt;!&ndash;            계절감 &ndash;&gt;-->
-<!--                <TextView-->
-<!--                    android:id="@+id/season"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="20dp"-->
-<!--                    android:layout_marginVertical="10dp"-->
-<!--                    android:textColor="@color/black"-->
-<!--                    android:textStyle="bold"-->
-<!--                    android:text="계절감" />-->
-<!--                <LinearLayout-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="20dp"-->
-<!--                    android:layout_marginVertical="10dp"-->
-<!--                    android:orientation="horizontal">-->
-<!--                    <RadioButton-->
-<!--                        android:id="@+id/chbox_spring"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_weight="1"-->
-<!--                        android:text="봄" />-->
-<!--                    <RadioButton-->
-<!--                        android:id="@+id/chbox_summer"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_weight="1"-->
-<!--                        android:text="여름" />-->
-<!--                    <RadioButton-->
-<!--                        android:id="@+id/chbox_fall"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_weight="1"-->
-<!--                        android:text="가을" />-->
-<!--                    <RadioButton-->
-<!--                        android:id="@+id/chbox_winter"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_weight="1"-->
-<!--                        android:text="겨울" />-->
-<!--                </LinearLayout>-->
 
                 <!--            종류 -->
                 <TextView
