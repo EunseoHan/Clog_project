@@ -125,7 +125,7 @@ class AddCloset : BaseActivity() {
                             "옷이 등록되었습니다.",
                             Toast.LENGTH_SHORT
                         ).show()
-                        val intent = Intent(this@AddCloset, ClosetActivity::class.java)
+                        val intent = Intent(this@AddCloset, MainActivity::class.java)
                         intent.putExtra("ID",idre)
                         startActivity(intent)
                     }else{
