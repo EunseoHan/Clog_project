@@ -1,12 +1,14 @@
-package com.example.myapplication.Request
+package com.example.myapplication
 
 import com.android.volley.AuthFailureError
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
+import java.io.*
 
 class AddClosetRequest (
     userID: String?,
     clothesNAME: String,
+    clothesIMGPATH: String?,
     type: Int,
     detail: Int,
     length: Int,
@@ -22,6 +24,7 @@ class AddClosetRequest (
         map = HashMap() //HashMap은 코틀린에서 key , value 형태로 데이터를 저장
         map.put("userID",userID.toString()) //userID를 "userID"에 담는다는 의미
         map.put("clothesNAME",clothesNAME)
+        map.put("clothesIMGPATH",clothesIMGPATH.toString())
         map.put("type",type.toString())
         map.put("detail",detail.toString())
         map.put("length",length.toString())
@@ -35,6 +38,6 @@ class AddClosetRequest (
         return map
     }
     companion object {
-        private const val URL = "http://175.192.111.51/AddCloset.php"
+        private const val URL = "http://192.168.200.167:8080/AddCloset.php"
     }
 }
