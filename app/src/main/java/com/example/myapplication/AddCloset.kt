@@ -22,6 +22,7 @@ import androidx.annotation.RequiresApi
 import androidx.loader.content.CursorLoader
 import com.android.volley.Response
 import com.android.volley.toolbox.Volley
+import com.example.myapplication.Request.AddClosetRequest
 import com.example.myapplication.databinding.ActivityAddClosetBinding
 import org.json.JSONException
 import org.json.JSONObject

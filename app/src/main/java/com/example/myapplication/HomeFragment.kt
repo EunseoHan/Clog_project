@@ -19,6 +19,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -39,12 +40,15 @@ import java.util.*
 
 
 class HomeFragment : Fragment() {
+
     companion object {
         var requestQueue: RequestQueue? = null
     }
 
     // 1. Context를 할당할 변수를 프로퍼티로 선언(어디서든 사용할 수 있게)
     private lateinit var mainActivity: MainActivity
+
+
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -170,6 +174,9 @@ class HomeFragment : Fragment() {
 
         val weatherView = view?.findViewById<TextView>(R.id.weatherView)
         val tempView = view?.findViewById<TextView>(R.id.tempView)
+        val tempMn = view?.findViewById<TextView>(R.id.tempMm)
+        val weatherImage = view?.findViewById<LinearLayout>(R.id.weatherImage)
+
         val url =
 //            "http://api.openweathermap.org/data/2.5/weather?q=seoul&appid=e7a531d94bf0d7e2bff8881247a4b70f"
             "http://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lng + "&appid=e7a531d94bf0d7e2bff8881247a4b70f"
@@ -211,10 +218,49 @@ class HomeFragment : Fragment() {
                         else
                             weatherView.text = weather
                     }
+                    if (weatherId < 300) {  // 2xx: Thunderstorm
+                        if (weatherImage != null) {
+                            weatherImage.setBackgroundResource(R.drawable.thunderstorm)
+                        }
+                    } else if (weatherId < 600) {   // 3xx, 5xx: Rain
+                        if (weatherImage != null) {
+                            weatherImage.setBackgroundResource(R.drawable.rain)
+                        }
+                    } else if (weatherId < 700){    // 6xx: Snow
+                        if (weatherImage != null) {
+                            weatherImage.setBackgroundResource(R.drawable.snow)
+                        }
+                    } else if (weatherId < 800) {   // Atmosphere (주로 안개)
+                        if (weatherImage != null) {
+                            weatherImage.setBackgroundResource(R.drawable.atmosphere)
+                        }
+                    } else if (weatherId == 800) {   // clear sky
+                        if (weatherImage != null) {
+                            weatherImage.setBackgroundResource(R.drawable.clearsky)
+                        }
+                    } else if (weatherId == 804) {   // clear sky
+                        if (weatherImage != null) {
+                            weatherImage.setBackgroundResource(R.drawable.overcastclouds)
+                        }
+                    } else if (weatherId == 803) {   // broken clouds
+                        if (weatherImage != null) {
+                            weatherImage.setBackgroundResource(R.drawable.brokenclouds)
+                        }
+                    } else if (weatherId < 900) {   // clouds
+                        if (weatherImage != null) {
+                            weatherImage.setBackgroundResource(R.drawable.clouds)
+                        }
+                    }
+
                     val tempK = JSONObject(jsonObject.getString("main"))
                     val tempDo = Math.round((tempK.getDouble("temp") - 273.15) * 100) / 100
+                    val temp_m = Math.round((tempK.getDouble("temp_min") - 273.15) * 100) / 100
+                    val temp_M = Math.round((tempK.getDouble("temp_max") - 273.15) * 100) / 100
                     if (tempView != null) {
                         tempView.text = "$tempDo°"
+                    }
+                    if (tempMn != null) {
+                        tempMn.text = "최고: $temp_M° 최저: $temp_m°"
                     }
                 } catch (e: Exception) {
                     e.printStackTrace()

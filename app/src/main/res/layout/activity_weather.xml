@@ -125,32 +125,25 @@
         android:inputType="text"
         android:textColorHint="#686767" />
 
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <FrameLayout
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="158dp"
-            android:layout_marginLeft="10dp" >
-
+            android:layout_margin="10dp"
+            android:background="@color/Serenity">
             <ImageView
-                android:id="@+id/imageView16"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                app:srcCompat="@drawable/rectangle_sel" />
-
-            <ImageView
-                android:id="@+id/imageView22"
+                android:id="@+id/wImage01"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 app:srcCompat="@drawable/sun" />
-
             <TextView
-                android:id="@+id/textView14"
+                android:id="@+id/time01"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -161,7 +154,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/textView15"
+                android:id="@+id/temp01"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -174,86 +167,72 @@
         </FrameLayout>
 
         <FrameLayout
-            android:layout_width="wrap_content"
-            android:layout_height="158dp">
-
+            android:layout_width="100dp"
+            android:layout_height="158dp"
+            android:layout_margin="10dp"
+            android:background="@color/Serenity">
             <ImageView
-                android:id="@+id/imageView17"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                app:srcCompat="@drawable/rectangle_sel" />
-
-            <TextView
-                android:id="@+id/textView16"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginBottom="45dp"
-                android:text="오후 3시"
-                android:textColor="#000000"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-
-            <ImageView
-                android:id="@+id/imageView23"
+                android:id="@+id/wImage02"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 app:srcCompat="@drawable/sun" />
+            <TextView
+                android:id="@+id/time02"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="45dp"
+                android:text="오후 12시"
+                android:textColor="#000000"
+                android:textSize="14sp"
+                android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/textView17"
+                android:id="@+id/temp02"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="45dp"
-                android:text="22°"
+                android:text="19°"
                 android:textColor="#000000"
                 android:textSize="14sp"
                 android:textStyle="bold" />
+
         </FrameLayout>
 
         <FrameLayout
-            android:layout_width="wrap_content"
-            android:layout_height="158dp">
-
+            android:layout_width="100dp"
+            android:layout_height="158dp"
+            android:layout_margin="10dp"
+            android:background="@color/Serenity">
             <ImageView
-                android:id="@+id/imageView18"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:layout_weight="1"
-                app:srcCompat="@drawable/rectangle_sel" />
-
-            <TextView
-                android:id="@+id/textView19"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginBottom="45dp"
-                android:text="오후 6시"
-                android:textColor="#000000"
-                android:textSize="14sp"
-                android:textStyle="bold"/>
-
-            <ImageView
-                android:id="@+id/imageView24"
+                android:id="@+id/wImage03"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 app:srcCompat="@drawable/sun" />
+            <TextView
+                android:id="@+id/time03"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="45dp"
+                android:text="오후 12시"
+                android:textColor="#000000"
+                android:textSize="14sp"
+                android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/textView21"
+                android:id="@+id/temp03"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="45dp"
-                android:text="18°"
+                android:text="19°"
                 android:textColor="#000000"
                 android:textSize="14sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
         </FrameLayout>
     </LinearLayout>
