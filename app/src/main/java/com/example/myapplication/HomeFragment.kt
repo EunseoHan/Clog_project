@@ -94,7 +94,6 @@ class HomeFragment : Fragment() {
 
         val lm = mainActivity.getSystemService(LOCATION_SERVICE) as LocationManager
 
-
         if (Build.VERSION.SDK_INT >= 23 &&
             ContextCompat.checkSelfPermission(
                 mainActivity.applicationContext,
@@ -105,25 +104,11 @@ class HomeFragment : Fragment() {
                 arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
                 0
             )
-            println("if 안")
 
         } else {
-            println("else 안 provider")
-
             val location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER)
-            val provider = location?.provider
             val longitude = location?.longitude
             val latitude = location?.latitude
-            val altitude = location?.altitude
-
-            println("else 안 provider" + provider)
-
-//                txtResult!!.text = """
-//                    위치정보 : $provider
-//                    위도 : $longitude
-//                    경도 : $latitude
-//                    고도  :
-//                    """.trimIndent() + altitude
 
             if (latitude != null) {
                 lat = latitude.toDouble()
@@ -131,8 +116,6 @@ class HomeFragment : Fragment() {
             if (longitude != null) {
                 lng = longitude.toDouble()
             }
-
-            println("lat=" + lat + ", lng=" + lng)
 
             lm.requestLocationUpdates(
                 LocationManager.GPS_PROVIDER,
@@ -147,17 +130,14 @@ class HomeFragment : Fragment() {
                 gpsLocationListener
             )
         }
-
     }
 
 
 
     val gpsLocationListener: LocationListener = object : LocationListener {
         override fun onLocationChanged(location: Location) {
-//            val provider = location.provider
             val longitude = location.longitude
             val latitude = location.latitude
-//            val altitude = location.altitude
 
                 lat = latitude
                 lng = longitude
@@ -180,7 +160,6 @@ class HomeFragment : Fragment() {
         val url =
 //            "http://api.openweathermap.org/data/2.5/weather?q=seoul&appid=e7a531d94bf0d7e2bff8881247a4b70f"
             "http://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lng + "&appid=e7a531d94bf0d7e2bff8881247a4b70f"
-        println(url)
 
         val request: StringRequest =
             object : StringRequest(Method.GET, url, Response.Listener { response ->
@@ -191,13 +170,9 @@ class HomeFragment : Fragment() {
                     val simpleDateFormatTime = SimpleDateFormat("HH:mm:ss")
                     val getDay = simpleDateFormatDay.format(date)
                     val getTime = simpleDateFormatTime.format(date)
-//                    val getDate = """
-//                      $getDay
-//                      $getTime
-//                      """.trimIndent()
+
                     val getDate = "$getDay $getTime"
-//                    val dateView: TextView
-//                    dateView = view.findViewById(R.id.dateView)
+
                     val dateView = view?.findViewById<TextView>(R.id.dateView)
                     if (dateView != null) {
                         dateView.text = getDate
@@ -219,37 +194,21 @@ class HomeFragment : Fragment() {
                             weatherView.text = weather
                     }
                     if (weatherId < 300) {  // 2xx: Thunderstorm
-                        if (weatherImage != null) {
-                            weatherImage.setBackgroundResource(R.drawable.thunderstorm)
-                        }
+                        weatherImage?.setBackgroundResource(R.drawable.thunderstorm)
                     } else if (weatherId < 600) {   // 3xx, 5xx: Rain
-                        if (weatherImage != null) {
-                            weatherImage.setBackgroundResource(R.drawable.rain)
-                        }
+                        weatherImage?.setBackgroundResource(R.drawable.rain)
                     } else if (weatherId < 700){    // 6xx: Snow
-                        if (weatherImage != null) {
-                            weatherImage.setBackgroundResource(R.drawable.snow)
-                        }
+                        weatherImage?.setBackgroundResource(R.drawable.snow)
                     } else if (weatherId < 800) {   // Atmosphere (주로 안개)
-                        if (weatherImage != null) {
-                            weatherImage.setBackgroundResource(R.drawable.atmosphere)
-                        }
+                        weatherImage?.setBackgroundResource(R.drawable.atmosphere)
                     } else if (weatherId == 800) {   // clear sky
-                        if (weatherImage != null) {
-                            weatherImage.setBackgroundResource(R.drawable.clearsky)
-                        }
+                        weatherImage?.setBackgroundResource(R.drawable.clearsky)
                     } else if (weatherId == 804) {   // clear sky
-                        if (weatherImage != null) {
-                            weatherImage.setBackgroundResource(R.drawable.overcastclouds)
-                        }
+                        weatherImage?.setBackgroundResource(R.drawable.overcastclouds)
                     } else if (weatherId == 803) {   // broken clouds
-                        if (weatherImage != null) {
-                            weatherImage.setBackgroundResource(R.drawable.brokenclouds)
-                        }
+                        weatherImage?.setBackgroundResource(R.drawable.brokenclouds)
                     } else if (weatherId < 900) {   // clouds
-                        if (weatherImage != null) {
-                            weatherImage.setBackgroundResource(R.drawable.clouds)
-                        }
+                        weatherImage?.setBackgroundResource(R.drawable.clouds)
                     }
 
                     val tempK = JSONObject(jsonObject.getString("main"))

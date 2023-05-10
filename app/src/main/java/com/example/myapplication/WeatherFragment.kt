@@ -175,45 +175,22 @@ class WeatherFragment : Fragment() {
         val temp08 = view?.findViewById<TextView>(R.id.temp08)
 
 
-
-        val weatherView = view?.findViewById<TextView>(R.id.weatherView)
-        val tempView = view?.findViewById<TextView>(R.id.tempView)
-        val tempMn = view?.findViewById<TextView>(R.id.tempMm)
-        val weatherImage = view?.findViewById<LinearLayout>(R.id.weatherImage)
-
         val url =
-//            "http://api.openweathermap.org/data/2.5/weather?q=seoul&appid=e7a531d94bf0d7e2bff8881247a4b70f"
-//            "http://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lng + "&appid=e7a531d94bf0d7e2bff8881247a4b70f"
-            "http://api.openweathermap.org/data/2.5/forecast?lat=" + lat + "&lon=" + lng + "&appid=e7a531d94bf0d7e2bff8881247a4b70f"
+            "http://api.openweathermap.org/data/2.5/forecast?lat=$lat&lon=$lng&appid=e7a531d94bf0d7e2bff8881247a4b70f"
+        println(url)
 
 
         val request: StringRequest =
             object : StringRequest(Method.GET, url, Response.Listener { response ->
                 try {
-
-                    println("url:"+url)
+//                    println("url:"+url)
                     val now = System.currentTimeMillis()
                     val date = Date(now)
-//                    val simpleDateFormatDay = SimpleDateFormat("yyyy-MM-dd")
                     val simpleDateFormatTime = SimpleDateFormat("HH")
-//                    val getDay = simpleDateFormatDay.format(date)
                     val getTime = simpleDateFormatTime.format(date)
+                    val getTimeInt = (getTime.toInt())
 
-                    val getTimeInt = (getTime.toInt()).toInt()
-//
-//                    val getDate = "$getDay $getTime"
-
-//                    val dateView = view?.findViewById<TextView>(R.id.dateView)
-//                    if (dateView != null) {
-//                        dateView.text = getDate
-//                    }
                     val jsonObject = JSONObject(response)
-
-//                    val list = jsonArray.getJSONObject("list")
-//                    val jsonObject = list.getJSONObject("main")
-//                    var temp = jsonObject.getString("temp")
-//                    print(temp)
-
                     val weatherJson = jsonObject.getJSONArray("list")
 
                     for (i: Int in 0..8) {
@@ -229,80 +206,85 @@ class WeatherFragment : Fragment() {
                         val weather = weatherObj.getJSONArray("weather")
                         val iconObj = weather.getJSONObject(0)
                         val icon = iconObj.getString("icon")
-                        var icon_sub = icon.substring(0 until 2)
-                        if (dt_txt_sub>=6 && dt_txt_sub<=18)
-                            icon_sub = icon_sub + "d"
-                        else icon_sub = icon_sub + "n"
+//                        var icon_sub = icon.substring(0 until 2)
 
-                        val imageStr = "https://openweathermap.org/img/wn/" + icon_sub + "@2x.png"
+
+                        val imageStr = "https://openweathermap.org/img/wn/" + icon + "@2x.png"
 
                         val timeMinus = 24-getTimeInt
-                        val dt_txt_cal = (dt_txt_sub + timeMinus)%24
+                        val dt_txt_cal = (dt_txt_sub + 8)%24
 
-
-                        // 집어넣기
-                        if (0 <= dt_txt_cal && dt_txt_cal < 3) {
+                        if (i==0) {
                             if (temp01 != null) { temp01.text = "$temp°" }
-                            if (time01 != null) { time01.text = "$dt_txt_sub" + "시" }
+                            if (time01 != null) { time01.text = "$dt_txt_cal" + "시" }
                             if (wImage01 != null) { Glide.with(this).load(imageStr).into(wImage01) }
-                        } else if (3 <= dt_txt_cal && dt_txt_cal < 6) {
+                        } else if (i==1) {
                             if (temp02 != null) { temp02.text = "$temp°" }
-                            if (time02 != null) { time02.text = "$dt_txt_sub" + "시" }
+                            if (time02 != null) { time02.text = "$dt_txt_cal" + "시" }
                             if (wImage02 != null) { Glide.with(this).load(imageStr).into(wImage02) }
-                        } else if (dt_txt_cal in 6..8) {
+                        } else if (i==2) {
                             if (temp03 != null) { temp03.text = "$temp°" }
-                            if (time03 != null) { time03.text = "$dt_txt_sub" + "시" }
+                            if (time03 != null) { time03.text = "$dt_txt_cal" + "시" }
                             if (wImage03 != null) { Glide.with(this).load(imageStr).into(wImage03) }
-                        } else if (9 <= dt_txt_cal && dt_txt_cal < 12) {
+                        } else if (i==3) {
                             if (temp04 != null) { temp04.text = "$temp°" }
-                            if (time04 != null) { time04.text = "$dt_txt_sub" + "시" }
+                            if (time04 != null) { time04.text = "$dt_txt_cal" + "시" }
                             if (wImage04 != null) { Glide.with(this).load(imageStr).into(wImage04) }
-                        } else if (12 <= dt_txt_cal && dt_txt_cal < 15) {
+                        } else if (i==4) {
                             if (temp05 != null) { temp05.text = "$temp°" }
-                            if (time05 != null) { time05.text = "$dt_txt_sub" + "시" }
+                            if (time05 != null) { time05.text = "$dt_txt_cal" + "시" }
                             if (wImage05 != null) { Glide.with(this).load(imageStr).into(wImage05) }
-                        } else if (15 <= dt_txt_cal && dt_txt_cal < 18) {
+                        } else if (i==5) {
                             if (temp06 != null) { temp06.text = "$temp°" }
-                            if (time06 != null) { time06.text = "$dt_txt_sub" + "시" }
+                            if (time06 != null) { time06.text = "$dt_txt_cal" + "시" }
                             if (wImage06 != null) { Glide.with(this).load(imageStr).into(wImage06) }
-                        } else if (18 <= dt_txt_cal && dt_txt_cal < 21) {
+                        } else if (i==6) {
                             if (temp07 != null) { temp07.text = "$temp°" }
-                            if (time07 != null) { time07.text = "$dt_txt_sub" + "시" }
+                            if (time07 != null) { time07.text = "$dt_txt_cal" + "시" }
                             if (wImage07 != null) { Glide.with(this).load(imageStr).into(wImage07) }
-                        } else if (21 <= dt_txt_cal && dt_txt_cal < 24) {
+                        } else if (i==7) {
                             if (temp08 != null) { temp08.text = "$temp°" }
-                            if (time08 != null) { time08.text = "$dt_txt_sub" + "시" }
+                            if (time08 != null) { time08.text = "$dt_txt_cal" + "시" }
                             if (wImage08 != null) { Glide.with(this).load(imageStr).into(wImage08) }
                         }
+
+                        // 집어넣기
+//                        if (dt_txt_cal in 0..2) {
+//                            if (temp01 != null) { temp01.text = "$temp°" }
+//                            if (time01 != null) { time01.text = "$dt_txt_sub" + "시" }
+//                            if (wImage01 != null) { Glide.with(this).load(imageStr).into(wImage01) }
+//                        } else if (dt_txt_cal in 3..5) {
+//                            if (temp02 != null) { temp02.text = "$temp°" }
+//                            if (time02 != null) { time02.text = "$dt_txt_sub" + "시" }
+//                            if (wImage02 != null) { Glide.with(this).load(imageStr).into(wImage02) }
+//                        } else if (dt_txt_cal in 6..8) {
+//                            if (temp03 != null) { temp03.text = "$temp°" }
+//                            if (time03 != null) { time03.text = "$dt_txt_sub" + "시" }
+//                            if (wImage03 != null) { Glide.with(this).load(imageStr).into(wImage03) }
+//                        } else if (dt_txt_cal in 9..11) {
+//                            if (temp04 != null) { temp04.text = "$temp°" }
+//                            if (time04 != null) { time04.text = "$dt_txt_sub" + "시" }
+//                            if (wImage04 != null) { Glide.with(this).load(imageStr).into(wImage04) }
+//                        } else if (dt_txt_cal in 12..14) {
+//                            if (temp05 != null) { temp05.text = "$temp°" }
+//                            if (time05 != null) { time05.text = "$dt_txt_sub" + "시" }
+//                            if (wImage05 != null) { Glide.with(this).load(imageStr).into(wImage05) }
+//                        } else if (dt_txt_cal in 15..17) {
+//                            if (temp06 != null) { temp06.text = "$temp°" }
+//                            if (time06 != null) { time06.text = "$dt_txt_sub" + "시" }
+//                            if (wImage06 != null) { Glide.with(this).load(imageStr).into(wImage06) }
+//                        } else if (dt_txt_cal in 18..20) {
+//                            if (temp07 != null) { temp07.text = "$temp°" }
+//                            if (time07 != null) { time07.text = "$dt_txt_sub" + "시" }
+//                            if (wImage07 != null) { Glide.with(this).load(imageStr).into(wImage07) }
+//                        } else if (dt_txt_cal in 21..23) {
+//                            if (temp08 != null) { temp08.text = "$temp°" }
+//                            if (time08 != null) { time08.text = "$dt_txt_sub" + "시" }
+//                            if (wImage08 != null) { Glide.with(this).load(imageStr).into(wImage08) }
+//                        }
                     }
 
 
-
-
-//                    val weatherJson = jsonObject.getJSONArray("list")
-//                    val weatherObj = weatherJson.getJSONObject(0)
-//                    val tempJson = weatherObj.getJSONObject("main")
-
-//                    val temp = tempJson.getInt("temp")
-//                    val time = tempJson.getString("dt_txt")
-
-//                    println("$temp$time")
-//                    if (weatherView != null) {
-////                        if (wDescEngToKor(weatherId) != "null")
-////                            weatherView.text = wDescEngToKor(weatherId)
-////                        else
-////                            weatherView.text = weather
-//                    }
-//                    val tempK = JSONObject(jsonObject.getString("main"))
-//                    val tempDo = Math.round((tempK.getDouble("temp") - 273.15) * 100) / 100
-//                    val temp_m = Math.round((tempK.getDouble("temp_min") - 273.15) * 100) / 100
-//                    val temp_M = Math.round((tempK.getDouble("temp_max") - 273.15) * 100) / 100
-//                    if (tempView != null) {
-//                        tempView.text = "$tempDo°"
-//                    }
-//                    if (tempMn != null) {
-//                        tempMn.text = "최고: $temp_M° 최저: $temp_m°"
-//                    }
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
