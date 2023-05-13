@@ -16,7 +16,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.Response
 import com.android.volley.toolbox.Volley
 import com.bumptech.glide.Glide
-import com.example.myapplication.Request.AddClosetRequest
+//import com.example.myapplication.Request.AddClosetRequest
 import com.example.myapplication.Request.CommunityWriteRequest
 import com.example.myapplication.Request.LoginRequest
 import org.json.JSONException

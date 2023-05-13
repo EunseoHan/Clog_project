@@ -1,10 +1,10 @@
 package com.example.myapplication
 
-import android.app.PendingIntent.getActivity
 import android.content.ContentValues
 import android.content.Intent
 import android.database.Cursor
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.ImageDecoder
 import android.icu.text.SimpleDateFormat
 import android.net.Uri
@@ -38,32 +38,9 @@ class AddCloset : BaseActivity() {
     val PERM_STORAGE = 9
     val PERM_CAMERA = 10
     val REQ_CAMERA = 11
-    val REQ_GALLERY =12
+    val REQ_GALLERY = 12
 
     val binding by lazy { ActivityAddClosetBinding.inflate(layoutInflater) }
-
-    /*@RequiresApi(Build.VERSION_CODES.O)
-    fun BitMapToString(bitmap: Bitmap) {
-        val baos = ByteArrayOutputStream() // 바이트 배열 데이터 출력 클래스 선언
-
-        //(비트맵 -> 바이트)하고 바이트를 arry에 넣기
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos) //bitmap compress // 비트맵을 PNG로 저장하며 압축한다. 해당 코드에서는 100%로 압축(비트맵 -> 바이트 형태로)
-        val arr = baos.toByteArray() // 압축 내용을 바이트 배열로 변환 후 arr 변수에 저장
-        //val image: String = Base64.encodeToString(arr, Base64.DEFAULT)
-        //val image: String = String(arr)
-
-        // 바이트 형식에서 스트링 형식으로 변환
-        val encoder: Base64.Encoder = Base64.getEncoder()
-        val image: String = encoder.encodeToString(arr)
-
-        //인코딩된 데이터를 UTF-8로 한번 더 인코딩하는 코드
-        var temp = ""
-        try {
-            temp = "&imagedevice=" + URLEncoder.encode(image, "utf-8")
-        } catch (e: java.lang.Exception) {
-            println("UTF-8로 인코딩 오류")
-        }
-    }*/
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -133,50 +110,51 @@ class AddCloset : BaseActivity() {
         }
 
         //옷 등록 버튼 눌렀을 때
-        binding.btnAddCloset.setOnClickListener{
+        binding.btnAddCloset.setOnClickListener {
 
             //로그인 했을 때
-            val responseListener: Response.Listener<String> = Response.Listener<String> { response->
-                try {
-                    println("나 타니?")
-                    println(namere)
-                    println(typere)
-                    println(detailre)
-                    println(lengthre)
-                    println(thicknessre)
-                    println(brushedre)
-                    println(weatherre)
-                    println("리얼 유알아이$imgPath")
-                    println("hongchul$response")
-                    val jsonObject = JSONObject(response)
-                    println(response)
-                    val success = jsonObject.getBoolean("success")
+            val responseListener: Response.Listener<String> =
+                Response.Listener<String> { response ->
+                    try {
+                        println("나 타니?")
+                        println(namere)
+                        println(typere)
+                        println(detailre)
+                        println(lengthre)
+                        println(thicknessre)
+                        println(brushedre)
+                        println(weatherre)
+                        println("리얼 유알아이$imgPath")
+                        println("hongchul$response")
+                        val jsonObject = JSONObject(response)
+                        println(response)
+                        val success = jsonObject.getBoolean("success")
 
-                    if(success){
-                        println("hey 성공?")
-                        Toast.makeText(
-                            this@AddCloset,
-                            "옷이 등록되었습니다.",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        val intent = Intent(this@AddCloset, MainActivity::class.java)
-                        intent.putExtra("ID",idre)
-                        startActivity(intent)
-                    }else{
-                        println("hey 실패?")
-                        Toast.makeText(
-                            this@AddCloset,
-                            "회원 등록에 실패하였습니다.",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        if (success) {
+                            println("hey 성공?")
+                            Toast.makeText(
+                                this@AddCloset,
+                                "옷이 등록되었습니다.",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            val intent = Intent(this@AddCloset, MainActivity::class.java)
+                            intent.putExtra("ID", idre)
+                            startActivity(intent)
+                        } else {
+                            println("hey 실패?")
+                            Toast.makeText(
+                                this@AddCloset,
+                                "옷 등록에 실패하였습니다.",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    } catch (e: JSONException) {
+                        e.printStackTrace()
                     }
-                } catch (e: JSONException) {
-                    e.printStackTrace()
                 }
-            }
 
             //로그인하지 않았을 경우
-            if(idre==null){
+            if (idre == null) {
                 Toast.makeText(
                     this@AddCloset,
                     "옷을 등록하기 위해서 로그인이 필요합니다.",
@@ -184,688 +162,1424 @@ class AddCloset : BaseActivity() {
                 ).show()
                 val intent = Intent(this@AddCloset, LoginActivity::class.java)
                 startActivity(intent)
-            }else{
+            } else {
                 //로그인 했을 경우
                 namere = binding.clothesName.editableText.toString()
                 //가디건(아우터)
-                if(binding.cardigan.isChecked){
+                if (binding.cardigan.isChecked) {
                     typere = 1
                     detailre = 11
-                    if(binding.thin.isChecked){
-                        thicknessre=1
-                        for(i: Int in 5..6){
+                    if (binding.thin.isChecked) {
+                        thicknessre = 1
+                        for (i: Int in 5..6) {
                             val addClosetRequest =
-                                AddClosetRequest(idre,namere,imgPath,typere,detailre,lengthre,thicknessre,brushedre,i,responseListener)
+                                AddClosetRequest(
+                                    idre,
+                                    namere,
+                                    imgPath,
+                                    typere,
+                                    detailre,
+                                    lengthre,
+                                    thicknessre,
+                                    brushedre,
+                                    i,
+                                    IMG,
+                                    responseListener
+                                )
                             val queue = Volley.newRequestQueue(this@AddCloset)
                             queue.add(addClosetRequest)
                         }
-                    }else if(binding.normal.isChecked){
-                        thicknessre=2
-                        for(i: Int in 3..4){
+                    } else if (binding.normal.isChecked) {
+                        thicknessre = 2
+                        for (i: Int in 3..4) {
                             val addClosetRequest =
-                                AddClosetRequest(idre,namere,imgPath,typere,detailre,lengthre,thicknessre,brushedre,i,responseListener)
+                                AddClosetRequest(
+                                    idre,
+                                    namere,
+                                    imgPath,
+                                    typere,
+                                    detailre,
+                                    lengthre,
+                                    thicknessre,
+                                    brushedre,
+                                    i,
+                                    IMG,
+                                    responseListener
+                                )
                             val queue = Volley.newRequestQueue(this@AddCloset)
                             queue.add(addClosetRequest)
                         }
-                    }else if(binding.thick.isChecked){
-                        thicknessre=3
+                    } else if (binding.thick.isChecked) {
+                        thicknessre = 3
                         val addClosetRequest1 =
-                            AddClosetRequest(idre,namere,imgPath,typere,detailre,lengthre,thicknessre,brushedre,3,responseListener)
+                            AddClosetRequest(
+                                idre,
+                                namere,
+                                imgPath,
+                                typere,
+                                detailre,
+                                lengthre,
+                                thicknessre,
+                                brushedre,
+                                3,
+                                IMG,
+                                responseListener
+                            )
                         val queue1 = Volley.newRequestQueue(this@AddCloset)
                         queue1.add(addClosetRequest1)
-                    }else{
+                    } else {
                         Toast.makeText(
                             this@AddCloset,
                             "가디건의 두께를 선택하세요!",
                             Toast.LENGTH_SHORT
                         ).show()
                     }
-                }else if(binding.jacket.isChecked){ //자켓(아우터)
+                } else if (binding.jacket.isChecked) { //자켓(아우터)
                     typere = 1
                     detailre = 12
-                    if(binding.thin.isChecked){
-                        thicknessre=1
-                        for(i: Int in 4..5){
+                    if (binding.thin.isChecked) {
+                        thicknessre = 1
+                        for (i: Int in 4..5) {
                             val addClosetRequest =
-                                AddClosetRequest(idre,namere,imgPath,typere,detailre,lengthre,thicknessre,brushedre,i,responseListener)
+                                AddClosetRequest(
+                                    idre,
+                                    namere,
+                                    imgPath,
+                                    typere,
+                                    detailre,
+                                    lengthre,
+                                    thicknessre,
+                                    brushedre,
+                                    i,
+                                    IMG,
+                                    responseListener
+                                )
                             val queue = Volley.newRequestQueue(this@AddCloset)
                             queue.add(addClosetRequest)
                         }
-                    }else if(binding.normal.isChecked){
-                        thicknessre=2
+                    } else if (binding.normal.isChecked) {
+                        thicknessre = 2
                         val addClosetRequest1 =
-                            AddClosetRequest(idre,namere,imgPath,typere,detailre,lengthre,thicknessre,brushedre,4,responseListener)
+                            AddClosetRequest(
+                                idre,
+                                namere,
+                                imgPath,
+                                typere,
+                                detailre,
+                                lengthre,
+                                thicknessre,
+                                brushedre,
+                                4,
+                                IMG,
+                                responseListener
+                            )
                         val queue1 = Volley.newRequestQueue(this@AddCloset)
                         queue1.add(addClosetRequest1)
-                    }else if(binding.thick.isChecked){
-                        thicknessre=3
+                    } else if (binding.thick.isChecked) {
+                        thicknessre = 3
                         val addClosetRequest1 =
-                            AddClosetRequest(idre,namere,imgPath,typere,detailre,lengthre,thicknessre,brushedre,3,responseListener)
+                            AddClosetRequest(
+                                idre,
+                                namere,
+                                imgPath,
+                                typere,
+                                detailre,
+                                lengthre,
+                                thicknessre,
+                                brushedre,
+                                3,
+                                IMG,
+                                responseListener
+                            )
                         val queue1 = Volley.newRequestQueue(this@AddCloset)
                         queue1.add(addClosetRequest1)
-                    }else{
+                    } else {
                         Toast.makeText(
                             this@AddCloset,
                             "자켓의 두께를 선택하세요!",
                             Toast.LENGTH_SHORT
                         ).show()
                     }
-                }else if(binding.fieldJacket.isChecked){ //야상(아우터)
+                } else if (binding.fieldJacket.isChecked) { //야상(아우터)
                     typere = 1
                     detailre = 13
-                    for(i: Int in 3..4){
+                    for (i: Int in 3..4) {
                         val addClosetRequest =
-                            AddClosetRequest(idre,namere,imgPath,typere,detailre,lengthre,thicknessre,brushedre,i,responseListener)
+                            AddClosetRequest(
+                                idre,
+                                namere,
+                                imgPath,
+                                typere,
+                                detailre,
+                                lengthre,
+                                thicknessre,
+                                brushedre,
+                                i,
+                                IMG,
+                                responseListener
+                            )
                         val queue = Volley.newRequestQueue(this@AddCloset)
                         queue.add(addClosetRequest)
                     }
-                }else if(binding.leatherJacket.isChecked){ //레더자켓(아우터)
+                } else if (binding.leatherJacket.isChecked) { //레더자켓(아우터)
                     typere = 1
                     detailre = 14
-                    for(i: Int in 3..4){
+                    for (i: Int in 3..4) {
                         val addClosetRequest =
-                            AddClosetRequest(idre,namere,imgPath,typere,detailre,lengthre,thicknessre,brushedre,i,responseListener)
+                            AddClosetRequest(
+                                idre,
+                                namere,
+                                imgPath,
+                                typere,
+                                detailre,
+                                lengthre,
+                                thicknessre,
+                                brushedre,
+                                i,
+                                IMG,
+                                responseListener
+                            )
                         val queue = Volley.newRequestQueue(this@AddCloset)
                         queue.add(addClosetRequest)
                     }
-                }else if(binding.fleece.isChecked){ //플리스(아우터)
+                } else if (binding.fleece.isChecked) { //플리스(아우터)
                     typere = 1
                     detailre = 15
-                    for(i: Int in 2..3){
+                    for (i: Int in 2..3) {
                         val addClosetRequest =
-                            AddClosetRequest(idre,namere,imgPath,typere,detailre,lengthre,thicknessre,brushedre,i,responseListener)
+                            AddClosetRequest(
+                                idre,
+                                namere,
+                                imgPath,
+                                typere,
+                                detailre,
+                                lengthre,
+                                thicknessre,
+                                brushedre,
+                                i,
+                                IMG,
+                                responseListener
+                            )
                         val queue = Volley.newRequestQueue(this@AddCloset)
                         queue.add(addClosetRequest)
                     }
-                }else if(binding.hoodie.isChecked){ //후드집업(아우터)
+                } else if (binding.hoodie.isChecked) { //후드집업(아우터)
                     typere = 1
                     detailre = 16
-                    if(binding.liningX.isChecked){
-                        brushedre=1
-                        for(i: Int in 3..4){
+                    if (binding.liningX.isChecked) {
+                        brushedre = 1
+                        for (i: Int in 3..4) {
                             val addClosetRequest =
-                                AddClosetRequest(idre,namere,imgPath,typere,detailre,lengthre,thicknessre,brushedre,i,responseListener)
+                                AddClosetRequest(
+                                    idre,
+                                    namere,
+                                    imgPath,
+                                    typere,
+                                    detailre,
+                                    lengthre,
+                                    thicknessre,
+                                    brushedre,
+                                    i,
+                                    IMG,
+                                    responseListener
+                                )
                             val queue = Volley.newRequestQueue(this@AddCloset)
                             queue.add(addClosetRequest)
                         }
-                    }else if(binding.liningO.isChecked){
-                        brushedre=2
+                    } else if (binding.liningO.isChecked) {
+                        brushedre = 2
                         val addClosetRequest1 =
-                            AddClosetRequest(idre,namere,imgPath,typere,detailre,lengthre,thicknessre,brushedre,2,responseListener)
+                            AddClosetRequest(
+                                idre,
+                                namere,
+                                imgPath,
+                                typere,
+                                detailre,
+                                lengthre,
+                                thicknessre,
+                                brushedre,
+                                2,
+                                IMG,
+                                responseListener
+                            )
                         val queue1 = Volley.newRequestQueue(this@AddCloset)
                         queue1.add(addClosetRequest1)
-                    }else{
+                    } else {
                         Toast.makeText(
                             this@AddCloset,
                             "후드집업의 기모여부를 선택하세요!",
                             Toast.LENGTH_SHORT
                         ).show()
                     }
-                }else if(binding.coat.isChecked){ //코트(아우터)
+                } else if (binding.coat.isChecked) { //코트(아우터)
                     typere = 1
                     detailre = 17
-                    if(binding.thin.isChecked){
-                        thicknessre=1
+                    if (binding.thin.isChecked) {
+                        thicknessre = 1
                         val addClosetRequest1 =
-                            AddClosetRequest(idre,namere,imgPath,typere,detailre,lengthre,thicknessre,brushedre,4,responseListener)
+                            AddClosetRequest(
+                                idre,
+                                namere,
+                                imgPath,
+                                typere,
+                                detailre,
+                                lengthre,
+                                thicknessre,
+                                brushedre,
+                                4,
+                                IMG,
+                                responseListener
+                            )
                         val queue1 = Volley.newRequestQueue(this@AddCloset)
                         queue1.add(addClosetRequest1)
-                    }else if(binding.normal.isChecked){
-                        thicknessre=2
+                    } else if (binding.normal.isChecked) {
+                        thicknessre = 2
                         val addClosetRequest1 =
-                            AddClosetRequest(idre,namere,imgPath,typere,detailre,lengthre,thicknessre,brushedre,3,responseListener)
+                            AddClosetRequest(
+                                idre,
+                                namere,
+                                imgPath,
+                                typere,
+                                detailre,
+                                lengthre,
+                                thicknessre,
+                                brushedre,
+                                3,
+                                IMG,
+                                responseListener
+                            )
                         val queue1 = Volley.newRequestQueue(this@AddCloset)
                         queue1.add(addClosetRequest1)
-                    }else if(binding.thick.isChecked){
-                        thicknessre=3
-                        for(i: Int in 1..2){
+                    } else if (binding.thick.isChecked) {
+                        thicknessre = 3
+                        for (i: Int in 1..2) {
                             val addClosetRequest =
-                                AddClosetRequest(idre,namere,imgPath,typere,detailre,lengthre,thicknessre,brushedre,i,responseListener)
+                                AddClosetRequest(
+                                    idre,
+                                    namere,
+                                    imgPath,
+                                    typere,
+                                    detailre,
+                                    lengthre,
+                                    thicknessre,
+                                    brushedre,
+                                    i,
+                                    IMG,
+                                    responseListener
+                                )
                             val queue = Volley.newRequestQueue(this@AddCloset)
                             queue.add(addClosetRequest)
                         }
-                    }else{
+                    } else {
                         Toast.makeText(
                             this@AddCloset,
                             "코트의 두께를 선택하세요!",
                             Toast.LENGTH_SHORT
                         ).show()
                     }
-                }else if(binding.paddedCoat.isChecked){ //패딩(아우터)
+                } else if (binding.paddedCoat.isChecked) { //패딩(아우터)
                     typere = 1
                     detailre = 18
-                    for(i: Int in 1..2){
+                    for (i: Int in 1..2) {
                         val addClosetRequest =
-                            AddClosetRequest(idre,namere,imgPath,typere,detailre,lengthre,thicknessre,brushedre,i,responseListener)
+                            AddClosetRequest(
+                                idre,
+                                namere,
+                                imgPath,
+                                typere,
+                                detailre,
+                                lengthre,
+                                thicknessre,
+                                brushedre,
+                                i,
+                                IMG,
+                                responseListener
+                            )
                         val queue = Volley.newRequestQueue(this@AddCloset)
                         queue.add(addClosetRequest)
                     }
-                }else if(binding.nonSleeve.isChecked){ //민소매 티셔츠(상의)
+                } else if (binding.nonSleeve.isChecked) { //민소매 티셔츠(상의)
                     typere = 2
                     detailre = 21
                     val addClosetRequest1 =
-                        AddClosetRequest(idre,namere,imgPath,typere,detailre,lengthre,thicknessre,brushedre,8,responseListener)
+                        AddClosetRequest(
+                            idre,
+                            namere,
+                            imgPath,
+                            typere,
+                            detailre,
+                            lengthre,
+                            thicknessre,
+                            brushedre,
+                            8,
+                            IMG,
+                            responseListener
+                        )
                     val queue1 = Volley.newRequestQueue(this@AddCloset)
                     queue1.add(addClosetRequest1)
-                }else if(binding.shortSleeve.isChecked){ //반소매 티셔츠(상의)
+                } else if (binding.shortSleeve.isChecked) { //반소매 티셔츠(상의)
                     typere = 2
                     detailre = 22
-                    for(i: Int in 7..8){
+                    for (i: Int in 7..8) {
                         val addClosetRequest =
-                            AddClosetRequest(idre,namere,imgPath,typere,detailre,lengthre,thicknessre,brushedre,i,responseListener)
+                            AddClosetRequest(
+                                idre,
+                                namere,
+                                imgPath,
+                                typere,
+                                detailre,
+                                lengthre,
+                                thicknessre,
+                                brushedre,
+                                i,
+                                IMG,
+                                responseListener
+                            )
                         val queue = Volley.newRequestQueue(this@AddCloset)
                         queue.add(addClosetRequest)
                     }
-                }else if(binding.shirt.isChecked){ //블라우스/셔츠 (상의)
+                } else if (binding.shirt.isChecked) { //블라우스/셔츠 (상의)
                     typere = 2
                     detailre = 23
-                    for(i: Int in 3..7){
+                    for (i: Int in 3..7) {
                         val addClosetRequest1 =
-                            AddClosetRequest(idre,namere,imgPath,typere,detailre,lengthre,thicknessre,brushedre,i,responseListener)
+                            AddClosetRequest(
+                                idre,
+                                namere,
+                                imgPath,
+                                typere,
+                                detailre,
+                                lengthre,
+                                thicknessre,
+                                brushedre,
+                                i,
+                                IMG,
+                                responseListener
+                            )
                         val queue1 = Volley.newRequestQueue(this@AddCloset)
                         queue1.add(addClosetRequest1)
                     }
-                }else if(binding.mtm.isChecked){ //맨투맨 (상의)
+                } else if (binding.mtm.isChecked) { //맨투맨 (상의)
                     typere = 2
                     detailre = 24
-                    if(binding.liningX.isChecked){
-                        brushedre=1
-                        for(i: Int in 2..6){
+                    if (binding.liningX.isChecked) {
+                        brushedre = 1
+                        for (i: Int in 2..6) {
                             val addClosetRequest1 =
-                                AddClosetRequest(idre,namere,imgPath,typere,detailre,lengthre,thicknessre,brushedre,i,responseListener)
+                                AddClosetRequest(
+                                    idre,
+                                    namere,
+                                    imgPath,
+                                    typere,
+                                    detailre,
+                                    lengthre,
+                                    thicknessre,
+                                    brushedre,
+                                    i,
+                                    IMG,
+                                    responseListener
+                                )
                             val queue1 = Volley.newRequestQueue(this@AddCloset)
                             queue1.add(addClosetRequest1)
                         }
-                    }else if(binding.liningO.isChecked){
-                        brushedre=2
-                        for(i: Int in 1..2){
+                    } else if (binding.liningO.isChecked) {
+                        brushedre = 2
+                        for (i: Int in 1..2) {
                             val addClosetRequest1 =
-                                AddClosetRequest(idre,namere,imgPath,typere,detailre,lengthre,thicknessre,brushedre,i,responseListener)
+                                AddClosetRequest(
+                                    idre,
+                                    namere,
+                                    imgPath,
+                                    typere,
+                                    detailre,
+                                    lengthre,
+                                    thicknessre,
+                                    brushedre,
+                                    i,
+                                    IMG,
+                                    responseListener
+                                )
                             val queue1 = Volley.newRequestQueue(this@AddCloset)
                             queue1.add(addClosetRequest1)
                         }
-                    }else{
+                    } else {
                         Toast.makeText(
                             this@AddCloset,
                             "맨투맨의 기모여부를 선택하세요!",
                             Toast.LENGTH_SHORT
                         ).show()
                     }
-                }else if(binding.hoodieTop.isChecked){ //후드티 (상의)
+                } else if (binding.hoodieTop.isChecked) { //후드티 (상의)
                     typere = 2
                     detailre = 25
-                    if(binding.liningX.isChecked){
-                        brushedre=1
-                        for(i: Int in 2..5){
+                    if (binding.liningX.isChecked) {
+                        brushedre = 1
+                        for (i: Int in 2..5) {
                             val addClosetRequest1 =
-                                AddClosetRequest(idre,namere,imgPath,typere,detailre,lengthre,thicknessre,brushedre,i,responseListener)
+                                AddClosetRequest(
+                                    idre,
+                                    namere,
+                                    imgPath,
+                                    typere,
+                                    detailre,
+                                    lengthre,
+                                    thicknessre,
+                                    brushedre,
+                                    i,
+                                    IMG,
+                                    responseListener
+                                )
                             val queue1 = Volley.newRequestQueue(this@AddCloset)
                             queue1.add(addClosetRequest1)
                         }
-                    }else if(binding.liningO.isChecked){
-                        brushedre=2
-                        for(i: Int in 1..2){
+                    } else if (binding.liningO.isChecked) {
+                        brushedre = 2
+                        for (i: Int in 1..2) {
                             val addClosetRequest1 =
-                                AddClosetRequest(idre,namere,imgPath,typere,detailre,lengthre,thicknessre,brushedre,i,responseListener)
+                                AddClosetRequest(
+                                    idre,
+                                    namere,
+                                    imgPath,
+                                    typere,
+                                    detailre,
+                                    lengthre,
+                                    thicknessre,
+                                    brushedre,
+                                    i,
+                                    IMG,
+                                    responseListener
+                                )
                             val queue1 = Volley.newRequestQueue(this@AddCloset)
                             queue1.add(addClosetRequest1)
                         }
-                    }else{
+                    } else {
                         Toast.makeText(
                             this@AddCloset,
                             "후드티의 기모여부를 선택하세요!",
                             Toast.LENGTH_SHORT
                         ).show()
                     }
-                }else if(binding.sweater.isChecked){ //니트 (상의)
+                } else if (binding.sweater.isChecked) { //니트 (상의)
                     typere = 2
                     detailre = 26
-                    if(binding.thin.isChecked){
-                        thicknessre=1
-                        for(i: Int in 5..6){
+                    if (binding.thin.isChecked) {
+                        thicknessre = 1
+                        for (i: Int in 5..6) {
                             val addClosetRequest =
-                                AddClosetRequest(idre,namere,imgPath,typere,detailre,lengthre,thicknessre,brushedre,i,responseListener)
+                                AddClosetRequest(
+                                    idre,
+                                    namere,
+                                    imgPath,
+                                    typere,
+                                    detailre,
+                                    lengthre,
+                                    thicknessre,
+                                    brushedre,
+                                    i,
+                                    IMG,
+                                    responseListener
+                                )
                             val queue = Volley.newRequestQueue(this@AddCloset)
                             queue.add(addClosetRequest)
                         }
-                    }else if(binding.normal.isChecked){
-                        thicknessre=2
-                        for(i: Int in 2..4){
+                    } else if (binding.normal.isChecked) {
+                        thicknessre = 2
+                        for (i: Int in 2..4) {
                             val addClosetRequest =
-                                AddClosetRequest(idre,namere,imgPath,typere,detailre,lengthre,thicknessre,brushedre,i,responseListener)
+                                AddClosetRequest(
+                                    idre,
+                                    namere,
+                                    imgPath,
+                                    typere,
+                                    detailre,
+                                    lengthre,
+                                    thicknessre,
+                                    brushedre,
+                                    i,
+                                    IMG,
+                                    responseListener
+                                )
                             val queue = Volley.newRequestQueue(this@AddCloset)
                             queue.add(addClosetRequest)
                         }
-                    }else if(binding.thick.isChecked){
-                        thicknessre=3
-                        for(i: Int in 1..2){
+                    } else if (binding.thick.isChecked) {
+                        thicknessre = 3
+                        for (i: Int in 1..2) {
                             val addClosetRequest =
-                                AddClosetRequest(idre,namere,imgPath,typere,detailre,lengthre,thicknessre,brushedre,i,responseListener)
+                                AddClosetRequest(
+                                    idre,
+                                    namere,
+                                    imgPath,
+                                    typere,
+                                    detailre,
+                                    lengthre,
+                                    thicknessre,
+                                    brushedre,
+                                    i,
+                                    IMG,
+                                    responseListener
+                                )
                             val queue = Volley.newRequestQueue(this@AddCloset)
                             queue.add(addClosetRequest)
                         }
-                    }else{
+                    } else {
                         Toast.makeText(
                             this@AddCloset,
                             "니트의 두께감을 선택하세요!",
                             Toast.LENGTH_SHORT
                         ).show()
                     }
-                }else if(binding.denim.isChecked){ //데님팬츠 (하의)
+                } else if (binding.denim.isChecked) { //데님팬츠 (하의)
                     typere = 3
                     detailre = 31
-                    if(binding.length3.isChecked){
-                        lengthre=3
-                        brushedre=1
+                    if (binding.length3.isChecked) {
+                        lengthre = 3
+                        brushedre = 1
                         val addClosetRequest =
-                            AddClosetRequest(idre,namere,imgPath,typere,detailre,lengthre,thicknessre,brushedre,8,responseListener)
+                            AddClosetRequest(
+                                idre,
+                                namere,
+                                imgPath,
+                                typere,
+                                detailre,
+                                lengthre,
+                                thicknessre,
+                                brushedre,
+                                8,
+                                IMG,
+                                responseListener
+                            )
                         val queue = Volley.newRequestQueue(this@AddCloset)
                         queue.add(addClosetRequest)
-                    }else if(binding.length5.isChecked){
-                        lengthre=5
-                        brushedre=1
-                        for(i: Int in 5..7){
+                    } else if (binding.length5.isChecked) {
+                        lengthre = 5
+                        brushedre = 1
+                        for (i: Int in 5..7) {
                             val addClosetRequest =
-                                AddClosetRequest(idre,namere,imgPath,typere,detailre,lengthre,thicknessre,brushedre,i,responseListener)
+                                AddClosetRequest(
+                                    idre,
+                                    namere,
+                                    imgPath,
+                                    typere,
+                                    detailre,
+                                    lengthre,
+                                    thicknessre,
+                                    brushedre,
+                                    i,
+                                    IMG,
+                                    responseListener
+                                )
                             val queue = Volley.newRequestQueue(this@AddCloset)
                             queue.add(addClosetRequest)
                         }
-                    }else if(binding.length9.isChecked){
-                        lengthre=9
-                        if(binding.liningX.isChecked){
-                            brushedre=1
-                            for(i: Int in 2..7){
+                    } else if (binding.length9.isChecked) {
+                        lengthre = 9
+                        if (binding.liningX.isChecked) {
+                            brushedre = 1
+                            for (i: Int in 2..7) {
                                 val addClosetRequest =
-                                    AddClosetRequest(idre,namere,imgPath,typere,detailre,lengthre,thicknessre,brushedre,i,responseListener)
+                                    AddClosetRequest(
+                                        idre,
+                                        namere,
+                                        imgPath,
+                                        typere,
+                                        detailre,
+                                        lengthre,
+                                        thicknessre,
+                                        brushedre,
+                                        i,
+                                        IMG,
+                                        responseListener
+                                    )
                                 val queue = Volley.newRequestQueue(this@AddCloset)
                                 queue.add(addClosetRequest)
                             }
-                        }else if(binding.liningO.isChecked){
-                            brushedre=2
+                        } else if (binding.liningO.isChecked) {
+                            brushedre = 2
                             val addClosetRequest =
-                                AddClosetRequest(idre,namere,imgPath,typere,detailre,lengthre,thicknessre,brushedre,1,responseListener)
+                                AddClosetRequest(
+                                    idre,
+                                    namere,
+                                    imgPath,
+                                    typere,
+                                    detailre,
+                                    lengthre,
+                                    thicknessre,
+                                    brushedre,
+                                    1,
+                                    IMG,
+                                    responseListener
+                                )
                             val queue = Volley.newRequestQueue(this@AddCloset)
                             queue.add(addClosetRequest)
-                        }else{
+                        } else {
                             Toast.makeText(
                                 this@AddCloset,
                                 "데님팬츠의 기모여부를 선택하세요!",
                                 Toast.LENGTH_SHORT
                             ).show()
                         }
-                    }else{
+                    } else {
                         Toast.makeText(
                             this@AddCloset,
                             "데님팬츠의 길이를 선택하세요!",
                             Toast.LENGTH_SHORT
                         ).show()
                     }
-                }else if(binding.leggings.isChecked){ //레깅스 (하의)
+                } else if (binding.leggings.isChecked) { //레깅스 (하의)
                     typere = 3
                     detailre = 32
-                    if(binding.length3.isChecked){
-                        lengthre=3
-                        brushedre=1
+                    if (binding.length3.isChecked) {
+                        lengthre = 3
+                        brushedre = 1
                         val addClosetRequest =
-                            AddClosetRequest(idre,namere,imgPath,typere,detailre,lengthre,thicknessre,brushedre,8,responseListener)
+                            AddClosetRequest(
+                                idre,
+                                namere,
+                                imgPath,
+                                typere,
+                                detailre,
+                                lengthre,
+                                thicknessre,
+                                brushedre,
+                                8,
+                                IMG,
+                                responseListener
+                            )
                         val queue = Volley.newRequestQueue(this@AddCloset)
                         queue.add(addClosetRequest)
-                    }else if(binding.length5.isChecked){
-                        lengthre=5
-                        brushedre=1
-                        for(i: Int in 6..7){
+                    } else if (binding.length5.isChecked) {
+                        lengthre = 5
+                        brushedre = 1
+                        for (i: Int in 6..7) {
                             val addClosetRequest =
-                                AddClosetRequest(idre,namere,imgPath,typere,detailre,lengthre,thicknessre,brushedre,i,responseListener)
+                                AddClosetRequest(
+                                    idre,
+                                    namere,
+                                    imgPath,
+                                    typere,
+                                    detailre,
+                                    lengthre,
+                                    thicknessre,
+                                    brushedre,
+                                    i,
+                                    IMG,
+                                    responseListener
+                                )
                             val queue = Volley.newRequestQueue(this@AddCloset)
                             queue.add(addClosetRequest)
                         }
-                    }else if(binding.length9.isChecked){
-                        lengthre=9
-                        if(binding.liningX.isChecked){
-                            brushedre=1
-                            for(i: Int in 3..7){
+                    } else if (binding.length9.isChecked) {
+                        lengthre = 9
+                        if (binding.liningX.isChecked) {
+                            brushedre = 1
+                            for (i: Int in 3..7) {
                                 val addClosetRequest =
-                                    AddClosetRequest(idre,namere,imgPath,typere,detailre,lengthre,thicknessre,brushedre,i,responseListener)
+                                    AddClosetRequest(
+                                        idre,
+                                        namere,
+                                        imgPath,
+                                        typere,
+                                        detailre,
+                                        lengthre,
+                                        thicknessre,
+                                        brushedre,
+                                        i,
+                                        IMG,
+                                        responseListener
+                                    )
                                 val queue = Volley.newRequestQueue(this@AddCloset)
                                 queue.add(addClosetRequest)
                             }
-                        }else if(binding.liningO.isChecked){
-                            brushedre=2
+                        } else if (binding.liningO.isChecked) {
+                            brushedre = 2
                             val addClosetRequest =
-                                AddClosetRequest(idre,namere,imgPath,typere,detailre,lengthre,thicknessre,brushedre,2,responseListener)
+                                AddClosetRequest(
+                                    idre,
+                                    namere,
+                                    imgPath,
+                                    typere,
+                                    detailre,
+                                    lengthre,
+                                    thicknessre,
+                                    brushedre,
+                                    2,
+                                    IMG,
+                                    responseListener
+                                )
                             val queue = Volley.newRequestQueue(this@AddCloset)
                             queue.add(addClosetRequest)
-                        }else{
+                        } else {
                             Toast.makeText(
                                 this@AddCloset,
                                 "레깅스의 기모여부를 선택하세요!",
                                 Toast.LENGTH_SHORT
                             ).show()
                         }
-                    }else{
+                    } else {
                         Toast.makeText(
                             this@AddCloset,
                             "레깅스의 길이를 선택하세요!",
                             Toast.LENGTH_SHORT
                         ).show()
                     }
-                }else if(binding.skirt.isChecked){ //스커트 (하의)
+                } else if (binding.skirt.isChecked) { //스커트 (하의)
                     typere = 3
                     detailre = 33
-                    if(binding.length3.isChecked){
-                        lengthre=3
-                        for(i: Int in 7..8){
+                    if (binding.length3.isChecked) {
+                        lengthre = 3
+                        for (i: Int in 7..8) {
                             val addClosetRequest =
-                                AddClosetRequest(idre,namere,imgPath,typere,detailre,lengthre,thicknessre,brushedre,i,responseListener)
+                                AddClosetRequest(
+                                    idre,
+                                    namere,
+                                    imgPath,
+                                    typere,
+                                    detailre,
+                                    lengthre,
+                                    thicknessre,
+                                    brushedre,
+                                    i,
+                                    IMG,
+                                    responseListener
+                                )
                             val queue = Volley.newRequestQueue(this@AddCloset)
                             queue.add(addClosetRequest)
                         }
-                    }else if(binding.length5.isChecked){
-                        lengthre=5
-                        for(i: Int in 4..7){
+                    } else if (binding.length5.isChecked) {
+                        lengthre = 5
+                        for (i: Int in 4..7) {
                             val addClosetRequest =
-                                AddClosetRequest(idre,namere,imgPath,typere,detailre,lengthre,thicknessre,brushedre,i,responseListener)
+                                AddClosetRequest(
+                                    idre,
+                                    namere,
+                                    imgPath,
+                                    typere,
+                                    detailre,
+                                    lengthre,
+                                    thicknessre,
+                                    brushedre,
+                                    i,
+                                    IMG,
+                                    responseListener
+                                )
                             val queue = Volley.newRequestQueue(this@AddCloset)
                             queue.add(addClosetRequest)
                         }
-                    }else if(binding.length9.isChecked){
-                        lengthre=9
-                        for(i: Int in 2..6){
+                    } else if (binding.length9.isChecked) {
+                        lengthre = 9
+                        for (i: Int in 2..6) {
                             val addClosetRequest =
-                                AddClosetRequest(idre,namere,imgPath,typere,detailre,lengthre,thicknessre,brushedre,i,responseListener)
+                                AddClosetRequest(
+                                    idre,
+                                    namere,
+                                    imgPath,
+                                    typere,
+                                    detailre,
+                                    lengthre,
+                                    thicknessre,
+                                    brushedre,
+                                    i,
+                                    IMG,
+                                    responseListener
+                                )
                             val queue = Volley.newRequestQueue(this@AddCloset)
                             queue.add(addClosetRequest)
                         }
-                    }else{
+                    } else {
                         Toast.makeText(
                             this@AddCloset,
                             "스커트의 길이를 선택하세요!",
                             Toast.LENGTH_SHORT
                         ).show()
                     }
-                }else if(binding.slacks.isChecked){ //슬랙스 (하의)
+                } else if (binding.slacks.isChecked) { //슬랙스 (하의)
                     typere = 3
                     detailre = 34
-                    if(binding.length3.isChecked){
-                        lengthre=3
-                        thicknessre=2
+                    if (binding.length3.isChecked) {
+                        lengthre = 3
+                        thicknessre = 2
                         val addClosetRequest =
-                            AddClosetRequest(idre,namere,imgPath,typere,detailre,lengthre,thicknessre,brushedre,8,responseListener)
+                            AddClosetRequest(
+                                idre,
+                                namere,
+                                imgPath,
+                                typere,
+                                detailre,
+                                lengthre,
+                                thicknessre,
+                                brushedre,
+                                8,
+                                IMG,
+                                responseListener
+                            )
                         val queue = Volley.newRequestQueue(this@AddCloset)
                         queue.add(addClosetRequest)
-                    }else if(binding.length5.isChecked){
-                        lengthre=5
-                        thicknessre=2
-                        for(i: Int in 6..7){
+                    } else if (binding.length5.isChecked) {
+                        lengthre = 5
+                        thicknessre = 2
+                        for (i: Int in 6..7) {
                             val addClosetRequest =
-                                AddClosetRequest(idre,namere,imgPath,typere,detailre,lengthre,thicknessre,brushedre,i,responseListener)
+                                AddClosetRequest(
+                                    idre,
+                                    namere,
+                                    imgPath,
+                                    typere,
+                                    detailre,
+                                    lengthre,
+                                    thicknessre,
+                                    brushedre,
+                                    i,
+                                    IMG,
+                                    responseListener
+                                )
                             val queue = Volley.newRequestQueue(this@AddCloset)
                             queue.add(addClosetRequest)
                         }
-                    }else if(binding.length9.isChecked){
-                        lengthre=9
-                        if(binding.thin.isChecked){
-                            thicknessre=1
-                            for(i: Int in 5..7){
+                    } else if (binding.length9.isChecked) {
+                        lengthre = 9
+                        if (binding.thin.isChecked) {
+                            thicknessre = 1
+                            for (i: Int in 5..7) {
                                 val addClosetRequest =
-                                    AddClosetRequest(idre,namere,imgPath,typere,detailre,lengthre,thicknessre,brushedre,i,responseListener)
+                                    AddClosetRequest(
+                                        idre,
+                                        namere,
+                                        imgPath,
+                                        typere,
+                                        detailre,
+                                        lengthre,
+                                        thicknessre,
+                                        brushedre,
+                                        i,IMG,
+                                        responseListener
+                                    )
                                 val queue = Volley.newRequestQueue(this@AddCloset)
                                 queue.add(addClosetRequest)
                             }
-                        }else if(binding.normal.isChecked){
-                            thicknessre=2
-                            for(i: Int in 2..6){
+                        } else if (binding.normal.isChecked) {
+                            thicknessre = 2
+                            for (i: Int in 2..6) {
                                 val addClosetRequest =
-                                    AddClosetRequest(idre,namere,imgPath,typere,detailre,lengthre,thicknessre,brushedre,i,responseListener)
+                                    AddClosetRequest(
+                                        idre,
+                                        namere,
+                                        imgPath,
+                                        typere,
+                                        detailre,
+                                        lengthre,
+                                        thicknessre,
+                                        brushedre,
+                                        i,
+                                        IMG,
+                                        responseListener
+                                    )
                                 val queue = Volley.newRequestQueue(this@AddCloset)
                                 queue.add(addClosetRequest)
                             }
-                        }else if(binding.thick.isChecked){
-                            thicknessre=3
+                        } else if (binding.thick.isChecked) {
+                            thicknessre = 3
                             val addClosetRequest =
-                                AddClosetRequest(idre,namere,imgPath,typere,detailre,lengthre,thicknessre,brushedre,1,responseListener)
+                                AddClosetRequest(
+                                    idre,
+                                    namere,
+                                    imgPath,
+                                    typere,
+                                    detailre,
+                                    lengthre,
+                                    thicknessre,
+                                    brushedre,
+                                    1,
+                                    IMG,
+                                    responseListener
+                                )
                             val queue = Volley.newRequestQueue(this@AddCloset)
                             queue.add(addClosetRequest)
-                        }else{
+                        } else {
                             Toast.makeText(
                                 this@AddCloset,
                                 "슬랙스의 두께를 선택하세요!",
                                 Toast.LENGTH_SHORT
                             ).show()
                         }
-                    }else{
+                    } else {
                         Toast.makeText(
                             this@AddCloset,
                             "슬랙스의 길이를 선택하세요!",
                             Toast.LENGTH_SHORT
                         ).show()
                     }
-                }else if(binding.jogger.isChecked){ //츄리닝 (하의)
+                } else if (binding.jogger.isChecked) { //츄리닝 (하의)
                     typere = 3
                     detailre = 35
-                    if(binding.length3.isChecked){
-                        lengthre=3
-                        brushedre=1
+                    if (binding.length3.isChecked) {
+                        lengthre = 3
+                        brushedre = 1
                         val addClosetRequest =
-                            AddClosetRequest(idre,namere,imgPath,typere,detailre,lengthre,thicknessre,brushedre,8,responseListener)
+                            AddClosetRequest(
+                                idre,
+                                namere,
+                                imgPath,
+                                typere,
+                                detailre,
+                                lengthre,
+                                thicknessre,
+                                brushedre,
+                                8,
+                                IMG,
+                                responseListener
+                            )
                         val queue = Volley.newRequestQueue(this@AddCloset)
                         queue.add(addClosetRequest)
-                    }else if(binding.length5.isChecked){
-                        lengthre=5
-                        brushedre=1
+                    } else if (binding.length5.isChecked) {
+                        lengthre = 5
+                        brushedre = 1
                         val addClosetRequest =
-                            AddClosetRequest(idre,namere,imgPath,typere,detailre,lengthre,thicknessre,brushedre,7,responseListener)
+                            AddClosetRequest(
+                                idre,
+                                namere,
+                                imgPath,
+                                typere,
+                                detailre,
+                                lengthre,
+                                thicknessre,
+                                brushedre,
+                                7,
+                                IMG,
+                                responseListener
+                            )
                         val queue = Volley.newRequestQueue(this@AddCloset)
                         queue.add(addClosetRequest)
-                    }else if(binding.length9.isChecked){
-                        lengthre=9
-                        if(binding.liningX.isChecked){
-                            brushedre=1
-                            for(i: Int in 2..7){
+                    } else if (binding.length9.isChecked) {
+                        lengthre = 9
+                        if (binding.liningX.isChecked) {
+                            brushedre = 1
+                            for (i: Int in 2..7) {
                                 val addClosetRequest =
-                                    AddClosetRequest(idre,namere,imgPath,typere,detailre,lengthre,thicknessre,brushedre,i,responseListener)
+                                    AddClosetRequest(
+                                        idre,
+                                        namere,
+                                        imgPath,
+                                        typere,
+                                        detailre,
+                                        lengthre,
+                                        thicknessre,
+                                        brushedre,
+                                        i,
+                                        IMG,
+                                        responseListener
+                                    )
                                 val queue = Volley.newRequestQueue(this@AddCloset)
                                 queue.add(addClosetRequest)
                             }
-                        }else if(binding.liningO.isChecked){
-                            brushedre=2
-                            for(i: Int in 1..2){
+                        } else if (binding.liningO.isChecked) {
+                            brushedre = 2
+                            for (i: Int in 1..2) {
                                 val addClosetRequest =
-                                    AddClosetRequest(idre,namere,imgPath,typere,detailre,lengthre,thicknessre,brushedre,i,responseListener)
+                                    AddClosetRequest(
+                                        idre,
+                                        namere,
+                                        imgPath,
+                                        typere,
+                                        detailre,
+                                        lengthre,
+                                        thicknessre,
+                                        brushedre,
+                                        i,IMG,
+                                        responseListener
+                                    )
                                 val queue = Volley.newRequestQueue(this@AddCloset)
                                 queue.add(addClosetRequest)
                             }
-                        }else{
+                        } else {
                             Toast.makeText(
                                 this@AddCloset,
                                 "츄리닝의 기모여부를 선택하세요!",
                                 Toast.LENGTH_SHORT
                             ).show()
                         }
-                    }else{
+                    } else {
                         Toast.makeText(
                             this@AddCloset,
                             "츄리닝의 길이를 선택하세요!",
                             Toast.LENGTH_SHORT
                         ).show()
                     }
-                }else if(binding.cotton.isChecked){ //코튼팬츠 (하의)
+                } else if (binding.cotton.isChecked) { //코튼팬츠 (하의)
                     typere = 3
                     detailre = 36
-                    if(binding.length3.isChecked){
-                        lengthre=3
+                    if (binding.length3.isChecked) {
+                        lengthre = 3
                         val addClosetRequest =
-                            AddClosetRequest(idre,namere,imgPath,typere,detailre,lengthre,thicknessre,brushedre,8,responseListener)
+                            AddClosetRequest(
+                                idre,
+                                namere,
+                                imgPath,
+                                typere,
+                                detailre,
+                                lengthre,
+                                thicknessre,
+                                brushedre,
+                                8,IMG,
+                                responseListener
+                            )
                         val queue = Volley.newRequestQueue(this@AddCloset)
                         queue.add(addClosetRequest)
-                    }else if(binding.length5.isChecked){
-                        lengthre=5
+                    } else if (binding.length5.isChecked) {
+                        lengthre = 5
                         val addClosetRequest =
-                            AddClosetRequest(idre,namere,imgPath,typere,detailre,lengthre,thicknessre,brushedre,7,responseListener)
+                            AddClosetRequest(
+                                idre,
+                                namere,
+                                imgPath,
+                                typere,
+                                detailre,
+                                lengthre,
+                                thicknessre,
+                                brushedre,
+                                7,IMG,
+                                responseListener
+                            )
                         val queue = Volley.newRequestQueue(this@AddCloset)
                         queue.add(addClosetRequest)
-                    }else if(binding.length9.isChecked){
-                        lengthre=9
-                        for(i: Int in 2..6){
+                    } else if (binding.length9.isChecked) {
+                        lengthre = 9
+                        for (i: Int in 2..6) {
                             val addClosetRequest =
-                                AddClosetRequest(idre,namere,imgPath,typere,detailre,lengthre,thicknessre,brushedre,i,responseListener)
+                                AddClosetRequest(
+                                    idre,
+                                    namere,
+                                    imgPath,
+                                    typere,
+                                    detailre,
+                                    lengthre,
+                                    thicknessre,
+                                    brushedre,
+                                    i,IMG,
+                                    responseListener
+                                )
                             val queue = Volley.newRequestQueue(this@AddCloset)
                             queue.add(addClosetRequest)
                         }
-                    }else{
+                    } else {
                         Toast.makeText(
                             this@AddCloset,
                             "코튼팬츠의 길이를 선택하세요!",
                             Toast.LENGTH_SHORT
                         ).show()
                     }
-                }else if(binding.nonSleeveOnepiece.isChecked){ //민소매 원피스 (원피스)
+                } else if (binding.nonSleeveOnepiece.isChecked) { //민소매 원피스 (원피스)
                     typere = 4
                     detailre = 41
-                    if(binding.length3.isChecked){
-                        lengthre=3
+                    if (binding.length3.isChecked) {
+                        lengthre = 3
                         val addClosetRequest =
-                            AddClosetRequest(idre,namere,imgPath,typere,detailre,lengthre,thicknessre,brushedre,8,responseListener)
+                            AddClosetRequest(
+                                idre,
+                                namere,
+                                imgPath,
+                                typere,
+                                detailre,
+                                lengthre,
+                                thicknessre,
+                                brushedre,
+                                8,IMG,
+                                responseListener
+                            )
                         val queue = Volley.newRequestQueue(this@AddCloset)
                         queue.add(addClosetRequest)
-                    }else if(binding.length5.isChecked){
-                        lengthre=5
+                    } else if (binding.length5.isChecked) {
+                        lengthre = 5
                         val addClosetRequest =
-                            AddClosetRequest(idre,namere,imgPath,typere,detailre,lengthre,thicknessre,brushedre,8,responseListener)
+                            AddClosetRequest(
+                                idre,
+                                namere,
+                                imgPath,
+                                typere,
+                                detailre,
+                                lengthre,
+                                thicknessre,
+                                brushedre,
+                                8,IMG,
+                                responseListener
+                            )
                         val queue = Volley.newRequestQueue(this@AddCloset)
                         queue.add(addClosetRequest)
-                    }else if(binding.length9.isChecked){
-                        lengthre=9
+                    } else if (binding.length9.isChecked) {
+                        lengthre = 9
                         val addClosetRequest =
-                            AddClosetRequest(idre,namere,imgPath,typere,detailre,lengthre,thicknessre,brushedre,8,responseListener)
+                            AddClosetRequest(
+                                idre,
+                                namere,
+                                imgPath,
+                                typere,
+                                detailre,
+                                lengthre,
+                                thicknessre,
+                                brushedre,
+                                8,IMG,
+                                responseListener
+                            )
                         val queue = Volley.newRequestQueue(this@AddCloset)
                         queue.add(addClosetRequest)
-                    }else{
+                    } else {
                         Toast.makeText(
                             this@AddCloset,
                             "민소매 원피스의 길이를 선택하세요!",
                             Toast.LENGTH_SHORT
                         ).show()
                     }
-                }else if(binding.shortSleeveOnepiece.isChecked){ //반소매 원피스 (원피스)
+                } else if (binding.shortSleeveOnepiece.isChecked) { //반소매 원피스 (원피스)
                     typere = 4
                     detailre = 42
-                    if(binding.length3.isChecked){
-                        lengthre=3
-                        for(i: Int in 7..8){
+                    if (binding.length3.isChecked) {
+                        lengthre = 3
+                        for (i: Int in 7..8) {
                             val addClosetRequest =
-                                AddClosetRequest(idre,namere,imgPath,typere,detailre,lengthre,thicknessre,brushedre,i,responseListener)
+                                AddClosetRequest(
+                                    idre,
+                                    namere,
+                                    imgPath,
+                                    typere,
+                                    detailre,
+                                    lengthre,
+                                    thicknessre,
+                                    brushedre,
+                                    i,IMG,
+                                    responseListener
+                                )
                             val queue = Volley.newRequestQueue(this@AddCloset)
                             queue.add(addClosetRequest)
                         }
-                    }else if(binding.length5.isChecked){
-                        lengthre=5
+                    } else if (binding.length5.isChecked) {
+                        lengthre = 5
                         val addClosetRequest =
-                            AddClosetRequest(idre,namere,imgPath,typere,detailre,lengthre,thicknessre,brushedre,7,responseListener)
+                            AddClosetRequest(
+                                idre,
+                                namere,
+                                imgPath,
+                                typere,
+                                detailre,
+                                lengthre,
+                                thicknessre,
+                                brushedre,
+                                7,IMG,
+                                responseListener
+                            )
                         val queue = Volley.newRequestQueue(this@AddCloset)
                         queue.add(addClosetRequest)
-                    }else if(binding.length9.isChecked){
-                        lengthre=9
+                    } else if (binding.length9.isChecked) {
+                        lengthre = 9
                         val addClosetRequest =
-                            AddClosetRequest(idre,namere,imgPath,typere,detailre,lengthre,thicknessre,brushedre,7,responseListener)
+                            AddClosetRequest(
+                                idre,
+                                namere,
+                                imgPath,
+                                typere,
+                                detailre,
+                                lengthre,
+                                thicknessre,
+                                brushedre,
+                                7,IMG,
+                                responseListener
+                            )
                         val queue = Volley.newRequestQueue(this@AddCloset)
                         queue.add(addClosetRequest)
-                    }else{
+                    } else {
                         Toast.makeText(
                             this@AddCloset,
                             "반소매 원피스의 길이를 선택하세요!",
                             Toast.LENGTH_SHORT
                         ).show()
                     }
-                }else if(binding.longSleeveOnepiece.isChecked){ //긴소매 원피스 (원피스)
+                } else if (binding.longSleeveOnepiece.isChecked) { //긴소매 원피스 (원피스)
                     typere = 4
                     detailre = 43
-                    if(binding.length3.isChecked){
-                        lengthre=3
-                        for(i: Int in 5..6){
+                    if (binding.length3.isChecked) {
+                        lengthre = 3
+                        for (i: Int in 5..6) {
                             val addClosetRequest =
-                                AddClosetRequest(idre,namere,imgPath,typere,detailre,lengthre,thicknessre,brushedre,i,responseListener)
+                                AddClosetRequest(
+                                    idre,
+                                    namere,
+                                    imgPath,
+                                    typere,
+                                    detailre,
+                                    lengthre,
+                                    thicknessre,
+                                    brushedre,
+                                    i,IMG,
+                                    responseListener
+                                )
                             val queue = Volley.newRequestQueue(this@AddCloset)
                             queue.add(addClosetRequest)
                         }
-                    }else if(binding.length5.isChecked){
-                        lengthre=5
-                        for(i: Int in 4..6){
+                    } else if (binding.length5.isChecked) {
+                        lengthre = 5
+                        for (i: Int in 4..6) {
                             val addClosetRequest =
-                                AddClosetRequest(idre,namere,imgPath,typere,detailre,lengthre,thicknessre,brushedre,i,responseListener)
+                                AddClosetRequest(
+                                    idre,
+                                    namere,
+                                    imgPath,
+                                    typere,
+                                    detailre,
+                                    lengthre,
+                                    thicknessre,
+                                    brushedre,
+                                    i,IMG,
+                                    responseListener
+                                )
                             val queue = Volley.newRequestQueue(this@AddCloset)
                             queue.add(addClosetRequest)
                         }
-                    }else if(binding.length9.isChecked){
-                        lengthre=9
-                        for(i: Int in 2..6){
+                    } else if (binding.length9.isChecked) {
+                        lengthre = 9
+                        for (i: Int in 2..6) {
                             val addClosetRequest =
-                                AddClosetRequest(idre,namere,imgPath,typere,detailre,lengthre,thicknessre,brushedre,i,responseListener)
+                                AddClosetRequest(
+                                    idre,
+                                    namere,
+                                    imgPath,
+                                    typere,
+                                    detailre,
+                                    lengthre,
+                                    thicknessre,
+                                    brushedre,
+                                    i,IMG,
+                                    responseListener
+                                )
                             val queue = Volley.newRequestQueue(this@AddCloset)
                             queue.add(addClosetRequest)
                         }
-                    }else{
+                    } else {
                         Toast.makeText(
                             this@AddCloset,
                             "긴소매 원피스의 길이를 선택하세요!",
                             Toast.LENGTH_SHORT
                         ).show()
                     }
-                }else if(binding.sneakers.isChecked) { //스니커즈 (신발)
+                } else if (binding.sneakers.isChecked) { //스니커즈 (신발)
                     typere = 5
                     detailre = 51
-                    for(i: Int in 1..8){
+                    for (i: Int in 1..8) {
                         val addClosetRequest =
-                            AddClosetRequest(idre,namere,imgPath,typere,detailre,lengthre,thicknessre,brushedre,i,responseListener)
+                            AddClosetRequest(
+                                idre,
+                                namere,
+                                imgPath,
+                                typere,
+                                detailre,
+                                lengthre,
+                                thicknessre,
+                                brushedre,
+                                i,IMG,
+                                responseListener
+                            )
                         val queue = Volley.newRequestQueue(this@AddCloset)
                         queue.add(addClosetRequest)
                     }
-                }else if(binding.sandals.isChecked) { //샌들 (신발)
+                } else if (binding.sandals.isChecked) { //샌들 (신발)
                     typere = 5
                     detailre = 52
-                    for(i: Int in 7..8){
+                    for (i: Int in 7..8) {
                         val addClosetRequest =
-                            AddClosetRequest(idre,namere,imgPath,typere,detailre,lengthre,thicknessre,brushedre,i,responseListener)
+                            AddClosetRequest(
+                                idre,
+                                namere,
+                                imgPath,
+                                typere,
+                                detailre,
+                                lengthre,
+                                thicknessre,
+                                brushedre,
+                                i,IMG,
+                                responseListener
+                            )
                         val queue = Volley.newRequestQueue(this@AddCloset)
                         queue.add(addClosetRequest)
                     }
-                }else if(binding.slippers.isChecked) { //슬리퍼 (신발)
+                } else if (binding.slippers.isChecked) { //슬리퍼 (신발)
                     typere = 5
                     detailre = 53
-                    for(i: Int in 7..8){
+                    for (i: Int in 7..8) {
                         val addClosetRequest =
-                            AddClosetRequest(idre,namere,imgPath,typere,detailre,lengthre,thicknessre,brushedre,i,responseListener)
+                            AddClosetRequest(
+                                idre,
+                                namere,
+                                imgPath,
+                                typere,
+                                detailre,
+                                lengthre,
+                                thicknessre,
+                                brushedre,
+                                i,IMG,
+                                responseListener
+                            )
                         val queue = Volley.newRequestQueue(this@AddCloset)
                         queue.add(addClosetRequest)
                     }
-                }else if(binding.boots.isChecked) { //부츠 (신발)
+                } else if (binding.boots.isChecked) { //부츠 (신발)
                     typere = 5
                     detailre = 54
-                    for(i: Int in 1..5){
+                    for (i: Int in 1..5) {
                         val addClosetRequest =
-                            AddClosetRequest(idre,namere,imgPath,typere,detailre,lengthre,thicknessre,brushedre,i,responseListener)
+                            AddClosetRequest(
+                                idre,
+                                namere,
+                                imgPath,
+                                typere,
+                                detailre,
+                                lengthre,
+                                thicknessre,
+                                brushedre,
+                                i,IMG,
+                                responseListener
+                            )
                         val queue = Volley.newRequestQueue(this@AddCloset)
                         queue.add(addClosetRequest)
                     }
-                }else if(binding.loafer.isChecked) { //로퍼 (신발)
+                } else if (binding.loafer.isChecked) { //로퍼 (신발)
                     typere = 5
                     detailre = 55
-                    for(i: Int in 3..6){
+                    for (i: Int in 3..6) {
                         val addClosetRequest =
-                            AddClosetRequest(idre,namere,imgPath,typere,detailre,lengthre,thicknessre,brushedre,i,responseListener)
+                            AddClosetRequest(
+                                idre,
+                                namere,
+                                imgPath,
+                                typere,
+                                detailre,
+                                lengthre,
+                                thicknessre,
+                                brushedre,
+                                i,IMG,
+                                responseListener
+                            )
                         val queue = Volley.newRequestQueue(this@AddCloset)
                         queue.add(addClosetRequest)
                     }
-                }else if(binding.rubberBoots.isChecked) { //장화 (신발)
+                } else if (binding.rubberBoots.isChecked) { //장화 (신발)
                     typere = 5
                     detailre = 56
-                    for(i: Int in 1..8){
+                    for (i: Int in 1..8) {
                         val addClosetRequest =
-                            AddClosetRequest(idre,namere,imgPath,typere,detailre,lengthre,thicknessre,brushedre,i,responseListener)
+                            AddClosetRequest(
+                                idre,
+                                namere,
+                                imgPath,
+                                typere,
+                                detailre,
+                                lengthre,
+                                thicknessre,
+                                brushedre,
+                                i,IMG,
+                                responseListener
+                            )
                         val queue = Volley.newRequestQueue(this@AddCloset)
                         queue.add(addClosetRequest)
                     }
-                }else{
+                } else {
                     Toast.makeText(
                         this@AddCloset,
                         "상세 종류를 선택하세요!",
@@ -883,7 +1597,7 @@ class AddCloset : BaseActivity() {
     // 대분류 -> 중분류
     // 버튼(대분류) 눌렀을 때 아래 레이아웃(중분류) 표시
     //(아우터, 상의, 하의, 원피스, 신발 버튼 누를 때 detail 나오게 하는 메소드)
-    fun clickBtn(btn:Button, layout: LinearLayout) {
+    fun clickBtn(btn: Button, layout: LinearLayout) {
         btn.setOnClickListener {
             if (layout.visibility == VISIBLE) { // 이미 버튼이 눌려있을 때
                 backgroundClear()   // 모든 버튼 색 변경
@@ -923,7 +1637,7 @@ class AddCloset : BaseActivity() {
     // 중분류 -> 세부(길이, 기모, 두께)
     // 라디오 버튼(중분류) 클릭 시 레이아웃(세부) 표시
     //(각 디테일(라디오버튼) 누를 때마다 그에 맞는 두께감, 기모, 길이 나오게 하는 메소드)
-    fun clickRadio(rd:RadioButton, layout:LinearLayout) {
+    fun clickRadio(rd: RadioButton, layout: LinearLayout) {
         rd.setOnClickListener {
             radio_clear()
             visibleGone_radio()
@@ -935,7 +1649,7 @@ class AddCloset : BaseActivity() {
 
     // 라디오 버튼 클릭 시 레이아웃 표시할 게 없는 경우 (위 함수와 같은 함수. input이 다름)
     //(각 디테일(라디오버튼) 누를 때 그에 맞는 두께감, 기모, 길이가 딱히 없을 때 불러오는 메소드)
-    fun clickRadio(rd:RadioButton) {
+    fun clickRadio(rd: RadioButton) {
         rd.setOnClickListener {
             radio_clear()
             visibleGone_radio()
@@ -1031,16 +1745,19 @@ class AddCloset : BaseActivity() {
 
 
     //원본 이미지를 저장할 Uri를 MediaStore(데이터베이스)에 생성하는 메서드(파일이름, 타입이 필요)
-    fun createImageUri(filename:String, mimeType:String) : Uri? {
+    fun createImageUri(filename: String, mimeType: String): Uri? {
         val values = ContentValues() //(파일)이름과 타입을 넘겨주기 위한
         values.put(MediaStore.Images.Media.DISPLAY_NAME, filename) //파일이름 넘겨주는
         values.put(MediaStore.Images.Media.MIME_TYPE, mimeType) //타입을 넘겨주는
 
-        return contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values) //파일을 저장하는 Uri를 넘겨줌(return)
+        return contentResolver.insert(
+            MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+            values
+        ) //파일을 저장하는 Uri를 넘겨줌(return)
     }
 
     //파일이름을 생성하는 메서드
-    fun newFileName() : String {
+    fun newFileName(): String {
         val sdf = SimpleDateFormat("yyyyMMdd_HHmmss")
         val filename = sdf.format(System.currentTimeMillis())
         return "${filename}.jpg"
@@ -1049,16 +1766,16 @@ class AddCloset : BaseActivity() {
     // 원본 이미지 불러오는 메서드
     // Uri를 이용해서 미디어스토어에 저장된 이미지를 읽어오는 메서드
     // 파라미터로 Uri를 받아 결과값을 Bitmap으로 반환
-    fun loadBitmap(photoUri: Uri) : Bitmap? {
+    fun loadBitmap(photoUri: Uri): Bitmap? {
         try {
             return if (Build.VERSION.SDK_INT > Build.VERSION_CODES.O_MR1) {
-                val source  = ImageDecoder.createSource(contentResolver, photoUri)
+                val source = ImageDecoder.createSource(contentResolver, photoUri)
                 ImageDecoder.decodeBitmap(source)
             } else {
                 MediaStore.Images.Media.getBitmap(contentResolver, photoUri)
 
             }
-        } catch (e:Exception) {
+        } catch (e: Exception) {
             e.printStackTrace()
         }
         return null
@@ -1067,7 +1784,7 @@ class AddCloset : BaseActivity() {
 
     //요청 승인된 경우
     override fun permissionGranted(requestCode: Int) {
-        when(requestCode) {
+        when (requestCode) {
             PERM_STORAGE -> initViews() //스토리지 권한 요청인 경우
             PERM_CAMERA -> openCamera()
         }
@@ -1075,7 +1792,7 @@ class AddCloset : BaseActivity() {
 
     //요청 거부된 경우
     override fun permissionDenied(requestCode: Int) {
-        when(requestCode) {
+        when (requestCode) {
             PERM_STORAGE -> {
                 Toast.makeText(this, "공용 저장소 권한을 승인해야 앱을 사용할 수 있습니다.", Toast.LENGTH_SHORT).show()
                 finish()
@@ -1084,7 +1801,8 @@ class AddCloset : BaseActivity() {
         }
     }
 
-    var imgPath : String? = ""
+    var imgPath: String? = ""
+    var IMG: String? = ""
 
     //카메라를 찍거나 갤러리에서 가져오면 이 결과를 넘겨주는 함수
     //4.카메라를 찍은 후에 호출된다
@@ -1093,7 +1811,8 @@ class AddCloset : BaseActivity() {
         if (resultCode == RESULT_OK) { //액티비티에서 데이터를 가지고 왔을 경우
             when (requestCode) {
                 REQ_CAMERA -> { //카메라에서 // REQ_CAMERA : 카메라 요청에서 사용했던 코드
-                    val bitmap = data?.extras?.get("data") as Bitmap //data?.extras?.get("data") 안에 미리보기 이미지 , get은 오브젝트 따라서 Bitmap으로 형변환함.
+                    val bitmap =
+                        data?.extras?.get("data") as Bitmap //data?.extras?.get("data") 안에 미리보기 이미지 , get은 오브젝트 따라서 Bitmap으로 형변환함.
                     binding.picPlus.setImageBitmap(bitmap)
                     realUri?.let { uri -> //realUri가 null이 아닐 때만
                         val bitmap = loadBitmap(uri)
@@ -1103,7 +1822,7 @@ class AddCloset : BaseActivity() {
                     }
                 }
                 REQ_GALLERY -> { // 갤러리에서
-                    data?.data?.let {uri -> //data의 data에 이미지에 대한 uri가 o
+                    data?.data?.let { uri -> //data의 data에 이미지에 대한 uri가 o
                         binding.picPlus.setImageURI(uri) //이미지 뷰에 선택한 이미지 출력
                         //갤러리앱에서 관리하는 DB정보가 있는데, 그것이 나온다 [실제 파일 경로가 아님!!]
                         //얻어온 Uri는 Gallery앱의 DB번호임. (content://-----/2854)
@@ -1112,10 +1831,30 @@ class AddCloset : BaseActivity() {
                         println("갤러리1$uri")
 
                         //임의로 만든 메소드 (절대경로를 가져오는 메소드)
-                        imgPath= getRealPathFromUri(uri)
+                        imgPath = getRealPathFromUri(uri)
                         //imgPath = createCopyAndReturnRealPath("",uri)
                         println("갤러리2$imgPath")
+
+                        //추가
+                        // Base64 인코딩부분
+                        val inps: InputStream? = uri?.let {
+                            applicationContext.contentResolver.openInputStream(it)
+                        }
+                        val img: Bitmap = BitmapFactory.decodeStream(inps)
+                        inps?.close()
+                        binding.picPlus.setImageBitmap(img)
+
+                        //비트맵을 바이트로 변환
+                        val byteArrayOutputStream = ByteArrayOutputStream()
+                        img.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
+                        val byteArray: ByteArray = byteArrayOutputStream.toByteArray()
+
+                        // 바이트 형식에서 스트링 형식으로 변환
+                        val encoder: Base64.Encoder = Base64.getEncoder()
+                        IMG = encoder.encodeToString(byteArray)
+                        println("인코딩 $IMG")
                     }
+
                 }
             }
         }
@@ -1131,7 +1870,7 @@ class AddCloset : BaseActivity() {
             println("getRealPathFromUri proj $proj")
             val loader = CursorLoader(this, uri, proj, null, null, null)
             var cursor: Cursor? = loader.loadInBackground()
-            val column_index : Int = cursor!!.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+            val column_index: Int = cursor!!.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
             println("getRealPathFromUri column_index $column_index")
             cursor.moveToFirst()
             println("getRealPathFromUri cursor $cursor")
@@ -1142,5 +1881,4 @@ class AddCloset : BaseActivity() {
             cursor?.close()
         }
     }
-
 }

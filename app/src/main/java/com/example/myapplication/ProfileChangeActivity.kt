@@ -27,7 +27,7 @@ class ProfileChangeActivity : AppCompatActivity() {
         var brown = 0
         var purple = 0
         var yellow = 0
-        val id = intent.extras!!.getString("userID")
+        val id = intent.extras!!.getString("ID")
 
         binding.buttonChange.setOnClickListener {
             val password = binding.password.text.toString()
@@ -72,7 +72,7 @@ class ProfileChangeActivity : AppCompatActivity() {
                             "회원 정보가 수정되었습니다.",
                             Toast.LENGTH_SHORT
                         ).show()
-                        val intent = Intent(this@ProfileChangeActivity, MainActivity::class.java)
+                        val intent = Intent(this@ProfileChangeActivity, LoginActivity::class.java)
                         startActivity(intent)
                     }else{
                         println("실패 탔니?")

@@ -15,6 +15,7 @@ class AddClosetRequest (
     thickness: Int,
     brushed: Int,
     weather: Int,
+    IMG : String?,
     listener: Response.Listener<String>
 ) :
     StringRequest(Method.POST, URL, listener, null) { //HTTP 메서드(Method.POST), 서버 URL(URL), 서버로부터 결과를 받을 때 호출할 콜백(listener), 서버 연동 실패 시 호출할 콜백(null)
@@ -31,6 +32,7 @@ class AddClosetRequest (
         map.put("thickness",thickness.toString())
         map.put("brushed",brushed.toString())
         map.put("weather",weather.toString())
+        map.put("IMG",IMG.toString())
     }
 
     @Throws(AuthFailureError::class)
