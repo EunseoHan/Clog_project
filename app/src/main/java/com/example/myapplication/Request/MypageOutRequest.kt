@@ -23,6 +23,6 @@ class MypageOutRequest(userID: String, userPASSWORD: String, listener: Response.
 
     companion object {
         // 서버 URL 설정 ( PHP 파일 연동 )
-        private const val URL = "http://192.168.35.243/appout.php"
+        private const val URL = "http://175.192.111.51/appout.php"
     }
 }
