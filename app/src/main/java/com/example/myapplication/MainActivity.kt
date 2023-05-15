@@ -1,13 +1,18 @@
 package com.example.myapplication
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.TextView
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.databinding.ActivityMainBinding
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+
 
 
 class MainActivity : AppCompatActivity() {
@@ -21,12 +26,18 @@ class MainActivity : AppCompatActivity() {
     lateinit var tab4:CommunityFragment
 
 
+    companion object {
+        const val REQUEST_CODE = 101
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         installSplashScreen()
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+
 
         //각 tab에 해당하는 fragment 선언 및 제일 처음 tab으로 나올 화면 frameLayout에 출력
         tab1 = HomeFragment()
@@ -237,5 +248,6 @@ class MainActivity : AppCompatActivity() {
 //            }
 //        }
     }
+
 
 }

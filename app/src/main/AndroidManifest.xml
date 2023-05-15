@@ -174,7 +174,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
+        <activitygit
             android:name=".MypageMainActivity"
             android:exported="true"
             tools:ignore="DuplicateActivity">
@@ -183,9 +183,31 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activitygit>
+        <activity
+            android:name=".ListItem"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
+        <!--firebase-->
+<!--        <service-->
+<!--            android:name=".MyFirebaseMessagingService"-->
+<!--            android:exported="false">-->
+<!--            <intent-filter>-->
+<!--                <action android:name="com.google.firebase.MESSAGING_EVENT" />-->
+<!--            </intent-filter>-->
+<!--        </service>-->
+<!--        <meta-data-->
+<!--            android:name="com.google.fire.base.messaging.default_notification_icon"-->
+<!--            android:resource="@drawable/ic_clog" />-->
+<!--        <meta-data-->
+<!--            android:name="com.google.fire.base.messaging.default_notification_icon"-->
+<!--            android:resource="@color/purple_700"/>-->
 
-        <uses-library android:name="org.apache.http.legacy" android:required="false"/>
+
     </application>
 
 

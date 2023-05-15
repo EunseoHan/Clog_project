@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "423833173174",
+    "project_id": "clog-5262f",
+    "storage_bucket": "clog-5262f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:423833173174:android:626a34aee33aff7264ba17",
+        "android_client_info": {
+          "package_name": "com.example.myapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "423833173174-2s1dfllgrh4vmo8gre78cdgb9iirslj1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD1qRZXBMrgI5AStF-J51TF_ym_oQx7jMQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "423833173174-2s1dfllgrh4vmo8gre78cdgb9iirslj1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
