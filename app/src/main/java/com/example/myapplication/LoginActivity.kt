@@ -80,7 +80,7 @@ class LoginActivity : AppCompatActivity() {
                                 )
                                     .show()
                                 val intent =
-                                    Intent(this@LoginActivity, MypageMainActivity::class.java)
+                                    Intent(this@LoginActivity, MainActivity::class.java)
                                 //로그인하면서 사용자 정보 넘기기
                                 intent.putExtra("ID", userID)
                                 intent.putExtra("PW", userPASSWORD)

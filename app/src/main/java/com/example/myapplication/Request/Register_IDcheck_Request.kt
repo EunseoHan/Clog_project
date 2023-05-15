@@ -18,7 +18,6 @@ class Register_IDcheck_Request(userID: String, listener: Response.Listener<Strin
     }
     companion object {
 
-        private const val URL = "http://172.20.10.5:8080/IDcheck.php"
-
+        private const val URL = "http://175.192.111.51/IDcheck.php"
     }
 }

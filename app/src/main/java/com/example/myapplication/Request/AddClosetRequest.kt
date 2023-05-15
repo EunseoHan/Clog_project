@@ -42,7 +42,6 @@ class AddClosetRequest (
     companion object {
 
         //private const val URL = "http://175.192.111.51/AddCloset.php"
-        private const val URL = "http://172.20.10.5:8080/AddCloset.php"
-
+        private const val URL = "http://175.192.111.51/AddCloset.php"
     }
 }
