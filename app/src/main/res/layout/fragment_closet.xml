@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:tool="http://schemas.android.com/tools"
+
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".ClosetFragment">
 
@@ -61,29 +63,14 @@
                         android:layout_height="match_parent"
                         android:layout_marginTop="10dp"
                         android:orientation="horizontal">
-                        <ImageView
-                            android:id="@+id/ex_outer"
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
-                            android:layout_marginRight="10dp"
-                            android:clickable="true"
-                            android:background="@drawable/button_roud"
-                            android:orientation="horizontal" />
-                        <ImageView
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
-                            android:layout_marginRight="10dp"
-                            android:background="@drawable/button_roud"/>
-                        <ImageView
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
-                            android:layout_marginRight="10dp"
-                            android:background="@drawable/button_roud"/>
-                        <ImageView
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
-                            android:layout_marginRight="10dp"
-                            android:background="@drawable/button_roud"/>
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/outer_board"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            tool:listitem="@layout/listitem_recycler_closet"
+                            android:orientation="horizontal"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+
                     </LinearLayout>
                 </HorizontalScrollView>
 
@@ -106,26 +93,13 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:orientation="horizontal">
-                        <ImageView
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
-                            android:layout_marginRight="10dp"
-                            android:background="@drawable/button_roud"/>
-                        <ImageView
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
-                            android:layout_marginRight="10dp"
-                            android:background="@drawable/button_roud"/>
-                        <ImageView
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
-                            android:layout_marginRight="10dp"
-                            android:background="@drawable/button_roud"/>
-                        <ImageView
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
-                            android:layout_marginRight="10dp"
-                            android:background="@drawable/button_roud"/>
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/top_board"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            tool:listitem="@layout/listitem_recycler_closet"
+                            android:orientation="horizontal"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
                     </LinearLayout>
                 </HorizontalScrollView>
 
@@ -148,26 +122,14 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:orientation="horizontal">
-                        <ImageView
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
-                            android:layout_marginRight="10dp"
-                            android:background="@drawable/button_roud"/>
-                        <ImageView
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
-                            android:layout_marginRight="10dp"
-                            android:background="@drawable/button_roud"/>
-                        <ImageView
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
-                            android:layout_marginRight="10dp"
-                            android:background="@drawable/button_roud"/>
-                        <ImageView
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
-                            android:layout_marginRight="10dp"
-                            android:background="@drawable/button_roud"/>
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/bottom_board"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            tool:listitem="@layout/listitem_recycler_closet"
+                            android:orientation="horizontal"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+
                     </LinearLayout>
                 </HorizontalScrollView>
 
@@ -190,26 +152,14 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:orientation="horizontal">
-                        <ImageView
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
-                            android:layout_marginRight="10dp"
-                            android:background="@drawable/button_roud"/>
-                        <ImageView
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
-                            android:layout_marginRight="10dp"
-                            android:background="@drawable/button_roud"/>
-                        <ImageView
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
-                            android:layout_marginRight="10dp"
-                            android:background="@drawable/button_roud"/>
-                        <ImageView
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
-                            android:layout_marginRight="10dp"
-                            android:background="@drawable/button_roud"/>
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/onepiece_board"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            tool:listitem="@layout/listitem_recycler_closet"
+                            android:orientation="horizontal"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+
                     </LinearLayout>
                 </HorizontalScrollView>
 
@@ -232,26 +182,14 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:orientation="horizontal">
-                        <ImageView
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
-                            android:layout_marginRight="10dp"
-                            android:background="@drawable/button_roud"/>
-                        <ImageView
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
-                            android:layout_marginRight="10dp"
-                            android:background="@drawable/button_roud"/>
-                        <ImageView
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
-                            android:layout_marginRight="10dp"
-                            android:background="@drawable/button_roud"/>
-                        <ImageView
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
-                            android:layout_marginRight="10dp"
-                            android:background="@drawable/button_roud"/>
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/shoes_board"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            tool:listitem="@layout/listitem_recycler_closet"
+                            android:orientation="horizontal"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+
                     </LinearLayout>
                 </HorizontalScrollView>
 
