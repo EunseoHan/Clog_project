@@ -17,7 +17,8 @@ class ListAdapterCloset(val itemList: ArrayList<ListItemCloset>) :
     }
 
     override fun onBindViewHolder(holder: BoardViewHolder, position: Int) {
-        holder.closetImage.setImageResource(itemList[position].ImageResource)
+        //holder.closetImage.setImageResource(itemList[position].ImageResource)
+        holder.closetImage.setImageBitmap(itemList[position].ImageResource)
     }
 
     override fun getItemCount(): Int {

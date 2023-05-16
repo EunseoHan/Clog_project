@@ -36,7 +36,6 @@ class EditCloset : BaseActivity() {
         setContentView(R.layout.activity_edit_closet)
 
         setContentView(binding.root)
-        setContentView(binding.root)
 
         clickBtn(binding.outer, binding.typeDetailOuter)
         clickBtn(binding.top, binding.typeDetailTop)

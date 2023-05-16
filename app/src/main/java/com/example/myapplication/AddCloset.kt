@@ -40,7 +40,7 @@ class AddCloset : BaseActivity() {
     val REQ_CAMERA = 11
     val REQ_GALLERY = 12
 
-    val binding by lazy { ActivityAddClosetBinding.inflate(layoutInflater) }
+    val binding by lazy {ActivityAddClosetBinding.inflate(layoutInflater) }
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {

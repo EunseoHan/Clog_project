@@ -118,7 +118,7 @@ class LoginActivity : AppCompatActivity() {
 
                 val loginRequest = LoginRequest(userID, userPASSWORD, responseListener)
                 val queue = Volley.newRequestQueue(this@LoginActivity)
-                //queue.add<Any>(loginRequest)
+                println("큐 $queue")
                 queue.add(loginRequest)
             }
         })

@@ -76,7 +76,7 @@ class WeatherFragment : Fragment() {
         // Outer
         val itemListOuter = ArrayList<ListItemCloset>()
 
-        itemListOuter.add(ListItemCloset(R.drawable.sample))
+        //itemListOuter.add(ListItemCloset(R.drawable.sample))
 
         val listAdapterOuter = ListAdapterCloset(itemListOuter)
         listAdapterOuter.notifyDataSetChanged()
@@ -87,8 +87,8 @@ class WeatherFragment : Fragment() {
         // Top
         val itemListTop = ArrayList<ListItemCloset>()
 
-        itemListTop.add(ListItemCloset(R.drawable.sample))
-        itemListTop.add(ListItemCloset(R.drawable.sample))
+        //itemListTop.add(ListItemCloset(R.drawable.sample))
+        //itemListTop.add(ListItemCloset(R.drawable.sample))
 
         val listAdapterTop = ListAdapterCloset(itemListTop)
         listAdapterTop.notifyDataSetChanged()

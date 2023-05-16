@@ -1,8 +1,11 @@
 package com.example.myapplication
 
 import android.annotation.SuppressLint
+import android.R.transition.explode
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -12,6 +15,17 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.android.volley.Response
+import com.android.volley.toolbox.Volley
+import com.example.myapplication.Request.ClosetFragmentRequest
+import com.example.myapplication.Request.ClosetImageRequest
+import com.example.myapplication.databinding.ActivityLoginBinding
+import com.example.myapplication.databinding.FragmentClosetBinding
+import org.json.JSONException
+import org.json.JSONObject
+import java.util.*
+import java.net.URLDecoder
+
 
 class ClosetFragment : Fragment(){
 
@@ -51,6 +65,84 @@ class ClosetFragment : Fragment(){
         val shoes_board = view.findViewById<RecyclerView>(R.id.shoes_board)
 
 
+        val send = arguments?.getString("ID")
+        println("closetFragment3")
+        println(send)
+
+        var imgPathf : String = ""
+        var typef : Int = 0
+        var imgPathff : String = ""
+        var bitmapDecode : Bitmap
+
+        val responseListener =
+            Response.Listener<String> { response ->
+                try {
+                    println(response)
+                    val jsonObject = JSONObject(response)
+                    //val success = jsonObject.getBoolean("success")
+                    val success = jsonObject.getBoolean("success")
+                    if (success) {
+                        println("성공")
+                        val imgPath = jsonObject.getJSONObject("imgPath")
+                        val type = jsonObject.getJSONObject("type")
+
+                        //리스트에서 수정
+                        imgPathf = imgPath.getString("1")
+                        typef = type.getInt("1")
+                        println("imgPath : $imgPath")
+                        println("type : $type")
+                        println("imgPathf : $imgPathf")
+                        println("typef : $typef")
+
+                        imgPathff = imgPathf.split("/").last()
+                        println("imgPathff : $imgPathff")
+
+                        val responseListener =
+                            Response.Listener<String> { response ->
+                                try {
+                                    println(response)
+                                    val jsonObjectt = JSONObject(response)
+                                    val success = jsonObjectt.getBoolean("success")
+                                    if (success) {
+                                        //디코딩
+                                        var IMG = jsonObjectt.getString("IMG")
+                                        val decoder: Base64.Decoder = Base64.getDecoder()
+                                        val encodeByte = decoder.decode(IMG)
+                                        bitmapDecode = BitmapFactory.decodeByteArray(encodeByte,0,encodeByte.size)
+                                        val itemListOuter = ArrayList<ListItemCloset>()
+                                        println("${bitmapDecode::class.simpleName}")
+                                        itemListOuter.add(ListItemCloset(bitmapDecode))
+                                        //ex_outer.setImageBitmap(bitmapDecode)
+
+                                        val listAdapterOuter = ListAdapterCloset(itemListOuter)
+                                        listAdapterOuter.notifyDataSetChanged()
+
+                                        outer_board.adapter = listAdapterOuter
+                                        outer_board.layoutManager = LinearLayoutManager(mainActivity, LinearLayoutManager.HORIZONTAL, false)
+                                    } else {
+                                        return@Listener
+                                    }
+                                } catch (e: JSONException) {
+                                    e.printStackTrace()
+                                }
+                            }
+                        val closetImageRequest = ClosetImageRequest(imgPathff, responseListener)
+                        val queue = Volley.newRequestQueue(getActivity())
+                        queue.add(closetImageRequest)
+
+                    } else {
+                        return@Listener
+                    }
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+            }
+
+        val closetFragmentRequest = ClosetFragmentRequest(send, responseListener)
+        val queue = Volley.newRequestQueue(getActivity())
+        println("프래그먼트 큐 $queue")
+        queue.add(closetFragmentRequest)
+
         add_closet.setOnClickListener{
             //MainActivity에서 ID값 받아옴, 옷 등록하기 버튼 누른 후에는 AddCloset에서 ID값 받아옴
             val send = arguments?.getString("ID")
@@ -69,13 +161,15 @@ class ClosetFragment : Fragment(){
 //            intent.putExtra("ID", send)
 //            startActivity(intent)
 //        }
-
+//    }
 
         // listview
         // Outer
         val itemListOuter = ArrayList<ListItemCloset>()
 
-        itemListOuter.add(ListItemCloset(R.drawable.sample))
+        //itemListOuter.add(ListItemCloset(R.drawable.sample))
+        //println("${ListItemCloset(R.drawable.sample)::class.simpleName}")
+        //itemListOuter.add(ListItemCloset(bitmapDecode))
 
         val listAdapterOuter = ListAdapterCloset(itemListOuter)
         listAdapterOuter.notifyDataSetChanged()
@@ -86,8 +180,8 @@ class ClosetFragment : Fragment(){
         // Top
         val itemListTop = ArrayList<ListItemCloset>()
 
-        itemListTop.add(ListItemCloset(R.drawable.sample))
-        itemListTop.add(ListItemCloset(R.drawable.sample))
+        //itemListTop.add(ListItemCloset(R.drawable.sample))
+        //itemListTop.add(ListItemCloset(R.drawable.sample))
 
         val listAdapterTop = ListAdapterCloset(itemListTop)
         listAdapterTop.notifyDataSetChanged()

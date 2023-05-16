@@ -7,25 +7,29 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.android.volley.Response
+import com.android.volley.toolbox.Volley
+import com.example.myapplication.Request.LoginRequest
+import com.example.myapplication.databinding.ActivityClosetBinding
+import org.json.JSONException
+import org.json.JSONObject
 
 class ClosetActivity : AppCompatActivity() {
 
-    lateinit var add_cloth : TextView
-    lateinit var ex_outer : ImageView
+    val binding by lazy { ActivityClosetBinding.inflate(layoutInflater) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.fragment_closet)
 
-        add_cloth = findViewById(R.id.add_cloth)
-        ex_outer = findViewById(R.id.ex_outer)
+        setContentView(binding.root)
 
-        add_cloth.setOnClickListener {
+        binding.addCloth.setOnClickListener {
             val intent = Intent(this, AddCloset::class.java)
             startActivity(intent)
         }
-        ex_outer.setOnClickListener {
+        binding.exOuter.setOnClickListener {
             val intent = Intent(this, EditCloset::class.java)
             startActivity(intent)
         }
