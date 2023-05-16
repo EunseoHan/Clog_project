@@ -3,8 +3,10 @@ package com.example.myapplication
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 
 
 class ListAdapterCommunity(val itemList: ArrayList<ListItemCommunity>) :
@@ -16,8 +18,9 @@ class ListAdapterCommunity(val itemList: ArrayList<ListItemCommunity>) :
     }
 
     override fun onBindViewHolder(holder: BoardViewHolder, position: Int) {
-        holder.title.text = itemList[position].title
-        holder.context.text = itemList[position].context
+//        holder.title.text = itemList[position].title
+//        holder.context.text = itemList[position].context
+        holder.bind(itemList[position])
     }
 
     override fun getItemCount(): Int {
@@ -26,7 +29,15 @@ class ListAdapterCommunity(val itemList: ArrayList<ListItemCommunity>) :
 
 
     inner class BoardViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val commuImage = itemView.findViewById<ImageView>(R.id.commuImage)
         val title = itemView.findViewById<TextView>(R.id.title)
         val context = itemView.findViewById<TextView>(R.id.context)
+
+        fun bind(item: ListItemCommunity) {
+            title.text = item.title
+            context.text = item.context
+            Glide.with(itemView).load(item.image).into(commuImage)
+
+        }
     }
 }

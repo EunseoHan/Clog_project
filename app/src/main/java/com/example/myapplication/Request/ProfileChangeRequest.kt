@@ -36,6 +36,6 @@ class ProfileChangeRequest(userID : String?,
     }
     companion object {
 
-        private const val URL = "http://175.192.111.51/ProfileChange.php"
+        private const val URL = "http://220.116.242.228/ProfileChange.php"
     }
 }

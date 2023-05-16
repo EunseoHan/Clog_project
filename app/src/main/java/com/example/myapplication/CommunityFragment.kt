@@ -53,11 +53,11 @@ class CommunityFragment : Fragment() {
 
         val itemList = ArrayList<ListItemCommunity>()
 
-        itemList.add(ListItemCommunity("제목01", "내용01"))
-        itemList.add(ListItemCommunity("제목02", "내용02"))
-        itemList.add(ListItemCommunity("제목03", "내용03"))
-        itemList.add(ListItemCommunity("제목04", "내용04"))
-        itemList.add(ListItemCommunity("제목05", "내용05"))
+        itemList.add(ListItemCommunity(R.drawable.arrow,"제목01", "내용01"))
+        itemList.add(ListItemCommunity(R.drawable.arrow,"제목02", "내용02"))
+        itemList.add(ListItemCommunity(R.drawable.arrow,"제목03", "내용03"))
+        itemList.add(ListItemCommunity(R.drawable.arrow,"제목04", "내용04"))
+        itemList.add(ListItemCommunity(R.drawable.arrow,"제목05", "내용05"))
 
         val listAdapter = ListAdapterCommunity(itemList)
         listAdapter.notifyDataSetChanged()
