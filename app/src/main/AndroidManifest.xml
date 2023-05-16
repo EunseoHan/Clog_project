@@ -174,7 +174,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activitygit
+        <activity
             android:name=".MypageMainActivity"
             android:exported="true"
             tools:ignore="DuplicateActivity">
@@ -183,7 +183,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activitygit>
+        </activity>
         <activity
             android:name=".ListItem"
             android:exported="true">
@@ -193,21 +193,19 @@
             </intent-filter>
         </activity>
         <!--firebase-->
-<!--        <service-->
-<!--            android:name=".MyFirebaseMessagingService"-->
-<!--            android:exported="false">-->
-<!--            <intent-filter>-->
-<!--                <action android:name="com.google.firebase.MESSAGING_EVENT" />-->
-<!--            </intent-filter>-->
-<!--        </service>-->
-<!--        <meta-data-->
-<!--            android:name="com.google.fire.base.messaging.default_notification_icon"-->
-<!--            android:resource="@drawable/ic_clog" />-->
-<!--        <meta-data-->
-<!--            android:name="com.google.fire.base.messaging.default_notification_icon"-->
-<!--            android:resource="@color/purple_700"/>-->
-
-
+                <service
+                    android:name=".MyFirebaseMessagingService"
+                    android:exported="false">
+                    <intent-filter>
+                        <action android:name="com.google.firebase.MESSAGING_EVENT" />
+                    </intent-filter>
+                </service>
+                <meta-data
+                    android:name="com.google.fire.base.messaging.default_notification_icon"
+                    android:resource="@drawable/ic_clog" />
+                <meta-data
+                    android:name="com.google.fire.base.messaging.default_notification_color"
+                    android:resource="@color/purple_700"/>
     </application>
 
 
