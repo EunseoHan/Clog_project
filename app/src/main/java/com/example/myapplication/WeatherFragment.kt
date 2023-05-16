@@ -18,6 +18,8 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.AuthFailureError
 import com.android.volley.RequestQueue
 import com.android.volley.Response
@@ -62,6 +64,42 @@ class WeatherFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // list view
+        val outer_board = view.findViewById<RecyclerView>(R.id.outer_board)
+        val top_board = view.findViewById<RecyclerView>(R.id.top_board)
+        val bottom_board = view.findViewById<RecyclerView>(R.id.bottom_board)
+        val onepiece_board = view.findViewById<RecyclerView>(R.id.onepiece_board)
+        val shoes_board = view.findViewById<RecyclerView>(R.id.shoes_board)
+
+        // listview
+        // Outer
+        val itemListOuter = ArrayList<ListItemCloset>()
+
+        itemListOuter.add(ListItemCloset(R.drawable.sample))
+
+        val listAdapterOuter = ListAdapterCloset(itemListOuter)
+        listAdapterOuter.notifyDataSetChanged()
+
+        outer_board.adapter = listAdapterOuter
+        outer_board.layoutManager = LinearLayoutManager(mainActivity, LinearLayoutManager.HORIZONTAL, false)
+
+        // Top
+        val itemListTop = ArrayList<ListItemCloset>()
+
+        itemListTop.add(ListItemCloset(R.drawable.sample))
+        itemListTop.add(ListItemCloset(R.drawable.sample))
+
+        val listAdapterTop = ListAdapterCloset(itemListTop)
+        listAdapterTop.notifyDataSetChanged()
+
+        top_board.adapter = listAdapterTop
+        top_board.layoutManager = LinearLayoutManager(mainActivity, LinearLayoutManager.HORIZONTAL, false)
+
+
+
+
+
 
         if (requestQueue == null) {
             requestQueue = Volley.newRequestQueue(MyApplication.ApplicationContext())
@@ -248,40 +286,6 @@ class WeatherFragment : Fragment() {
                             if (wImage08 != null) { Glide.with(this).load(imageStr).into(wImage08) }
                         }
 
-                        // 집어넣기
-//                        if (dt_txt_cal in 0..2) {
-//                            if (temp01 != null) { temp01.text = "$temp°" }
-//                            if (time01 != null) { time01.text = "$dt_txt_sub" + "시" }
-//                            if (wImage01 != null) { Glide.with(this).load(imageStr).into(wImage01) }
-//                        } else if (dt_txt_cal in 3..5) {
-//                            if (temp02 != null) { temp02.text = "$temp°" }
-//                            if (time02 != null) { time02.text = "$dt_txt_sub" + "시" }
-//                            if (wImage02 != null) { Glide.with(this).load(imageStr).into(wImage02) }
-//                        } else if (dt_txt_cal in 6..8) {
-//                            if (temp03 != null) { temp03.text = "$temp°" }
-//                            if (time03 != null) { time03.text = "$dt_txt_sub" + "시" }
-//                            if (wImage03 != null) { Glide.with(this).load(imageStr).into(wImage03) }
-//                        } else if (dt_txt_cal in 9..11) {
-//                            if (temp04 != null) { temp04.text = "$temp°" }
-//                            if (time04 != null) { time04.text = "$dt_txt_sub" + "시" }
-//                            if (wImage04 != null) { Glide.with(this).load(imageStr).into(wImage04) }
-//                        } else if (dt_txt_cal in 12..14) {
-//                            if (temp05 != null) { temp05.text = "$temp°" }
-//                            if (time05 != null) { time05.text = "$dt_txt_sub" + "시" }
-//                            if (wImage05 != null) { Glide.with(this).load(imageStr).into(wImage05) }
-//                        } else if (dt_txt_cal in 15..17) {
-//                            if (temp06 != null) { temp06.text = "$temp°" }
-//                            if (time06 != null) { time06.text = "$dt_txt_sub" + "시" }
-//                            if (wImage06 != null) { Glide.with(this).load(imageStr).into(wImage06) }
-//                        } else if (dt_txt_cal in 18..20) {
-//                            if (temp07 != null) { temp07.text = "$temp°" }
-//                            if (time07 != null) { time07.text = "$dt_txt_sub" + "시" }
-//                            if (wImage07 != null) { Glide.with(this).load(imageStr).into(wImage07) }
-//                        } else if (dt_txt_cal in 21..23) {
-//                            if (temp08 != null) { temp08.text = "$temp°" }
-//                            if (time08 != null) { time08.text = "$dt_txt_sub" + "시" }
-//                            if (wImage08 != null) { Glide.with(this).load(imageStr).into(wImage08) }
-//                        }
                     }
 
 

@@ -18,16 +18,16 @@ class CommunityActivity : AppCompatActivity() {
         setContentView(R.layout.activity_community)
 
         go_to_community_write = findViewById(R.id.go_to_community_write)
-        ex_community1 = findViewById(R.id.ex_community1)
+//        ex_community1 = findViewById(R.id.ex_community1)
 
         go_to_community_write.setOnClickListener {
             val intent = Intent(this, CommunityWrite::class.java)
             startActivity(intent)
         }
-        ex_community1.setOnClickListener {
-            val intent = Intent(this, CommunityDetailActivity::class.java)
-            startActivity(intent)
-        }
+//        ex_community1.setOnClickListener {
+//            val intent = Intent(this, CommunityDetailActivity::class.java)
+//            startActivity(intent)
+//        }
 
 
     }

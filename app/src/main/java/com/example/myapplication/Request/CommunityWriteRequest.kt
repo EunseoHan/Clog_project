@@ -37,7 +37,7 @@ class CommunityWriteRequest(
     }
     companion object {
 
-        private const val URL = "http://172.20.10.5:8080/CommunityWrite.php"
+        private const val URL = "http://220.116.242.228/CommunityWrite.php"
 
     }
 }
