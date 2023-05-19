@@ -7,6 +7,8 @@
     android:orientation="vertical"
     tool:context=".MainActivity">
 
+
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="55dp"
@@ -98,6 +100,11 @@
             android:textStyle="bold" />
     </LinearLayout>
 
+    <WebView
+        android:id="@+id/webView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -116,7 +123,7 @@
     </LinearLayout>
 
     <EditText
-        android:id="@+id/Sample1"
+        android:id="@+id/location_editText"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_margin="15dp"

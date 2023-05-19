@@ -1,18 +1,31 @@
 package com.example.myapplication
 
 import android.Manifest
+import android.annotation.SuppressLint
+import android.app.Dialog
 import android.content.Context
 import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
 import android.icu.text.SimpleDateFormat
+import android.location.Geocoder
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
+import android.net.http.SslError
 import android.os.Build
 import android.os.Bundle
+import android.os.Message
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.JavascriptInterface
+import android.webkit.JsResult
+import android.webkit.SslErrorHandler
+import android.webkit.WebChromeClient
+import android.webkit.WebResourceRequest
+import android.webkit.WebView
+import android.webkit.WebViewClient
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -27,11 +40,22 @@ import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.Target
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.json.JSONObject
 import java.util.*
 
 
 class WeatherFragment : Fragment() {
+
+    val IP = "192.168.45.143"
+
+    lateinit var location_editText: EditText
+    lateinit var webView: WebView
+
+
 
     companion object {
         var requestQueue: RequestQueue? = null
@@ -64,6 +88,13 @@ class WeatherFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        location_editText = view.findViewById(R.id.location_editText)
+        webView = view.findViewById(R.id.webView)
+
+        location_editText.setOnClickListener {
+            showKakaoAddressWebView()
+        }
 
         // list view
         val outer_board = view.findViewById<RecyclerView>(R.id.outer_board)
@@ -113,9 +144,99 @@ class WeatherFragment : Fragment() {
         button.setOnClickListener {
             getGPS()
             CurrentWeatherCall()
+            location_editText.setText("\uD83D\uDCCD 현재 위치")
+
         }
     }
 
+    // 위치 검색
+    @SuppressLint("JavascriptInterface")
+    private fun showKakaoAddressWebView() {
+
+        webView.settings.apply {
+            javaScriptEnabled = true
+            javaScriptCanOpenWindowsAutomatically = true
+            setSupportMultipleWindows(true)
+        }
+
+        webView.apply {
+            addJavascriptInterface(WebViewData(), "Leaf")
+            webViewClient = client
+            webChromeClient = chromeClient
+            loadUrl("http://$IP/daum_address.php")
+        }
+    }
+
+    private val client: WebViewClient = object : WebViewClient() {
+
+        override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
+            return false
+        }
+
+        override fun onReceivedSslError(view: WebView?, handler: SslErrorHandler?, error: SslError?) {
+            handler?.proceed()
+        }
+    }
+
+    private inner class WebViewData {
+        @JavascriptInterface
+        fun getAddress(zoneCode: String, roadAddress: String, buildingName: String) {
+
+            CoroutineScope(Dispatchers.Default).launch {
+
+                withContext(CoroutineScope(Dispatchers.Main).coroutineContext) {
+                //우편번호:($zoneCode)
+
+                    location_editText.setText("\uD83D\uDCCD $roadAddress $buildingName")
+                    var geo_lat_lng = geoCoding("$roadAddress").toString()
+                    lat = geo_lat_lng.substring(10 until 19).toDouble()
+                    lng = geo_lat_lng.substring(20 until 30).toDouble()
+
+                    CurrentWeatherCall()
+
+                }
+            }
+        }
+    }
+
+    private val chromeClient = object : WebChromeClient() {
+
+        override fun onCreateWindow(view: WebView?, isDialog: Boolean, isUserGesture: Boolean, resultMsg: Message?): Boolean {
+
+            val newWebView = WebView(mainActivity)
+
+            newWebView.settings.javaScriptEnabled = true
+
+            val dialog = Dialog(mainActivity)
+
+            dialog.setContentView(newWebView)
+
+            val params = dialog.window!!.attributes
+
+            params.width = ViewGroup.LayoutParams.MATCH_PARENT
+            params.height = ViewGroup.LayoutParams.MATCH_PARENT
+            dialog.window!!.attributes = params
+            dialog.show()
+
+            newWebView.webChromeClient = object : WebChromeClient() {
+                override fun onJsAlert(view: WebView, url: String, message: String, result: JsResult): Boolean {
+                    super.onJsAlert(view, url, message, result)
+                    return true
+                }
+
+                override fun onCloseWindow(window: WebView?) {
+                    dialog.dismiss()
+                }
+            }
+
+            (resultMsg!!.obj as WebView.WebViewTransport).webView = newWebView
+            resultMsg.sendToTarget()
+
+            return true
+        }
+    }
+
+    // 현재 위치 + 날씨
     fun getGPS() {
 
         val lm = mainActivity.getSystemService(Context.LOCATION_SERVICE) as LocationManager
@@ -244,7 +365,6 @@ class WeatherFragment : Fragment() {
                         val weather = weatherObj.getJSONArray("weather")
                         val iconObj = weather.getJSONObject(0)
                         val icon = iconObj.getString("icon")
-//                        var icon_sub = icon.substring(0 until 2)
 
 
                         val imageStr = "https://openweathermap.org/img/wn/" + icon + "@2x.png"
@@ -302,5 +422,21 @@ class WeatherFragment : Fragment() {
         requestQueue!!.add(request)
     }
 
+    fun geoCoding(address: String): Location {
+        return try {
+            Geocoder(mainActivity, Locale.KOREA).getFromLocationName(address, 1)?.let{
+                Location("").apply {
+                    latitude =  it[0].latitude
+                    longitude = it[0].longitude
+                }
+            }?: Location("").apply {
+                latitude = 0.0
+                longitude = 0.0
+            }
+        }catch (e:Exception) {
+            e.printStackTrace()
+            geoCoding(address) //재시도
+        }
+    }
 
 }

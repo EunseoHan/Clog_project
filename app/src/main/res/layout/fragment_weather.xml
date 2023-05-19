@@ -14,12 +14,32 @@
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
-<androidx.appcompat.widget.SearchView
-    android:id="@+id/searchView"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:iconifiedByDefault="false"
-    app:queryHint="Search..." />
+
+    <WebView
+        android:id="@+id/webView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <EditText
+        android:id="@+id/location_editText"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/button_roud"
+        android:editable="false"
+        android:focusable="false"
+        android:hint="위치 검색하기"
+        android:textSize="15dp"
+        android:textColor="@color/black"
+        android:textAlignment="center"/>
+
+    <TextView
+        android:id="@+id/getWeatherTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="20dp"
+        android:layout_gravity="right"
+        android:text="현재 위치로 설정하기"/>
 
 <ScrollView
     android:layout_width="match_parent"
@@ -30,12 +50,7 @@
     android:layout_height="match_parent">
 
 
-    <TextView
-        android:id="@+id/getWeatherTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:text="위치 받아오기 (임시 버튼)"/>
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
