@@ -4,3 +4,4 @@ import android.graphics.Bitmap
 import android.net.Uri
 
 data class ListItemCloset(val ImageResource: Bitmap)
+//data class ListItemCloset(val ImageResource: Uri)
