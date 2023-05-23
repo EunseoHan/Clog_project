@@ -56,11 +56,12 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/commutitle"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
-                android:textSize="20sp"
+                android:text="커뮤니티 제목"
                 android:textColor="@color/black"
-                android:text="커뮤니티 제목"/>
+                android:textSize="20sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -86,10 +87,11 @@
             </LinearLayout>
 
             <ImageView
+                android:id="@+id/commuimage"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:layout_marginBottom="20dp"
-                android:background="@drawable/button_roud"/>
+                android:background="@drawable/button_roud" />
 
             <ScrollView
                 android:layout_width="match_parent"
@@ -99,11 +101,13 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
+
                 <TextView
+                    android:id="@+id/commutext"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="20dp"
-                    android:text="커뮤니티 내용"/>
+                    android:text="커뮤니티 내용" />
             </LinearLayout>
             </ScrollView>
 
