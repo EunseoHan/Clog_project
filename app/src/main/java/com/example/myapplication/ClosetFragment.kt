@@ -61,7 +61,7 @@ class ClosetFragment : Fragment(){
         val outer_board = view.findViewById<RecyclerView>(R.id.outer_board)
         val top_board = view.findViewById<RecyclerView>(R.id.top_board)
         val bottom_board = view.findViewById<RecyclerView>(R.id.bottom_board)
-        val onepiece_board = view.findViewById<RecyclerView>(R.id.onepiece_board)
+        val dress_board = view.findViewById<RecyclerView>(R.id.onepiece_board)
         val shoes_board = view.findViewById<RecyclerView>(R.id.shoes_board)
 
 
@@ -79,56 +79,228 @@ class ClosetFragment : Fragment(){
                 try {
                     println(response)
                     val jsonObject = JSONObject(response)
-                    //val success = jsonObject.getBoolean("success")
                     val success = jsonObject.getBoolean("success")
                     if (success) {
                         println("성공")
                         val imgPath = jsonObject.getJSONObject("imgPath")
                         val type = jsonObject.getJSONObject("type")
 
-                        //리스트에서 수정
-                        imgPathf = imgPath.getString("1")
-                        typef = type.getInt("1")
+                        val imgPathNum = jsonObject.getInt("i")
+
                         println("imgPath : $imgPath")
                         println("type : $type")
-                        println("imgPathf : $imgPathf")
-                        println("typef : $typef")
+                        println("imgPathNum : $imgPathNum")
 
-                        imgPathff = imgPathf.split("/").last()
-                        println("imgPathff : $imgPathff")
+                        //리스트에서 수정
+                        if(imgPathNum != 0) {
+                            val itemListOuter = ArrayList<ListItemCloset>()
+                            val itemListTop = ArrayList<ListItemCloset>()
+                            val itemListBottom = ArrayList<ListItemCloset>()
+                            val itemListDress = ArrayList<ListItemCloset>()
+                            val itemListShoes = ArrayList<ListItemCloset>()
+                            for (i: Int in 1..imgPathNum) {
+                                println("for문")
+                                imgPathf = imgPath.getString(i.toString())
+                                typef = type.getInt(i.toString())
 
-                        val responseListener =
-                            Response.Listener<String> { response ->
-                                try {
-                                    println(response)
-                                    val jsonObjectt = JSONObject(response)
-                                    val success = jsonObjectt.getBoolean("success")
-                                    if (success) {
-                                        //디코딩
-                                        var IMG = jsonObjectt.getString("IMG")
-                                        val decoder: Base64.Decoder = Base64.getDecoder()
-                                        val encodeByte = decoder.decode(IMG)
-                                        bitmapDecode = BitmapFactory.decodeByteArray(encodeByte,0,encodeByte.size)
-                                        val itemListOuter = ArrayList<ListItemCloset>()
-                                        println("${bitmapDecode::class.simpleName}")
-                                        itemListOuter.add(ListItemCloset(bitmapDecode))
-                                        //ex_outer.setImageBitmap(bitmapDecode)
+                                //println("imgPathf : $imgPathf")
+                                //println("typef : $typef")
 
-                                        val listAdapterOuter = ListAdapterCloset(itemListOuter)
-                                        listAdapterOuter.notifyDataSetChanged()
+                                imgPathff = imgPathf.split("/").last()
+                                //println("imgPathff : $imgPathff")
+                                if(typef==1){val responseListener = Response.Listener<String> { response ->
+                                        try {
+                                            println(response)
+                                            val jsonObjectt = JSONObject(response)
+                                            val success = jsonObjectt.getBoolean("success")
+                                            if (success) {
+                                                //디코딩
+                                                var IMG = jsonObjectt.getString("IMG")
+                                                val decoder: Base64.Decoder = Base64.getDecoder()
+                                                val encodeByte = decoder.decode(IMG)
+                                                bitmapDecode = BitmapFactory.decodeByteArray(
+                                                    encodeByte,
+                                                    0,
+                                                    encodeByte.size
+                                                )
+                                                //리스트에 넣기
+                                                println("${bitmapDecode::class.simpleName}")
+                                                itemListOuter.add(ListItemCloset(bitmapDecode))
+                                                //itemListOuter.add(ListItemCloset(imgPathf))
+                                                //ex_outer.setImageBitmap(bitmapDecode)
 
-                                        outer_board.adapter = listAdapterOuter
-                                        outer_board.layoutManager = LinearLayoutManager(mainActivity, LinearLayoutManager.HORIZONTAL, false)
-                                    } else {
-                                        return@Listener
+                                                val listAdapterOuter = ListAdapterCloset(itemListOuter)
+                                                listAdapterOuter.notifyDataSetChanged()
+
+                                                outer_board.adapter = listAdapterOuter
+                                                outer_board.layoutManager = LinearLayoutManager(mainActivity, LinearLayoutManager.HORIZONTAL, false)
+                                            } else {
+                                                return@Listener
+                                            }
+                                        } catch (e: JSONException) {
+                                            e.printStackTrace()
+                                        }
+
+
                                     }
-                                } catch (e: JSONException) {
-                                    e.printStackTrace()
+                                    val closetImageRequest =
+                                        ClosetImageRequest(imgPathff, responseListener)
+//                                val closetImageRequest =
+//                                    ClosetImageRequest(imgPathf, responseListener)
+                                    val queue = Volley.newRequestQueue(getActivity())
+                                    queue.add(closetImageRequest)
+                                }else if(typef==2){
+                                    val responseListener = Response.Listener<String> { response ->
+                                        try {
+                                            println(response)
+                                            val jsonObjectt = JSONObject(response)
+                                            val success = jsonObjectt.getBoolean("success")
+                                            if (success) {
+                                                //디코딩
+                                                var IMG = jsonObjectt.getString("IMG")
+                                                val decoder: Base64.Decoder = Base64.getDecoder()
+                                                val encodeByte = decoder.decode(IMG)
+                                                bitmapDecode = BitmapFactory.decodeByteArray(
+                                                    encodeByte,
+                                                    0,
+                                                    encodeByte.size
+                                                )
+                                                //리스트에 넣기
+                                                println("${bitmapDecode::class.simpleName}")
+                                                itemListTop.add(ListItemCloset(bitmapDecode))
+
+                                                val listAdapterTop = ListAdapterCloset(itemListTop)
+                                                listAdapterTop.notifyDataSetChanged()
+
+                                                top_board.adapter = listAdapterTop
+                                                top_board.layoutManager = LinearLayoutManager(mainActivity, LinearLayoutManager.HORIZONTAL, false)
+
+                                            } else {
+                                                return@Listener
+                                            }
+                                        } catch (e: JSONException) {
+                                            e.printStackTrace()
+                                        }
+                                    }
+                                    val closetImageRequest =
+                                        ClosetImageRequest(imgPathff, responseListener)
+
+                                    val queue = Volley.newRequestQueue(getActivity())
+                                    queue.add(closetImageRequest)
+                                }else if(typef==3){
+                                    val responseListener = Response.Listener<String> { response ->
+                                        try {
+                                            println(response)
+                                            val jsonObjectt = JSONObject(response)
+                                            val success = jsonObjectt.getBoolean("success")
+                                            if (success) {
+                                                //디코딩
+                                                var IMG = jsonObjectt.getString("IMG")
+                                                val decoder: Base64.Decoder = Base64.getDecoder()
+                                                val encodeByte = decoder.decode(IMG)
+                                                bitmapDecode = BitmapFactory.decodeByteArray(
+                                                    encodeByte,
+                                                    0,
+                                                    encodeByte.size
+                                                )
+                                                //리스트에 넣기
+                                                println("${bitmapDecode::class.simpleName}")
+                                                itemListBottom.add(ListItemCloset(bitmapDecode))
+
+                                                val listAdapterBottom = ListAdapterCloset(itemListBottom)
+                                                listAdapterBottom.notifyDataSetChanged()
+
+                                                bottom_board.adapter = listAdapterBottom
+                                                bottom_board.layoutManager = LinearLayoutManager(mainActivity, LinearLayoutManager.HORIZONTAL, false)
+                                            } else {
+                                                return@Listener
+                                            }
+                                        } catch (e: JSONException) {
+                                            e.printStackTrace()
+                                        }
+                                    }
+                                    val closetImageRequest =
+                                        ClosetImageRequest(imgPathff, responseListener)
+
+                                    val queue = Volley.newRequestQueue(getActivity())
+                                    queue.add(closetImageRequest)
+                                }else if(typef==4){
+                                    val responseListener = Response.Listener<String> { response ->
+                                        try {
+                                            println(response)
+                                            val jsonObjectt = JSONObject(response)
+                                            val success = jsonObjectt.getBoolean("success")
+                                            if (success) {
+                                                //디코딩
+                                                var IMG = jsonObjectt.getString("IMG")
+                                                val decoder: Base64.Decoder = Base64.getDecoder()
+                                                val encodeByte = decoder.decode(IMG)
+                                                bitmapDecode = BitmapFactory.decodeByteArray(
+                                                    encodeByte,
+                                                    0,
+                                                    encodeByte.size
+                                                )
+                                                //리스트에 넣기
+                                                println("${bitmapDecode::class.simpleName}")
+                                                itemListDress.add(ListItemCloset(bitmapDecode))
+
+                                                val listAdapterDress = ListAdapterCloset(itemListDress)
+                                                listAdapterDress.notifyDataSetChanged()
+
+                                                dress_board.adapter = listAdapterDress
+                                                dress_board.layoutManager = LinearLayoutManager(mainActivity, LinearLayoutManager.HORIZONTAL, false)
+                                            } else {
+                                                return@Listener
+                                            }
+                                        } catch (e: JSONException) {
+                                            e.printStackTrace()
+                                        }
+                                    }
+                                    val closetImageRequest =
+                                        ClosetImageRequest(imgPathff, responseListener)
+
+                                    val queue = Volley.newRequestQueue(getActivity())
+                                    queue.add(closetImageRequest)
+                                }else if(typef==5){
+                                    val responseListener = Response.Listener<String> { response ->
+                                        try {
+                                            println(response)
+                                            val jsonObjectt = JSONObject(response)
+                                            val success = jsonObjectt.getBoolean("success")
+                                            if (success) {
+                                                //디코딩
+                                                var IMG = jsonObjectt.getString("IMG")
+                                                val decoder: Base64.Decoder = Base64.getDecoder()
+                                                val encodeByte = decoder.decode(IMG)
+                                                bitmapDecode = BitmapFactory.decodeByteArray(
+                                                    encodeByte,
+                                                    0,
+                                                    encodeByte.size
+                                                )
+                                                //리스트에 넣기
+                                                println("${bitmapDecode::class.simpleName}")
+                                                itemListShoes.add(ListItemCloset(bitmapDecode))
+
+                                                val listAdapterShoes = ListAdapterCloset(itemListShoes)
+                                                listAdapterShoes.notifyDataSetChanged()
+
+                                                shoes_board.adapter = listAdapterShoes
+                                                shoes_board.layoutManager = LinearLayoutManager(mainActivity, LinearLayoutManager.HORIZONTAL, false)
+                                            } else {
+                                                return@Listener
+                                            }
+                                        } catch (e: JSONException) {
+                                            e.printStackTrace()
+                                        }
+                                    }
+                                    val closetImageRequest =
+                                        ClosetImageRequest(imgPathff, responseListener)
+
+                                    val queue = Volley.newRequestQueue(getActivity())
+                                    queue.add(closetImageRequest)
                                 }
                             }
-                        val closetImageRequest = ClosetImageRequest(imgPathff, responseListener)
-                        val queue = Volley.newRequestQueue(getActivity())
-                        queue.add(closetImageRequest)
+                        }
 
                     } else {
                         return@Listener
@@ -163,7 +335,7 @@ class ClosetFragment : Fragment(){
 //        }
 //    }
 
-        // listview
+        /*// listview
         // Outer
         val itemListOuter = ArrayList<ListItemCloset>()
 
@@ -187,7 +359,7 @@ class ClosetFragment : Fragment(){
         listAdapterTop.notifyDataSetChanged()
 
         top_board.adapter = listAdapterTop
-        top_board.layoutManager = LinearLayoutManager(mainActivity, LinearLayoutManager.HORIZONTAL, false)
+        top_board.layoutManager = LinearLayoutManager(mainActivity, LinearLayoutManager.HORIZONTAL, false)*/
 
 
     }
