@@ -13,7 +13,6 @@ class LoginRequest(userID: String, userPASSWORD: String, listener: Response.List
         map = HashMap()
         map.put("userID",userID)
         map.put("userPASSWORD",userPASSWORD)
-        println("loginrequest안")
         println(userID)
         println(userPASSWORD)
     }
@@ -25,6 +24,6 @@ class LoginRequest(userID: String, userPASSWORD: String, listener: Response.List
 
     companion object {
         // 서버 URL 설정 ( PHP 파일 연동 )
-        private const val URL = "http://218.159.194.125/Login.php"
+        private const val URL = "http://172.18.13.151/Login.php"
     }
 }

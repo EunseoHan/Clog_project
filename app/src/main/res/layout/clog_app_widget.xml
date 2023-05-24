@@ -1,0 +1,93 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/Widget.MyApplication.AppWidget.Container"
+    android:id="@+id/widgetAll"
+    android:layout_width="250dp"
+    android:layout_height="250dp"
+    android:background="#00ff0000"
+    android:padding="20dp"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:padding="10dp"
+        android:background="@drawable/button_roud3"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/widgetCity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="서울특별시"
+            android:gravity="center"
+            android:textColor="@color/black"/>
+
+        <TextView
+            android:id="@+id/widgetTemp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="25°"
+            android:textSize="45dp"
+            android:gravity="center"
+            android:textColor="@color/black"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/widgetWeather"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:text="맑음"
+            android:textColor="@color/black"/>
+        <TextView
+            android:id="@+id/widgetTempMm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="최고: 29 | 최저: 18"
+            android:textSize="13dp"
+            android:textColor="@color/black"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"/>
+    <TextView
+        android:id="@+id/widgetText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="지금 날씨에는 이런 옷 어때요?"
+        android:layout_marginBottom="5dp"
+        android:textSize="13dp"
+        android:textColor="@color/black"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:text="clog"
+                android:textSize="16dp"
+                android:textColor="@color/Serenity2"
+                android:textStyle="bold"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:text="와 내 옷장에서 옷 고르기"
+                android:textSize="14dp"
+                android:textColor="@color/black"/>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

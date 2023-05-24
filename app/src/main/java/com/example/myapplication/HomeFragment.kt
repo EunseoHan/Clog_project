@@ -2,6 +2,7 @@ package com.example.myapplication
 
 import android.Manifest
 import android.app.Application
+import android.content.ComponentName
 import android.content.Context
 import android.content.Context.LOCATION_SERVICE
 import android.content.Intent
@@ -9,6 +10,7 @@ import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -24,6 +26,7 @@ import android.widget.TextView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.getSystemService
+import androidx.core.net.toUri
 import com.android.volley.AuthFailureError
 import com.android.volley.RequestQueue
 import com.android.volley.Response
@@ -35,15 +38,26 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import org.json.JSONObject
+import java.net.URL
 import java.text.SimpleDateFormat
 import java.util.*
 
 
 class HomeFragment : Fragment() {
 
+
     companion object {
         var requestQueue: RequestQueue? = null
+
+        var widgetTemp: String = ""
+        var widgetCity: String = ""
+        var widgetWeather: String = ""
+        var widgetTempMm: String = ""
+        var widgetText: String = ""
+        var widgetImage: String = ""
     }
+
+
 
     // 1. Context를 할당할 변수를 프로퍼티로 선언(어디서든 사용할 수 있게)
     private lateinit var mainActivity: MainActivity
@@ -87,9 +101,14 @@ class HomeFragment : Fragment() {
             getGPS()
             CurrentWeatherCall()
         }
+        print("widgetImage: "+widgetImage)
     }
 
 
+
+
+
+    //GPS
     fun getGPS() {
 
         val lm = mainActivity.getSystemService(LOCATION_SERVICE) as LocationManager
@@ -181,35 +200,57 @@ class HomeFragment : Fragment() {
                     val city = jsonObject.getString("name")
                     if (cityView != null) {
                         cityView.text = city
+                        widgetCity = city
                     }
                     val weatherJson = jsonObject.getJSONArray("weather")
                     val weatherObj = weatherJson.getJSONObject(0)
                     val weather = weatherObj.getString("description")
                     val weatherId = weatherObj.getInt("id")
-                    println("id=" + weatherId)
+                    val weatherIcon = weatherObj.getString("icon")
+//                    widgetImage = "https://openweathermap.org/img/wn/" + weatherIcon + "@2x.png"
+                    widgetImage = "https://openweathermap.org/img/wn/01n@2x.png"
+
+
+                    println("widgetImage_HOME= " + widgetImage)
+
+
                     if (weatherView != null) {
-                        if (wDescEngToKor(weatherId) != "null")
+                        if (wDescEngToKor(weatherId) != "null") {
                             weatherView.text = wDescEngToKor(weatherId)
-                        else
+                            widgetWeather = wDescEngToKor(weatherId)
+                        }
+                        else {
                             weatherView.text = weather
+                            widgetWeather = wDescEngToKor(weatherId)
+                        }
                     }
                     if (weatherId < 300) {  // 2xx: Thunderstorm
                         weatherImage?.setBackgroundResource(R.drawable.thunderstorm)
+                        widgetText = "오늘처럼 흐린 날 이런 옷은 어때요?"
                     } else if (weatherId < 600) {   // 3xx, 5xx: Rain
                         weatherImage?.setBackgroundResource(R.drawable.rain)
+                        widgetText = "비 오는 날은 이렇게 입어보세요!"
                     } else if (weatherId < 700){    // 6xx: Snow
                         weatherImage?.setBackgroundResource(R.drawable.snow)
+                        widgetText = "눈 오는 날은 이렇게 입어보세요!"
                     } else if (weatherId < 800) {   // Atmosphere (주로 안개)
                         weatherImage?.setBackgroundResource(R.drawable.atmosphere)
+                        widgetText = ""
                     } else if (weatherId == 800) {   // clear sky
                         weatherImage?.setBackgroundResource(R.drawable.clearsky)
-                    } else if (weatherId == 804) {   // clear sky
+                        widgetText = "이렇게 맑은 날 이런 옷은 어때요?"
+                    } else if (weatherId == 804) {   // overcastclouds
                         weatherImage?.setBackgroundResource(R.drawable.overcastclouds)
+                        widgetText = ""
                     } else if (weatherId == 803) {   // broken clouds
                         weatherImage?.setBackgroundResource(R.drawable.brokenclouds)
+                        widgetText = ""
                     } else if (weatherId < 900) {   // clouds
                         weatherImage?.setBackgroundResource(R.drawable.clouds)
+                        widgetText = ""
                     }
+
+
 
                     val tempK = JSONObject(jsonObject.getString("main"))
                     val tempDo = Math.round((tempK.getDouble("temp") - 273.15) * 100) / 100
@@ -217,9 +258,11 @@ class HomeFragment : Fragment() {
                     val temp_M = Math.round((tempK.getDouble("temp_max") - 273.15) * 100) / 100
                     if (tempView != null) {
                         tempView.text = "$tempDo°"
+                        widgetTemp = "$tempDo°"
                     }
                     if (tempMn != null) {
                         tempMn.text = "최고: $temp_M° 최저: $temp_m°"
+                        widgetTempMm = "최고: $temp_M° 최저: $temp_m°"
                     }
                 } catch (e: Exception) {
                     e.printStackTrace()
@@ -250,7 +293,7 @@ class HomeFragment : Fragment() {
             "매우 강한 비","극심한 비","우박","약한 소나기 비","소나기 비","강한 소나기 비","불규칙적 소나기 비",
             "가벼운 눈","눈","강한 눈","진눈깨비","소나기 진눈깨비","약한 비와 눈","비와 눈","약한 소나기 눈",
             "소나기 눈","강한 소나기 눈","박무","연기","연무","모래 먼지","안개","모래","먼지","화산재","돌풍",
-            "토네이도","구름 한 점 없는 맑은 하늘","약간의 구름이 낀 하늘","드문드문 구름이 낀 하늘","구름이 거의 없는 하늘",
+            "토네이도","구름 없는 맑은 하늘","약간의 구름이 낀 하늘","드문드문 구름이 낀 하늘","구름이 거의 없는 하늘",
             "구름으로 뒤덮인 흐린 하늘","토네이도","태풍","허리케인","한랭","고온","바람부는","우박","바람이 거의 없는",
             "약한 바람","부드러운 바람","중간 세기 바람","신선한 바람","센 바람","돌풍에 가까운 센 바람","돌풍",
             "심각한 돌풍","폭풍","강한 폭풍","허리케인")

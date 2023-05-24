@@ -35,6 +35,6 @@ class ProfileChangeRequest(userID : String?,
         return map
     }
     companion object {
-        private const val URL = "http://218.159.194.125/ProfileChange.php"
+        private const val URL = "http://172.18.13.151/ProfileChange.php"
     }
 }

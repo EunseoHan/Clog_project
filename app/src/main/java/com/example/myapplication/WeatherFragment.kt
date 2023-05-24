@@ -50,7 +50,7 @@ import java.util.*
 
 class WeatherFragment : Fragment() {
 
-    val IP = "121.129.180.71"
+    val IP = "172.18.13.151"
 
     lateinit var location_editText: EditText
     lateinit var webView: WebView
@@ -333,6 +333,8 @@ class WeatherFragment : Fragment() {
         val temp07 = view?.findViewById<TextView>(R.id.temp07)
         val temp08 = view?.findViewById<TextView>(R.id.temp08)
 
+        val textView00 = view?.findViewById<TextView>(R.id.textView00)
+
 
         val url =
             "http://api.openweathermap.org/data/2.5/forecast?lat=$lat&lon=$lng&appid=e7a531d94bf0d7e2bff8881247a4b70f"
@@ -348,6 +350,21 @@ class WeatherFragment : Fragment() {
                     val simpleDateFormatTime = SimpleDateFormat("HH")
                     val getTime = simpleDateFormatTime.format(date)
                     val getTimeInt = (getTime.toInt())
+//
+//                    if (getTimeInt < 13) {
+//                        if (textView00 != null) {
+//                            textView00.text = "오전 ${getTimeInt + 1}시, 내 옷장에서 추천받기"
+//                        }
+//                    }
+//                    else {
+//                        if (textView00 != null) {
+//                            textView00.text = "오후 ${getTimeInt - 11}시, 내 옷장에서 추천받기"
+//                        }
+//                    }
+
+
+
+
 
                     val jsonObject = JSONObject(response)
                     val weatherJson = jsonObject.getJSONArray("list")
@@ -369,13 +386,18 @@ class WeatherFragment : Fragment() {
 
                         val imageStr = "https://openweathermap.org/img/wn/" + icon + "@2x.png"
 
-                        val timeMinus = 24-getTimeInt
                         val dt_txt_cal = (dt_txt_sub + 8)%24
 
                         if (i==0) {
                             if (temp01 != null) { temp01.text = "$temp°" }
                             if (time01 != null) { time01.text = "$dt_txt_cal" + "시" }
                             if (wImage01 != null) { Glide.with(this).load(imageStr).into(wImage01) }
+                            if (textView00 != null) {
+                                if (dt_txt_cal < 13)
+                                    textView00.text = "오전 ${dt_txt_cal}시, 내 옷장에서 추천받기"
+                                else
+                                    textView00.text = "오후 ${dt_txt_cal-12}시, 내 옷장에서 추천받기"
+                            }
                         } else if (i==1) {
                             if (temp02 != null) { temp02.text = "$temp°" }
                             if (time02 != null) { time02.text = "$dt_txt_cal" + "시" }

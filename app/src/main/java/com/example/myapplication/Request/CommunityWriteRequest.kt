@@ -36,6 +36,6 @@ class CommunityWriteRequest(
         return map
     }
     companion object {
-        private const val URL = "http://218.159.194.125/CommunityWrite.php"
+        private const val URL = "http://172.18.13.151/CommunityWrite.php"
     }
 }
