@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Recycler
@@ -63,9 +64,15 @@ class CommunityFragment : Fragment() {
             val send = arguments?.getString("ID")
             println("communityFragment-intent")
             println(send)
-            val intent = Intent(activity, CommunityWrite::class.java)
-            intent.putExtra("ID", send)
-            startActivity(intent)
+            if(send==null){
+                Toast.makeText(getActivity(),"글을 등록하기 위해서 로그인이 필요합니다.", Toast.LENGTH_SHORT).show();
+                val intent = Intent(activity, LoginActivity::class.java)
+                startActivity(intent)
+            }else{
+                val intent = Intent(activity, CommunityWrite::class.java)
+                intent.putExtra("ID", send)
+                startActivity(intent)
+            }
         }
 
 

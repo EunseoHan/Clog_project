@@ -13,6 +13,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Response
@@ -55,6 +56,7 @@ class ClosetFragment : Fragment(){
         super.onViewCreated(view, savedInstanceState)
 
 
+
         val add_closet = view.findViewById<TextView>(R.id.add_cloth)
 //        val ex_outer = view.findViewById<ImageView>(R.id.ex_outer)
 
@@ -71,8 +73,9 @@ class ClosetFragment : Fragment(){
 
         var imgPathf : String = ""
         var typef : Int = 0
-        var imgPathff : String = ""
+        //var imgPathff : String = ""
         var bitmapDecode : Bitmap
+        var clothesNamef : String = ""
 
         val responseListener =
             Response.Listener<String> { response ->
@@ -84,11 +87,12 @@ class ClosetFragment : Fragment(){
                         println("성공")
                         val imgPath = jsonObject.getJSONObject("imgPath")
                         val type = jsonObject.getJSONObject("type")
-
+                        val clothesName = jsonObject.getJSONObject("clothesName")
                         val imgPathNum = jsonObject.getInt("i")
 
                         println("imgPath : $imgPath")
                         println("type : $type")
+                        println("clothesName : $clothesName")
                         println("imgPathNum : $imgPathNum")
 
                         //리스트에서 수정
@@ -100,13 +104,14 @@ class ClosetFragment : Fragment(){
                             val itemListShoes = ArrayList<ListItemCloset>()
                             for (i: Int in 1..imgPathNum) {
                                 println("for문")
+
                                 imgPathf = imgPath.getString(i.toString())
+                                println("imgPathf : $imgPathf")
+
                                 typef = type.getInt(i.toString())
+                                println("typef : $typef")
 
-                                //println("imgPathf : $imgPathf")
-                                //println("typef : $typef")
-
-                                imgPathff = imgPathf.split("/").last()
+                                //imgPathff = imgPathf.split("/").last()
                                 //println("imgPathff : $imgPathff")
                                 if(typef==1){val responseListener = Response.Listener<String> { response ->
                                         try {
@@ -125,7 +130,11 @@ class ClosetFragment : Fragment(){
                                                 )
                                                 //리스트에 넣기
                                                 println("${bitmapDecode::class.simpleName}")
-                                                itemListOuter.add(ListItemCloset(bitmapDecode))
+                                                imgPathf = imgPath.getString(i.toString())
+                                                println("outer에서의 imgPathf : $imgPathf")
+                                                clothesNamef = clothesName.getString(i.toString())
+                                                println("outer에서 clothesNamef : $clothesNamef")
+                                                itemListOuter.add(ListItemCloset(bitmapDecode,imgPathf,clothesNamef,send))
                                                 //itemListOuter.add(ListItemCloset(imgPathf))
                                                 //ex_outer.setImageBitmap(bitmapDecode)
 
@@ -140,11 +149,9 @@ class ClosetFragment : Fragment(){
                                         } catch (e: JSONException) {
                                             e.printStackTrace()
                                         }
-
-
                                     }
                                     val closetImageRequest =
-                                        ClosetImageRequest(imgPathff, responseListener)
+                                        ClosetImageRequest(imgPathf, responseListener)
 //                                val closetImageRequest =
 //                                    ClosetImageRequest(imgPathf, responseListener)
                                     val queue = Volley.newRequestQueue(getActivity())
@@ -167,7 +174,11 @@ class ClosetFragment : Fragment(){
                                                 )
                                                 //리스트에 넣기
                                                 println("${bitmapDecode::class.simpleName}")
-                                                itemListTop.add(ListItemCloset(bitmapDecode))
+                                                imgPathf = imgPath.getString(i.toString())
+                                                println("top에서의 imgPathf : $imgPathf")
+                                                clothesNamef = clothesName.getString(i.toString())
+                                                println("top에서 clothesNamef : $clothesNamef")
+                                                itemListTop.add(ListItemCloset(bitmapDecode,imgPathf,clothesNamef,send))
 
                                                 val listAdapterTop = ListAdapterCloset(itemListTop)
                                                 listAdapterTop.notifyDataSetChanged()
@@ -183,7 +194,7 @@ class ClosetFragment : Fragment(){
                                         }
                                     }
                                     val closetImageRequest =
-                                        ClosetImageRequest(imgPathff, responseListener)
+                                        ClosetImageRequest(imgPathf, responseListener)
 
                                     val queue = Volley.newRequestQueue(getActivity())
                                     queue.add(closetImageRequest)
@@ -205,7 +216,10 @@ class ClosetFragment : Fragment(){
                                                 )
                                                 //리스트에 넣기
                                                 println("${bitmapDecode::class.simpleName}")
-                                                itemListBottom.add(ListItemCloset(bitmapDecode))
+                                                imgPathf = imgPath.getString(i.toString())
+                                                println("bottom에서의 imgPathf : $imgPathf")
+                                                clothesNamef = clothesName.getString(i.toString())
+                                                itemListBottom.add(ListItemCloset(bitmapDecode,imgPathf,clothesNamef,send))
 
                                                 val listAdapterBottom = ListAdapterCloset(itemListBottom)
                                                 listAdapterBottom.notifyDataSetChanged()
@@ -220,7 +234,7 @@ class ClosetFragment : Fragment(){
                                         }
                                     }
                                     val closetImageRequest =
-                                        ClosetImageRequest(imgPathff, responseListener)
+                                        ClosetImageRequest(imgPathf, responseListener)
 
                                     val queue = Volley.newRequestQueue(getActivity())
                                     queue.add(closetImageRequest)
@@ -242,7 +256,9 @@ class ClosetFragment : Fragment(){
                                                 )
                                                 //리스트에 넣기
                                                 println("${bitmapDecode::class.simpleName}")
-                                                itemListDress.add(ListItemCloset(bitmapDecode))
+                                                imgPathf = imgPath.getString(i.toString())
+                                                clothesNamef = clothesName.getString(i.toString())
+                                                itemListDress.add(ListItemCloset(bitmapDecode,imgPathf,clothesNamef,send))
 
                                                 val listAdapterDress = ListAdapterCloset(itemListDress)
                                                 listAdapterDress.notifyDataSetChanged()
@@ -257,7 +273,7 @@ class ClosetFragment : Fragment(){
                                         }
                                     }
                                     val closetImageRequest =
-                                        ClosetImageRequest(imgPathff, responseListener)
+                                        ClosetImageRequest(imgPathf, responseListener)
 
                                     val queue = Volley.newRequestQueue(getActivity())
                                     queue.add(closetImageRequest)
@@ -279,7 +295,9 @@ class ClosetFragment : Fragment(){
                                                 )
                                                 //리스트에 넣기
                                                 println("${bitmapDecode::class.simpleName}")
-                                                itemListShoes.add(ListItemCloset(bitmapDecode))
+                                                imgPathf = imgPath.getString(i.toString())
+                                                clothesNamef = clothesName.getString(i.toString())
+                                                itemListShoes.add(ListItemCloset(bitmapDecode,imgPathf,clothesNamef,send))
 
                                                 val listAdapterShoes = ListAdapterCloset(itemListShoes)
                                                 listAdapterShoes.notifyDataSetChanged()
@@ -294,7 +312,7 @@ class ClosetFragment : Fragment(){
                                         }
                                     }
                                     val closetImageRequest =
-                                        ClosetImageRequest(imgPathff, responseListener)
+                                        ClosetImageRequest(imgPathf, responseListener)
 
                                     val queue = Volley.newRequestQueue(getActivity())
                                     queue.add(closetImageRequest)
@@ -321,19 +339,16 @@ class ClosetFragment : Fragment(){
             //잘 넘어왔는지 print로 확인
             println("addcloset-intent")
             println(send)
-            val intent = Intent(activity, AddCloset::class.java)
-            intent.putExtra("ID", send)
-            startActivity(intent)
+            if(send==null){
+                Toast.makeText(getActivity(),"옷을 등록하기 위해서 로그인이 필요합니다.",Toast.LENGTH_SHORT).show();
+                val intent = Intent(activity, LoginActivity::class.java)
+                startActivity(intent)
+            }else{
+                val intent = Intent(activity, AddCloset::class.java)
+                intent.putExtra("ID", send)
+                startActivity(intent)
+            }
         }
-//        ex_outer.setOnClickListener{
-//            val send = arguments?.getString("ID")
-//            println("exouter-intent")
-//            println(send)
-//            val intent = Intent(activity, EditCloset::class.java)
-//            intent.putExtra("ID", send)
-//            startActivity(intent)
-//        }
-//    }
 
         /*// listview
         // Outer

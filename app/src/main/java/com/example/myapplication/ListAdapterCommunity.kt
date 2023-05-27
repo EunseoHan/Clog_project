@@ -58,6 +58,7 @@ class ListAdapterCommunity(val itemList: ArrayList<ListItemCommunity>) :
                 intent.putExtra("context", item.context)
 //                intent.putExtra("outputX", 100)
 //                intent.putExtra("outputY",100)
+                println("edit 넘어가라")
                 itemView.context.startActivity(intent)
             }
 
