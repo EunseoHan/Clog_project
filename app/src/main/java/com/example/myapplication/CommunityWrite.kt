@@ -117,6 +117,7 @@ class CommunityWrite : BaseActivity() {
                 } else {
                     println(commu_title)
                     println(commu_write)
+                    imgPath = imgPath?.split("/")?.last()
                     val communitywriterequest = CommunityWriteRequest(idre, imgPath, commu_title, commu_write, IMG, responseListener)
                     val queue = Volley.newRequestQueue(this@CommunityWrite)
                     queue.add(communitywriterequest)

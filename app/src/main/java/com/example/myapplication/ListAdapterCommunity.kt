@@ -56,6 +56,8 @@ class ListAdapterCommunity(val itemList: ArrayList<ListItemCommunity>) :
                 intent.putExtra("title", item.title)
                 intent.putExtra("image", imagedata)
                 intent.putExtra("context", item.context)
+                intent.putExtra("detail", item.detail)
+                intent.putExtra("number", item.number)
 //                intent.putExtra("outputX", 100)
 //                intent.putExtra("outputY",100)
                 println("edit 넘어가라")

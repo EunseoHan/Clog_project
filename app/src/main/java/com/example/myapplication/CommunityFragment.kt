@@ -77,7 +77,12 @@ class CommunityFragment : Fragment() {
 
 
         var bitmapDecode : Bitmap
-        val IMG = ""
+        var detail : String = ""
+        var path :String = ""
+        var path1 : String = ""
+        var title : String = ""
+        var id : String = ""
+        var number : Int
         val itemList = ArrayList<ListItemCommunity>()
 
         val responseListener =
@@ -88,28 +93,26 @@ class CommunityFragment : Fragment() {
                     // TODO : 인코딩 문제때문에 한글 DB인 경우 로그인 불가
                     println(response)
                     val jsonObject = JSONObject(response)
-                    val success = jsonObject.getBoolean("success")
                     val jsonid = jsonObject.getJSONObject("id")
                     val jsonpath = jsonObject.getJSONObject("path")
                     val jsontitle = jsonObject.getJSONObject("title")
+                    val jsondetail = jsonObject.getJSONObject("detail")
+                    val jsonnumber = jsonObject.getJSONObject("number")
                     val jsoni = jsonObject.getInt("i")
                     println("json")
                     println("id:$jsonid")
                     println("path:$jsonpath")
                     println("title:$jsontitle")
+                    println("detail:$jsondetail")
+                    println("jsonnumber:$jsonnumber")
                     println("i:$jsoni")
 
-                    println("여기는 왔니")
-//                    println(response)
-                    println("성공")
-                    //총 불러온 리스트의 값 = length
-
                     for (i in 1..jsoni){
-                        val id = jsonid.getString(i.toString())
-                        val path = jsonpath.getString(i.toString())
-                        val title = jsontitle.getString(i.toString())
-
-                        val lastpath = path.split("/").last()
+                        id = jsonid.getString(i.toString())
+                        path = jsonpath.getString(i.toString())
+                        title = jsontitle.getString(i.toString())
+                        detail = jsondetail.getString(i.toString())
+                        number = jsonnumber.getInt(i.toString())
 
                         if(!path.isEmpty()){
                             val responseListener = Response.Listener<String> { response ->
@@ -127,7 +130,10 @@ class CommunityFragment : Fragment() {
                                             0,
                                             encodeByte.size
                                         )
-                                        itemList.add(ListItemCommunity(bitmapDecode,title, id))
+                                        title = jsontitle.getString(i.toString())
+                                        id = jsonid.getString(i.toString())
+                                        detail = jsondetail.getString(i.toString())
+                                        itemList.add(ListItemCommunity(bitmapDecode,title, id, detail, number,path))
 
                                         val listAdapter = ListAdapterCommunity(itemList)
                                         listAdapter.notifyDataSetChanged()
@@ -143,8 +149,9 @@ class CommunityFragment : Fragment() {
                                     e.printStackTrace()
                                 }
                             }
-                            val communityimagerequest = CommunityImageRequest(lastpath, responseListener)
-                            val queue = Volley.newRequestQueue(getActivity())
+                            path1 = path.split("/").last().toString()
+                            val communityimagerequest = CommunityImageRequest(path1, responseListener)
+                            val queue = Volley.newRequestQueue(context)
                             queue.add(communityimagerequest)
                         }
                     }
@@ -236,18 +243,18 @@ class CommunityFragment : Fragment() {
 //                    }
 
 
-                    val listAdapter = ListAdapterCommunity(itemList)
-                    listAdapter.notifyDataSetChanged()
-
-                    rv_board.adapter = listAdapter
-                    rv_board.layoutManager = LinearLayoutManager(mainActivity, LinearLayoutManager.VERTICAL, false)
+//                    val listAdapter = ListAdapterCommunity(itemList)
+//                    listAdapter.notifyDataSetChanged()
+//
+//                    rv_board.adapter = listAdapter
+//                    rv_board.layoutManager = LinearLayoutManager(mainActivity, LinearLayoutManager.VERTICAL, false)
                 } catch (e: JSONException) {
 //                    e.printStackTrace()
                 }
             }
 
         val communitylistrequest = CommunityListRequest(responseListener)
-        val queue = Volley.newRequestQueue(getActivity())
+        val queue = Volley.newRequestQueue(context)
         println("큐 $queue")
         queue.add(communitylistrequest)
 

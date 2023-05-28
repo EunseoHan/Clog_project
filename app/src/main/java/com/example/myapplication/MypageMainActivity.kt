@@ -45,7 +45,8 @@ class MypageMainActivity : AppCompatActivity() {
             startActivity(intent)
         }
         writelist.setOnClickListener {
-            val intent = Intent(this, CommunityList::class.java)
+            val intent = Intent(this, MypageCommunityActivity::class.java)
+            intent.putExtra("ID", str_id)
             startActivity(intent)
         }
 

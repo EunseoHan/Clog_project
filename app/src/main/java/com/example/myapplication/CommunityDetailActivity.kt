@@ -8,6 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
+import kotlin.properties.Delegates
 
 class CommunityDetailActivity : AppCompatActivity() {
 
@@ -18,16 +19,19 @@ class CommunityDetailActivity : AppCompatActivity() {
     lateinit var commuimage: ImageView
     lateinit var commutext: TextView
     lateinit var commutitle: TextView
+    lateinit var commuid: TextView
     lateinit var datas:ListItemCommunity
     lateinit var data1:String
     lateinit var data2: String
     lateinit var data3: ByteArray
     lateinit var data4: Bitmap
+    lateinit var data5: String
+    var number by Delegates.notNull<Int>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_community_detail)
+        setContentView(R.layout.activity_mypage_detail)
 
         val back = findViewById<ImageView>(R.id.back)
 
@@ -43,18 +47,21 @@ class CommunityDetailActivity : AppCompatActivity() {
         commuimage = findViewById(R.id.commuimage)
         commutext = findViewById(R.id.commutext)
         commutitle = findViewById(R.id.commutitle)
+        commuid = findViewById(R.id.commuid)
 
         data1 = intent.getStringExtra("title").toString()
         //data2 = id값
         data2 = intent.getStringExtra("context").toString()
         data3 = intent.getByteArrayExtra("image")!!
         data4 = byteArrayToBitmap(data3)
+        data5 = intent.getStringExtra("detail").toString()
+        var number = intent.getStringExtra("number").toString()
+        println(number.toInt())
         // datas = intent.getSerializableExtra("data") as ListItemCommunity
         Glide.with(this).load(data4).into(commuimage)
         commutitle.text = data1
-        commutext.text = data2
-
-
+        commutext.text = data5
+        commuid.text = data2
 
     }
     fun byteArrayToBitmap(bytearray: ByteArray): Bitmap {
