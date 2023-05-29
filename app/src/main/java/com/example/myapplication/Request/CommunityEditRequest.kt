@@ -37,6 +37,6 @@ class CommunityEditRequest(
         return map
     }
     companion object {
-        private const val URL = "http://218.159.194.125/EditCommunity.php"
+        private const val URL = "http://172.30.1.9:8080/EditCommunity.php"
     }
 }

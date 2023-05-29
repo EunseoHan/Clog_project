@@ -91,14 +91,25 @@
         android:text="로그아웃"
         android:textColor="@color/black" />
 
-    <android.widget.Button
-        android:id="@+id/mypageout"
-        android:layout_width="170dp"
-        android:layout_height="48dp"
-        android:layout_marginBottom="110dp"
-        android:layout_gravity="center"
-        android:background="#BFCBE5"
-        android:text="탈퇴"
-        android:textColor="@color/black" />
+        <android.widget.Button
+            android:id="@+id/mypageout"
+            android:layout_width="170dp"
+            android:layout_height="48dp"
+            android:layout_marginBottom="3dp"
+            android:layout_gravity="center"
+            android:background="#BFCBE5"
+            android:text="탈퇴"
+            android:textColor="@color/black" />
+
+        <android.widget.Button
+            android:id="@+id/mypagealarm"
+            android:layout_width="170dp"
+            android:layout_height="48dp"
+            android:layout_marginBottom="100dp"
+            android:layout_gravity="center"
+            android:background="#BFCBE5"
+            android:text="알림설정"
+            android:textColor="@color/black" />
+
     </LinearLayout>
 </LinearLayout>

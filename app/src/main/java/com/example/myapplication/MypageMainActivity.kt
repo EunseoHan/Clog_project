@@ -20,7 +20,10 @@ class MypageMainActivity : AppCompatActivity() {
     lateinit var writelist: Button
     lateinit var mypagelogout: Button
     lateinit var mypageout: Button
+    lateinit var mypagealarm : Button
+
     lateinit var back: ImageView
+
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
@@ -37,6 +40,8 @@ class MypageMainActivity : AppCompatActivity() {
         writelist = findViewById(R.id.writelist)
         mypagelogout = findViewById(R.id.mypagelogout)
         mypageout = findViewById(R.id.mypageout)
+        mypagealarm = findViewById(R.id.mypagealarm)
+
         back = findViewById(R.id.back)
 
         Editprofile.setOnClickListener {
@@ -47,6 +52,11 @@ class MypageMainActivity : AppCompatActivity() {
         writelist.setOnClickListener {
             val intent = Intent(this, MypageCommunityActivity::class.java)
             intent.putExtra("ID", str_id)
+            startActivity(intent)
+        }
+
+        mypagealarm.setOnClickListener {
+            val intent = Intent(this, ButtonAlarm::class.java)
             startActivity(intent)
         }
 
