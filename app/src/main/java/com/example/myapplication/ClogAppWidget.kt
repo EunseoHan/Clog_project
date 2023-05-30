@@ -58,5 +58,6 @@ internal fun updateAppWidget(
 
 private fun setMyAction(context: Context?): PendingIntent {
     val intent = Intent(context, MainActivity::class.java)
+
     return PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
 }

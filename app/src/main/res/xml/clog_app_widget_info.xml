@@ -10,7 +10,7 @@
     android:resizeMode="horizontal|vertical"
     android:targetCellWidth="3"
     android:targetCellHeight="3"
-    android:updatePeriodMillis="3600000"
+    android:updatePeriodMillis="1800000"
     android:widgetCategory="home_screen" />
 
 <!--업데이트 주기 1시간 3600000-->

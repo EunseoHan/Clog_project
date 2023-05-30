@@ -26,7 +26,12 @@ class MyAlarmReceiver: BroadcastReceiver() {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             }
             //PendingIntent.getActivity를 사용하여 액티비티를 시작하는 PendingIntent 생성
-            val pendingIntent = PendingIntent.getActivity(context, 101, mainActivityintent, 0)
+            val pendingIntent = PendingIntent.getActivity(
+                context,
+                101,
+                mainActivityintent,
+                PendingIntent.FLAG_IMMUTABLE
+            )
             val contents = "내일 입을 옷 정하셨나요? Clog와 함께 코디해보아요!"
 
             // Notification

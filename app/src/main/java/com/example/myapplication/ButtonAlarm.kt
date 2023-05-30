@@ -39,7 +39,12 @@ class ButtonAlarm : AppCompatActivity() {
         val pendingIntent = Intent(binding.root.context, MyAlarmReceiver::class.java).let {  // MyAlarmReceiver로의 암시적 인텐트를 생성
             it.putExtra("code", REQUEST_CODE) //"code" 키로 REQUEST_CODE 값을 추가
             it.putExtra("count", 10) //"count"키로 10 값 추가
-            PendingIntent.getBroadcast(binding.root.context, REQUEST_CODE, it, 0) // BroadcastReceiver로 보내는 PendingIntent 생성
+            PendingIntent.getBroadcast(
+                binding.root.context,
+                REQUEST_CODE,
+                it,
+                PendingIntent.FLAG_IMMUTABLE
+            ) // BroadcastReceiver로 보내는 PendingIntent 생성
         }
         binding.switch01.setOnCheckedChangeListener { _, isChecked ->
             setting.edit {

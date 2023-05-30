@@ -152,13 +152,14 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:orientation="horizontal">
+
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/onepiece_board"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            tool:listitem="@layout/listitem_recycler_closet"
                             android:orientation="horizontal"
-                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                            tool:listitem="@layout/listitem_recycler_closet" />
 
                     </LinearLayout>
                 </HorizontalScrollView>

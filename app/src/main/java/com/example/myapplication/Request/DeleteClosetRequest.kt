@@ -21,6 +21,6 @@ class DeleteClosetRequest (userID: String, clothesNAME: String, clothesIMGPATH: 
         return map
     }
     companion object {
-        private const val URL = "http://172.30.1.9:8080/DeleteCloset.php"
+        private const val URL = "http://192.168.45.67/DeleteCloset.php"
     }
 }

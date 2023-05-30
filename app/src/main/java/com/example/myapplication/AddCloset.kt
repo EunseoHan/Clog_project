@@ -1,5 +1,6 @@
 package com.example.myapplication
 
+import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Intent
 import android.database.Cursor
@@ -42,6 +43,7 @@ class AddCloset : BaseActivity() {
 
     val binding by lazy {ActivityAddClosetBinding.inflate(layoutInflater) }
 
+    @SuppressLint("SuspiciousIndentation")
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

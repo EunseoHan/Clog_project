@@ -19,6 +19,6 @@ class CommunityListRequest(listener: Response.Listener<String>) :
 
     companion object {
         // 서버 URL 설정 ( PHP 파일 연동 )
-        private const val URL = "http://172.30.1.9:8080/CommunityList.php"
+        private const val URL = "http://192.168.45.25/CommunityList.php"
     }
 }
