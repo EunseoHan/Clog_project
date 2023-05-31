@@ -20,6 +20,6 @@ class CommunityImageRequest (imgName: String, listener: Response.Listener<String
 
     companion object {
         // 서버 URL 설정 ( PHP 파일 연동 )
-        private const val URL = "http://192.168.45.25/CommunityImage.php"
+        private const val URL = "http://172.18.10.176:8080/CommunityImage.php"
     }
 }
