@@ -132,7 +132,7 @@ class ProfileChangeActivity : AppCompatActivity() {
 
         binding.buttonArrow.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
-
+            intent.putExtra("ID", id)
             startActivity(intent)
         }
     }

@@ -53,13 +53,24 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center">
-    <ImageView
-        android:id="@+id/mypageperson"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_marginBottom="20dp"
-        app:srcCompat="@drawable/loginperson"
-        android:layout_gravity="center"/>
+
+        <ImageView
+            android:id="@+id/mypageperson"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="20dp"
+            app:srcCompat="@drawable/loginperson" />
+
+        <android.widget.Button
+            android:id="@+id/profileIMG"
+            android:layout_width="170dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="3dp"
+            android:background="#BFCBE5"
+            android:text="프로필 이미지 저장"
+            android:textColor="@color/black" />
 
     <android.widget.Button
         android:id="@+id/Editprofile"
@@ -68,7 +79,7 @@
         android:layout_gravity="center"
         android:layout_marginBottom="3dp"
         android:background="#BFCBE5"
-        android:text="프로필 편집"
+        android:text="회원 정보 수정"
         android:textColor="@color/black" />
 
     <android.widget.Button
@@ -112,4 +123,10 @@
             android:textColor="@color/black" />
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Button" />
 </LinearLayout>

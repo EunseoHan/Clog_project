@@ -60,8 +60,8 @@ class ButtonAlarm : AppCompatActivity() {
 //                //오후 9시  (Interval: Day)
                 val calendar = Calendar.getInstance().apply {
                     timeInMillis = System.currentTimeMillis()
-                    set(Calendar.HOUR_OF_DAY,23)
-                    set(Calendar.MINUTE,10)
+                    set(Calendar.HOUR_OF_DAY,21)
+                    set(Calendar.MINUTE,0)
                 }
                 alarmManager.setInexactRepeating(
                     AlarmManager.RTC_WAKEUP,

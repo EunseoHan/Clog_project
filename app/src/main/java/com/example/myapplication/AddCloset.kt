@@ -813,6 +813,7 @@ class AddCloset : BaseActivity() {
         //5. 버튼을 클릭하면 갤러리를 여는
         binding.picPlus.setOnClickListener {
             openGallery()
+            println("addcloset 갤러리 오픈")
         }
     }
 
