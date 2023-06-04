@@ -20,10 +20,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.loader.content.CursorLoader
 import com.android.volley.Response
 import com.android.volley.toolbox.Volley
-import com.example.myapplication.Request.AddClosetRequest
-import com.example.myapplication.Request.MypageOutRequest
-import com.example.myapplication.Request.ProfileImageRequest
-import com.example.myapplication.Request.ProfileImage_Request
+import com.example.myapplication.Request.*
 import com.example.myapplication.databinding.ActivityMypageMainBinding
 import org.json.JSONException
 import org.json.JSONObject
@@ -71,9 +68,9 @@ class MypageMainActivity : BaseActivity() { //AppCompatActivity()
                 try {
                     println("hongchul$response")
                     val jsonObject = JSONObject(response)
-                    val success = jsonObject.getBoolean("success")
 
-                    if (success) {
+                    val success = jsonObject.getBoolean("success")
+                    if (success) { // 로그인에 성공한 경우
                         println("디코딩을 해라")
                         var IMG = jsonObject.getString("IMG")
                         val decoder: Base64.Decoder = Base64.getDecoder()
@@ -84,12 +81,10 @@ class MypageMainActivity : BaseActivity() { //AppCompatActivity()
                             encodeByte.size
                         )
                         binding.mypageperson.setImageBitmap(bitmapDecode)
-                    } else {
-                        println("실패")
-                    }
 
 //                    //이미지가 있는 상태인지 아닌지 확인
 //                    val check_image_ox = jsonObject.getString("check_image_ox")
+                    }
 
                 } catch (e: JSONException) {
                     e.printStackTrace()
@@ -123,19 +118,21 @@ class MypageMainActivity : BaseActivity() { //AppCompatActivity()
             startActivity(intent)
         }
 
-        back.setOnClickListener {
+        binding.back.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             intent.putExtra("ID", str_id)
             intent.putExtra("PW", str_pw)
             startActivity(intent)
         }
 
-        mypageout.setOnClickListener{
+        binding.mypageout.setOnClickListener{
             val builder = AlertDialog.Builder(this)
             builder.setMessage("정말로 탈퇴하시겠습니까?")
                 .setPositiveButton("확인", DialogInterface.OnClickListener{dialog, which ->
 
-                    val responseListener =
+
+                    //closet 테이블 삭제 부분
+                    val responseListener1 =
                         Response.Listener<String> { response ->
                             println("여기는 타?")
 
@@ -148,28 +145,81 @@ class MypageMainActivity : BaseActivity() { //AppCompatActivity()
                                 val success = jsonObject.getBoolean("success")
                                 if (success) { // 탈퇴에 성공한 경우
                                     println("성공")
-                                    Toast.makeText(
-                                        this@MypageMainActivity,
-                                        "탈퇴되었습니다.",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                    val intent =
-                                        Intent(this@MypageMainActivity, MainActivity::class.java)
-                                    getIntent().removeExtra("ID");
-                                    getIntent().removeExtra("PW");
-                                    var str_id1 = intent.getStringExtra("ID")
-                                    var str_pw1 = intent.getStringExtra("PW")
-                                    intent.putExtra("ID",str_id1)
-                                    intent.putExtra("PW",str_pw1)
-                                    println("탈퇴성공")
-                                    println(str_id1)
-                                    println(str_pw1)
-                                    startActivity(intent)
+                                    //community 탈퇴 부분
+                                    val responseListener2 =
+                                                    Response.Listener<String> { response2 ->
+                                                        println("여기는 타?")
+
+                                                        try {
+                                                            // TODO : 인코딩 문제때문에 한글 DB인 경우 로그인 불가
+                                                            println("hongchul$response2")
+                                                            val jsonObject = JSONObject(response2)
+                                                            println("여기는 왔니")
+                                                            println(response2)
+                                                            val success = jsonObject.getBoolean("success")
+                                                            if (success) { // 탈퇴에 성공한 경우
+                                                                val responseListener3 =
+                                                                    Response.Listener<String> { response3 ->
+                                                                        println("여기는 타?")
+
+                                                                        try {
+                                                                            // TODO : 인코딩 문제때문에 한글 DB인 경우 로그인 불가
+                                                                            println("hongchul$response3")
+                                                                            println("여기는 왔니")
+                                                                            println(response3)
+                                                                            val success = jsonObject.getBoolean("success")
+                                                                            if (success) { // 탈퇴에 성공한 경우
+                                                                                println("성공")
+                                                                                Toast.makeText(
+                                                                                    this@MypageMainActivity,
+                                                                                    "탈퇴되었습니다",
+                                                                                    Toast.LENGTH_SHORT
+                                                                                ).show()
+                                                                                val intent =
+                                                                                    Intent(this@MypageMainActivity, MainActivity::class.java)
+                                                                                getIntent().removeExtra("ID");
+                                                                                getIntent().removeExtra("PW");
+                                                                                var str_id1 = intent.getStringExtra("ID")
+                                                                                var str_pw1 = intent.getStringExtra("PW")
+                                                                                intent.putExtra("ID",str_id1)
+                                                                                intent.putExtra("PW",str_pw1)
+                                                                                println("탈퇴성공")
+                                                                                println(str_id1)
+                                                                                println(str_pw1)
+                                                                                startActivity(intent)
+                                                                            } else { // 탈퇴에 실패한 경우
+                                                                                println("실패")
+                                                                                val intent =
+                                                                                    Intent(this@MypageMainActivity, MypageMainActivity::class.java)
+                                                                                startActivity(intent)
+                                                                                return@Listener
+                                                                            }
+                                                                        } catch (e: JSONException) {
+                                                                            e.printStackTrace()
+                                                                        }
+                                                                    }
+                                                                //user 테이블에서 삭제
+                                                                val mypageoutrequest = MypageOutRequest(str_id, str_pw, responseListener3)
+                                                                val queue3 = Volley.newRequestQueue(this@MypageMainActivity)
+                                                                //queue.add<Any>(loginRequest)
+                                                                queue3.add(mypageoutrequest)
+                                                } else { // 탈퇴에 실패한 경우
+                                                    println("실패")
+                                                    return@Listener
+                                                }
+                                            } catch (e: JSONException) {
+                                                e.printStackTrace()
+                                            }
+                                        }
+
+                                    val communityoutrequest =
+                                        str_id?.let { it1 -> CommunityOutRequest(it1, responseListener2) }
+                                    val queue2 = Volley.newRequestQueue(this@MypageMainActivity)
+                                    queue2.add(communityoutrequest)
+
+
                                 } else { // 탈퇴에 실패한 경우
                                     println("실패")
-                                    val intent =
-                                        Intent(this@MypageMainActivity, MypageMainActivity::class.java)
-                                    startActivity(intent)
                                     return@Listener
                                 }
                             } catch (e: JSONException) {
@@ -177,18 +227,14 @@ class MypageMainActivity : BaseActivity() { //AppCompatActivity()
                             }
                         }
 
-                    val mypageoutrequest = str_id?.let { str_pw?.let { it1 ->
-                        MypageOutRequest(it,
-                            it1, responseListener)
-                    } }
+                    val closetoutrequest =
+                        str_id?.let { it1 -> ClosetoutRequest(it1, responseListener1) }
                     val queue = Volley.newRequestQueue(this@MypageMainActivity)
                     //queue.add<Any>(loginRequest)
-                    queue.add(mypageoutrequest)
-                
-//                    val intent = Intent(this, MypageOutActivity::class.java)
-//                    intent.putExtra("ID", str_id)
-//                    intent.putExtra("PW", str_pw)
-//                    startActivity(intent)
+                    queue.add(closetoutrequest)
+
+
+
                 })
                 .setNegativeButton("취소", DialogInterface.OnClickListener{ dialog, which ->
                     Toast.makeText(

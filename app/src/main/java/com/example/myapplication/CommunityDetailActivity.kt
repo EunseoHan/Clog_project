@@ -26,7 +26,7 @@ class CommunityDetailActivity : AppCompatActivity() {
     lateinit var data3: ByteArray
     lateinit var data4: Bitmap
     lateinit var data5: String
-    var number by Delegates.notNull<Int>()
+    var number: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -55,8 +55,7 @@ class CommunityDetailActivity : AppCompatActivity() {
         data3 = intent.getByteArrayExtra("image")!!
         data4 = byteArrayToBitmap(data3)
         data5 = intent.getStringExtra("detail").toString()
-        var number = intent.getStringExtra("number").toString()
-        println(number.toInt())
+        number = intent.getIntExtra("number",-1)
         // datas = intent.getSerializableExtra("data") as ListItemCommunity
         Glide.with(this).load(data4).into(commuimage)
         commutitle.text = data1
