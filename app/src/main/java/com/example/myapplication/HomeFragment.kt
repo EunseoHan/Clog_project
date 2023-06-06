@@ -55,6 +55,7 @@ class HomeFragment : Fragment() {
         var widgetTempMm: String = ""
         var widgetText: String = ""
         var widgetImage: String = ""
+//        var widgetTime: String = ""
     }
 
 
@@ -195,6 +196,7 @@ class HomeFragment : Fragment() {
                     val dateView = view?.findViewById<TextView>(R.id.dateView)
                     if (dateView != null) {
                         dateView.text = getDate
+//                        widgetTime = getDate
                     }
                     val jsonObject = JSONObject(response)
                     val city = jsonObject.getString("name")

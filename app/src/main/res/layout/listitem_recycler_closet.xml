@@ -12,11 +12,16 @@
         android:id="@+id/closet_image"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:padding="5dp"
         android:layout_marginRight="10dp"
         android:clickable="true"
-        android:background="@drawable/button_roud"
-        android:orientation="horizontal" />
+        android:orientation="horizontal"
+        android:scaleType = "centerCrop"
+        android:bottomLeftRadius="10dp"
+        android:bottomRightRadius="10dp"
+        android:topLeftRadius="10dp"
+        android:topRightRadius="10dp"/>
+
+
 
 </LinearLayout>
 

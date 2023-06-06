@@ -4,6 +4,7 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -12,8 +13,10 @@ import android.location.Geocoder
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
+import android.net.Uri
 import android.net.http.SslError
 import android.os.Build
+import android.os.Build.ID
 import android.os.Bundle
 import android.os.Message
 import android.view.LayoutInflater
@@ -26,9 +29,11 @@ import android.webkit.WebChromeClient
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -39,9 +44,9 @@ import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.target.Target
-import com.example.myapplication.Request.WeatherFragmentRequest
 import com.example.myapplication.Request.ClosetImageRequest
+import com.example.myapplication.Request.UserWeatherRequest
+import com.example.myapplication.Request.WeatherFragmentRequest
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -53,7 +58,7 @@ import java.util.*
 
 class WeatherFragment : Fragment() {
 
-    val IP = "121.129.163.76"
+    val IP = "192.168.45.230"
 
     lateinit var location_editText: EditText
     lateinit var webView: WebView
@@ -61,8 +66,15 @@ class WeatherFragment : Fragment() {
     var currentTemp: Double = 0.0
     var weatherGrade: Int = 0
 
+    var userStyle = ""  // 사용자 취향
+    var weatherStyle = ""   // 계절 (날씨 추천)
+    var userCharacter = ""  // 추위 정도
+    var isRaining = 0   // 눈 비 여부
+
+
     companion object {
         var requestQueue: RequestQueue? = null
+
     }
 
     // 1. Context를 할당할 변수를 프로퍼티로 선언(어디서든 사용할 수 있게)
@@ -108,13 +120,21 @@ class WeatherFragment : Fragment() {
         getGPS()
         // 날씨 받기
         CurrentWeatherCall()
+        getUserInfo()
 
+        // 현지위치 버튼
         val button = view.findViewById<TextView>(R.id.getWeatherTime)
         button.setOnClickListener {
             getGPS()
             CurrentWeatherCall()
             location_editText.setText("\uD83D\uDCCD 현재 위치")
         }
+
+        // 쇼핑몰 버튼
+        val button2 = view.findViewById<Button>(R.id.go_to_shopping)
+        button2.setOnClickListener {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://zigzag.kr/search?keyword=$userStyle%20$weatherStyle%20옷"))
+            startActivity(intent)        }
     }
 
     // 위치 검색
@@ -205,6 +225,56 @@ class WeatherFragment : Fragment() {
         }
     }
 
+    fun getUserInfo() {
+
+
+        val send = arguments?.getString("ID")
+
+        val responseListener =
+            Response.Listener<String> { response ->
+                println("userWeather: 여기는 타? | send: $send")
+
+                try {
+                    val jsonObject = JSONObject(response)
+
+                    val success = jsonObject.getBoolean("success")
+                    if (success) { //성공한 경우
+                        println("userWeather 성공")
+                        val modern = jsonObject.getString("modern").toInt()
+                        val casual = jsonObject.getString("casual").toInt()
+                        val lovely = jsonObject.getString("lovely").toInt()
+                        val street = jsonObject.getString("street").toInt()
+                        val big_size = jsonObject.getString("big_size").toInt()
+                        val user_character = jsonObject.getString("user_character")
+
+                        println("user_character : $user_character")
+                        println("modern : $modern | casual : $casual | lovely : $lovely | street : $street | big_size : $big_size")
+
+                        userCharacter = user_character
+                        if (modern == 1) userStyle = "모던"
+                        else if (casual == 1) userStyle = "캐주얼"
+                        else if (lovely == 1) userStyle = "러블리"
+                        else if (street == 1) userStyle = "스트릿"
+                        else if (big_size == 1) userStyle = "빅사이즈"
+
+
+                    } else {
+
+                        return@Listener
+                    }
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+            }
+
+        val UserWeatherRequest =
+            UserWeatherRequest(send, responseListener)
+
+        val queue = Volley.newRequestQueue(getActivity())
+        queue.add(UserWeatherRequest)
+    }
+
+
     fun setImage() {
 
         val outer_board = view?.findViewById<RecyclerView>(R.id.outer_board)
@@ -219,9 +289,12 @@ class WeatherFragment : Fragment() {
 
         var imgPathf: String = ""
         var typef: Int = 0
+        var detailf: Int = 0
         var bitmapDecode: Bitmap
         var clothesNamef: String = ""
         var weatherN: Int = 0
+
+
 
         val responseListener =
             Response.Listener<String> { response ->
@@ -234,8 +307,10 @@ class WeatherFragment : Fragment() {
                         val imgPath = jsonObject.getJSONObject("imgPath")
                         val type = jsonObject.getJSONObject("type")
                         val clothesName = jsonObject.getJSONObject("clothesName")
+                        val detail = jsonObject.getJSONObject("detail")
                         val imgPathNum = jsonObject.getInt("i")
                         val weatherNum = jsonObject.getJSONObject("weather")
+
 
                         //리스트에서 수정
                         if (imgPathNum != 0) {
@@ -248,11 +323,79 @@ class WeatherFragment : Fragment() {
 
                                 imgPathf = imgPath.getString(i.toString())
                                 typef = type.getInt(i.toString())
+                                detailf = detail.getInt(i.toString())
                                 weatherN = weatherNum.getInt(i.toString())
                                 println("weatherN = $weatherN")
 
+                                // 비 올 때
+                                if (isRaining == 1) {
+                                    if (detailf == 56)  {
+                                        val responseListener =
+                                            Response.Listener<String> { response ->
+                                                try {
+                                                    println(response)
+                                                    val jsonObjectt = JSONObject(response)
+                                                    val success =
+                                                        jsonObjectt.getBoolean("success")
+                                                    if (success) {
+                                                        //디코딩
+                                                        var IMG = jsonObjectt.getString("IMG")
+                                                        val decoder: Base64.Decoder =
+                                                            Base64.getDecoder()
+                                                        val encodeByte = decoder.decode(IMG)
+                                                        bitmapDecode =
+                                                            BitmapFactory.decodeByteArray(
+                                                                encodeByte,
+                                                                0,
+                                                                encodeByte.size
+                                                            )
+                                                        //리스트에 넣기
+                                                        println("${bitmapDecode::class.simpleName}")
+                                                        imgPathf =
+                                                            imgPath.getString(i.toString())
+                                                        clothesNamef =
+                                                            clothesName.getString(i.toString())
+                                                        itemListShoes.add(
+                                                            ListItemWeather(
+                                                                bitmapDecode,
+                                                                imgPathf,
+                                                                clothesNamef,
+                                                                send
+                                                            )
+                                                        )
 
-                                if (weatherN == weatherGrade) {
+                                                        val listAdapterShoes =
+                                                            ListAdapterWeather(itemListShoes)
+                                                        listAdapterShoes.notifyDataSetChanged()
+
+                                                        if (shoes_board != null) {
+                                                            shoes_board.adapter = listAdapterShoes
+                                                        }
+                                                        if (shoes_board != null) {
+                                                            shoes_board.layoutManager =
+                                                                LinearLayoutManager(
+                                                                    mainActivity,
+                                                                    LinearLayoutManager.HORIZONTAL,
+                                                                    false
+                                                                )
+                                                        }
+                                                    } else {
+                                                        return@Listener
+                                                    }
+                                                } catch (e: JSONException) {
+                                                    e.printStackTrace()
+                                                }
+                                            }
+                                        val closetImageRequest =
+                                            ClosetImageRequest(imgPathf, responseListener)
+
+                                        val queue = Volley.newRequestQueue(getActivity())
+                                        queue.add(closetImageRequest)
+                                    }
+                                }
+
+                                // 기본 날씨 옷 추천
+                                if (weatherN == weatherGrade + (userCharacter.toInt()-2)) {
                                     if (typef == 1) {
                                         val responseListener =
                                             Response.Listener<String> { response ->
@@ -306,6 +449,8 @@ class WeatherFragment : Fragment() {
                                                                     false
                                                                 )
                                                         }
+
+
                                                     } else {
                                                         return@Listener
                                                     }
@@ -574,6 +719,8 @@ class WeatherFragment : Fragment() {
                                     }
                                 }
                             }
+
+
                         }
 
                     } else {
@@ -582,12 +729,20 @@ class WeatherFragment : Fragment() {
                 } catch (e: JSONException) {
                     e.printStackTrace()
                 }
+
+
+
             }
+
+
+
 
         val WeatherFragmentRequest = WeatherFragmentRequest(send, responseListener)
         val queue = Volley.newRequestQueue(getActivity())
         println("프래그먼트 큐 $queue")
         queue.add(WeatherFragmentRequest)
+
+
 
     }
 
@@ -704,8 +859,16 @@ class WeatherFragment : Fragment() {
                     val now = System.currentTimeMillis()
                     val date = Date(now)
                     val simpleDateFormatTime = SimpleDateFormat("HH")
+                    val simpleDateFormatMonth = SimpleDateFormat("MM")
                     val getTime = simpleDateFormatTime.format(date)
+                    val getMonth = simpleDateFormatMonth.format(date).toInt()
                     val getTimeInt = (getTime.toInt())
+
+                    // 계절 설정 (옷 추천 기준 / 실제 계절X)
+                    if (getMonth <= 2 || getMonth >= 11) weatherStyle = "겨울"
+                    else if (getMonth <= 4) weatherStyle = "봄"
+                    else if (getMonth <= 8) weatherStyle = "여름"
+                    else if (getMonth <= 10) weatherStyle = "가을"
 
 
                     val jsonObject = JSONObject(response)
@@ -724,7 +887,11 @@ class WeatherFragment : Fragment() {
                         val weather = weatherObj.getJSONArray("weather")
                         val iconObj = weather.getJSONObject(0)
                         val icon = iconObj.getString("icon")
+                        val icon_sub = icon.substring(0 until 2)
+                        if (icon_sub == "09" || icon_sub == "10" || icon_sub =="13")
+                            isRaining = 1
 
+                        println("isRaining: $isRaining")
 
                         val imageStr = "https://openweathermap.org/img/wn/" + icon + "@2x.png"
 

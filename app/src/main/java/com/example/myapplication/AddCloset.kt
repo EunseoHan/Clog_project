@@ -654,9 +654,9 @@ class AddCloset : BaseActivity() {
                 } else if (binding.rubberBoots.isChecked) { //장화 (신발)
                     typere = 5
                     detailre = 56
-                    for (i: Int in 1..8) {
-                        addDB(idre, namere, imgPath, typere, detailre, lengthre, thicknessre, brushedre, i, IMG, responseListener)
-                    }
+                    // 장화 수정 부분 weather 0으로
+                    addDB(idre, namere, imgPath, typere, detailre, lengthre, thicknessre, brushedre, 0, IMG, responseListener)
+
                 } else {
                     Toast.makeText(
                         this@AddCloset,

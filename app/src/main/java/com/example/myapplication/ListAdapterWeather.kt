@@ -20,8 +20,6 @@ class ListAdapterWeather(val itemList: ArrayList<ListItemWeather>) :
     }
 
     override fun onBindViewHolder(holder: BoardViewHolder, position: Int) {
-        //holder.closetImage.setImageResource(itemList[position].ImageResource)
-        //holder.closetImage.setImageBitmap(itemList[position].image)
         holder.bind(itemList[position])
     }
 
@@ -42,17 +40,13 @@ class ListAdapterWeather(val itemList: ArrayList<ListItemWeather>) :
                 return stream.toByteArray()
             }
             val imagedata = item.image?.let { bitmapToByteArray(it) }
-            println("edit 넘어가라 1")
             closetImage.setOnClickListener {
                 //Toast.makeText(itemView.context, "${item.title}",Toast.LENGTH_SHORT).show()
                 val intent = Intent(itemView.context, EditCloset::class.java)
-//                intent.putExtra("data", itemList)
                 intent.putExtra("clothesName", item.clothesName)
                 intent.putExtra("image", imagedata)
                 intent.putExtra("imageName", item.imageName)
                 intent.putExtra("id", item.id)
-
-                println("edit 넘어가라 2")
 
                 itemView.context.startActivity(intent)
             }
