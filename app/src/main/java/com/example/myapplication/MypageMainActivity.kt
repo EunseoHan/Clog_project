@@ -81,9 +81,6 @@ class MypageMainActivity : BaseActivity() { //AppCompatActivity()
                             encodeByte.size
                         )
                         binding.mypageperson.setImageBitmap(bitmapDecode)
-
-//                    //이미지가 있는 상태인지 아닌지 확인
-//                    val check_image_ox = jsonObject.getString("check_image_ox")
                     }
 
                 } catch (e: JSONException) {
@@ -309,8 +306,8 @@ class MypageMainActivity : BaseActivity() { //AppCompatActivity()
                     ProfileImageRequest(str_id, imgPath, IMG, responseListener)
                 val queue = Volley.newRequestQueue(this@MypageMainActivity)
                 queue.add(profileImageRequest)
-
             }
+
         }
 
         requirePermissions(arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE), PERM_STORAGE)

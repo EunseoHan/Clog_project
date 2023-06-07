@@ -20,6 +20,6 @@ class UserWeatherRequest (userID: String?, listener: Response.Listener<String>) 
 
     companion object {
         // 서버 URL 설정 ( PHP 파일 연동 )
-        private const val URL = "http://192.168.45.230/UserWeather.php"
+        private const val URL = "http://192.168.200.167:8080/UserWeather.php"
     }
 }

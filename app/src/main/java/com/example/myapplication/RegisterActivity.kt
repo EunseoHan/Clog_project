@@ -118,6 +118,7 @@ class RegisterActivity : AppCompatActivity() {
                     response-> //이거 or 위에
                     try {
                         println("나 타고 있니?")
+                        println(response)
                         //서버로부터 받은 데이터는 JSON타입의 객체다.
                         //응답 성공 시 Register.php에 회원가입 관련 정보를 POST방식으로 보내면 응답결과로 {"success":true} 혹은 {"success":false}를 받는 거임
                         val jsonObject = JSONObject(response) ////Register php에 response
