@@ -34,6 +34,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -58,7 +59,7 @@ import java.util.*
 
 class WeatherFragment : Fragment() {
 
-    val IP = "192.168.45.230"
+    val IP = "172.20.10.5:8080"
 
     lateinit var location_editText: EditText
     lateinit var webView: WebView
@@ -167,6 +168,7 @@ class WeatherFragment : Fragment() {
     }
 
     private inner class WebViewData {
+        @RequiresApi(Build.VERSION_CODES.O)
         @JavascriptInterface
         fun getAddress(zoneCode: String, roadAddress: String, buildingName: String) {
 
@@ -275,6 +277,7 @@ class WeatherFragment : Fragment() {
     }
 
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun setImage() {
 
         val outer_board = view?.findViewById<RecyclerView>(R.id.outer_board)
@@ -853,6 +856,7 @@ class WeatherFragment : Fragment() {
 
 
         val request: StringRequest =
+            @RequiresApi(Build.VERSION_CODES.O)
             object : StringRequest(Method.GET, url, Response.Listener { response ->
                 try {
 //                    println("url:"+url)

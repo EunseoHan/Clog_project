@@ -7,6 +7,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.SystemClock
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.edit
 import com.example.myapplication.databinding.AlarmButtonBinding
@@ -17,6 +18,8 @@ class ButtonAlarm : AppCompatActivity() {
 
     val binding by lazy {AlarmButtonBinding.inflate(layoutInflater)}
     lateinit var setting: SharedPreferences
+
+    lateinit var back: ImageView
 
     companion object {
         const val REQUEST_CODE = 101 //요청 코드 상수
@@ -31,9 +34,15 @@ class ButtonAlarm : AppCompatActivity() {
         setContentView(binding.root) //액티비티의 레이아웃을 설정
         view.instance = this // ButtonAlarm의 인스턴스를 view.instance에 할당
 
+        back=findViewById(R.id.back)
+
+        back.setOnClickListener{
+            val intent = Intent(this, MypageMainActivity::class.java)
+            startActivity(intent)
+        }
         setting = getSharedPreferences("setting", MODE_PRIVATE) //"setting" 이름의 SharedPreferences 인스턴스를 가져옴
-        //binding.switch01.isChecked = setting.getBoolean("alarm", false) // switch01 스위치의 상태를 SharedPreferences에서 가져와 설정
-        val isAlarmEnabled=setting.getBoolean("alarm",false)
+        binding.switch01.isChecked = setting.getBoolean("alarm", false) // switch01 스위치의 상태를 SharedPreferences에서 가져와 설정
+//        val isAlarmEnabled=setting.getBoolean("alarm",false)
 
         val alarmManager = binding.root.context.getSystemService(Context.ALARM_SERVICE) as AlarmManager // AlarmManager 인스턴스를 가져옴
         val pendingIntent = Intent(binding.root.context, MyAlarmReceiver::class.java).let {  // MyAlarmReceiver로의 암시적 인텐트를 생성
@@ -74,5 +83,8 @@ class ButtonAlarm : AppCompatActivity() {
             }
         }
     }
-
+    override fun onResume() {
+        super.onResume()
+        binding.switch01.isChecked = setting.getBoolean("alarm", false) // 액티비티가 다시 시작될 때 스위치 상태를 SharedPreferences에서 가져와 설정
+    }
 }

@@ -27,6 +27,6 @@ class MypageOutRequest(userID: String?, userPASSWORD: String?, listener: Respons
 
     companion object {
         // 서버 URL 설정 ( PHP 파일 연동 )
-        private const val URL = "http://192.168.200.167:8080/appout.php"
+        private const val URL = "http://172.20.10.5:8080/appout.php"
     }
 }
