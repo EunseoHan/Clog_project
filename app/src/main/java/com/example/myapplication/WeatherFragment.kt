@@ -59,7 +59,7 @@ import java.util.*
 
 class WeatherFragment : Fragment() {
 
-    val IP = "172.20.10.5:8080"
+    val IP = "192.168.45.236"
 
     lateinit var location_editText: EditText
     lateinit var webView: WebView
@@ -134,7 +134,9 @@ class WeatherFragment : Fragment() {
         // 쇼핑몰 버튼
         val button2 = view.findViewById<Button>(R.id.go_to_shopping)
         button2.setOnClickListener {
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://zigzag.kr/search?keyword=$userStyle%20$weatherStyle%20옷"))
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(
+                "https://zigzag.kr/search?keyword=$userStyle%20$weatherStyle%20옷"
+            ))
             startActivity(intent)        }
     }
 
@@ -228,8 +230,6 @@ class WeatherFragment : Fragment() {
     }
 
     fun getUserInfo() {
-
-
         val send = arguments?.getString("ID")
 
         val responseListener =
@@ -330,7 +330,7 @@ class WeatherFragment : Fragment() {
                                 weatherN = weatherNum.getInt(i.toString())
                                 println("weatherN = $weatherN")
 
-                                // 비 올 때
+                                // 특수한 경우 - 비/눈 올 때
                                 if (isRaining == 1) {
                                     if (detailf == 56)  {
                                         val responseListener =
@@ -892,10 +892,11 @@ class WeatherFragment : Fragment() {
                         val iconObj = weather.getJSONObject(0)
                         val icon = iconObj.getString("icon")
                         val icon_sub = icon.substring(0 until 2)
-                        if (icon_sub == "09" || icon_sub == "10" || icon_sub =="13")
-                            isRaining = 1
-
-                        println("isRaining: $isRaining")
+//                        if (icon_sub == "09" || icon_sub == "10" || icon_sub =="13") {
+//                            isRaining = 1
+//                        }
+//
+//                        println("isRaining: $isRaining | icon_sub: $icon_sub")
 
                         val imageStr = "https://openweathermap.org/img/wn/" + icon + "@2x.png"
 
@@ -913,6 +914,13 @@ class WeatherFragment : Fragment() {
                             }
                             currentTemp = temp.toDouble()
                             println("currentTemp = $currentTemp")
+
+                            if (icon_sub == "09" || icon_sub == "10" || icon_sub =="13") {
+                            isRaining = 1
+                            }
+
+                            println("isRaining: $isRaining | icon_sub: $icon_sub")
+
                         } else if (i==1) {
                             if (temp02 != null) { temp02.text = "$temp°" }
                             if (time02 != null) { time02.text = "$dt_txt_cal" + "시" }
