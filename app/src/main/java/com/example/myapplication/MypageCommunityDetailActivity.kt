@@ -39,7 +39,7 @@ class MypageCommunityDetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_community_detail)
+        setContentView(R.layout.activity_mypage_detail)
 
         val back = findViewById<ImageView>(R.id.back)
         val editbutton = findViewById<Button>(R.id.editbutton)
@@ -115,6 +115,7 @@ class MypageCommunityDetailActivity : AppCompatActivity() {
                                     ).show()
                                     val intent =
                                         Intent(this@MypageCommunityDetailActivity, MypageCommunityActivity::class.java)
+                                    intent.putExtra("context", data2)
                                     startActivity(intent)
                                 } else { // 삭제에 실패한 경우
                                     println("삭제되지 않았습니다. 다시 시도해주세요.")

@@ -59,7 +59,7 @@ import java.util.*
 
 class WeatherFragment : Fragment() {
 
-    val IP = "192.168.45.236"
+    val IP = "218.159.194.63"
 
     lateinit var location_editText: EditText
     lateinit var webView: WebView

@@ -31,7 +31,7 @@ class CommunityDetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_mypage_detail)
+        setContentView(R.layout.activity_community_detail)
 
         val back = findViewById<ImageView>(R.id.back)
 

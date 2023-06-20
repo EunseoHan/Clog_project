@@ -27,6 +27,6 @@ class DeleteCommuRequest(
         return map
     }
     companion object {
-        private const val URL = "http://172.20.10.5:8080/DeleteCommunity.php"
+        private const val URL = "http://218.159.194.63/DeleteCommunity.php"
     }
 }

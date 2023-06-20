@@ -114,23 +114,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="right"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/editbutton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:layout_marginRight="10dp"
-                    android:background="@drawable/button_roud"
-                    android:text="수정하기" />
-
-                <Button
-                    android:id="@+id/deletebutton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:background="@drawable/button_roud"
-                    android:text="삭제하기" />
-            </LinearLayout>
+                android:orientation="horizontal"/>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

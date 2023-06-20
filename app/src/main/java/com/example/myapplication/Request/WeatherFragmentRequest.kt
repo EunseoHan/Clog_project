@@ -20,6 +20,6 @@ class WeatherFragmentRequest(userID: String?, listener: Response.Listener<String
 
     companion object {
         // 서버 URL 설정 ( PHP 파일 연동 )
-        private const val URL = "http://172.20.10.5/Weather.php"
+        private const val URL = "http://218.159.194.63/Weather.php"
     }
 }
